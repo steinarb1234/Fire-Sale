@@ -1,7 +1,6 @@
 
 .listing {
-    background-color: blue;
-    border: solid 2px green
+    border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
 
 
