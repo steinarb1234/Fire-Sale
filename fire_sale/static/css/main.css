@@ -1,5 +1,5 @@
 
-.listing {
+.home {
     border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
 
@@ -12,10 +12,7 @@
     height: 250px;
 }
 
-.collapse navbar-collapse container-fluid {
-    background-color: green;
-}
-
-#navbar {
-    background-color: green;
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
 }

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="home">
+        <h2>Home</h2>
+    </div>
+    {% for category in favorite_categories %}
+        <div class="card-deck d-flex justify-content-between">
+            <div><h6>{{ category.name }}</h6></div>
+            {% for item in category.items %}
+            <div class="card vw-15">
+                <img class="card-img-top" src="{{ item.image }}" alt="{{ item.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name|truncatechars:15 }}</h5>
+                    <p class="card-text">{{ item.price }}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+
+
