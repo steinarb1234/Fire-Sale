@@ -8,12 +8,12 @@ from user.models import User
 
 class Offer(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer_offers')
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer_offers', blank=True, null=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_offers')
     amount = models.FloatField(default=0.0)
     
 class OfferDetails(models.Model):
-    offer = models.OneToOneField(Offer, on_delete=models.CASCADE)
+    offer = models.OneToOneField(Offer, on_delete=models.CASCADE, primary_key=True)
     start_date = models.DateField()
     end_date = models.DateField()
     message = models.CharField(max_length=255)
