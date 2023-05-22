@@ -6,7 +6,8 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse container-fluid" id="navbarSupportedContent">
+
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'item-index'%}">Home</a>
@@ -29,21 +30,22 @@
           <a class="nav-link disabled">Disabled</a>
         </li>
       </ul>
+
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+
       <div class="nav-item dropdown">
-          <div class="nav-link dropdown-toggle">
-            <img class="rounded-circle img-fluid" id="profile_image_small" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
-          </div>
+          <img class="nav-link dropdown-toggle w-10 rounded-circle img-fluid" id="profile_image_small" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">_full_name_here_</a></li>
             <li><a class="dropdown-item" href="#">_user_rating_here_</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
-        </div>
+      </div>
+
     </div>
   </div>
 </nav>
