@@ -1,0 +1,99 @@
+/* Width Classes */
+.w-5 {
+    width: 5% !important;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+.w-15 {
+    width: 15% !important;
+}
+
+/* Height Classes */
+.h-5 {
+    height: 5% !important;
+}
+
+.h-10 {
+    height: 10% !important;
+}
+    }
+
+.h-15 {
+    height: 15% !important;
+
+.h-25 {
+    height: 25% !important;
+}
+
+.h-50 {
+    height: 50% !important;
+}
+
+.h-75 {
+    height: 75% !important;
+}
+
+.h-100 {
+    height: 100% !important;
+}
+
+/* Viewport Width (vw) Classes */
+.vw-5 {
+    width: 5vw !important;
+}
+
+.vw-10 {
+    width: 10vw !important;
+}
+
+.vw-15 {
+    width: 15vw !important;
+}
+
+.vw-25 {
+    width: 25vw !important;
+}
+
+.vw-50 {
+    width: 50vw !important;
+}
+
+.vw-75 {
+    width: 75vw !important;
+}
+
+.vw-100 {
+    width: 100vw !important;
+}
+
+/* Viewport Height (vh) Classes */
+.vh-5 {
+    height: 5vh !important;
+}
+
+.vh-10 {
+    height: 10vh !important;
+}
+
+.vh-15 {
+    height: 15vh !important;
+}
+
+.vh-25 {
+    height: 25vh !important;
+}
+
+.vh-50 {
+    height: 50vh !important;
+}
+
+.vh-75 {
+    height: 75vh !important;
+}
+
+.vh-100 {
+    height: 100vh !important;
+}
