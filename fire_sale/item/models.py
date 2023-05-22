@@ -31,5 +31,5 @@ class ItemDetails(models.Model):
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    image = models.CharField(max_length=9999, blank=True)
+    image = models.CharField(max_length=9999)
 

@@ -7,7 +7,7 @@ from user.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    image = models.CharField(max_length=9999, blank=True)
+    parent = models.ForeignKey("self", blank=True, null=True, default="null", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
