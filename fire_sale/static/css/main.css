@@ -12,5 +12,18 @@
     height: 250px;
 }
 
+.profile {
+    margin-bottom: 10px;
+    display: flex;
+}
 
-
+.profile_button {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
