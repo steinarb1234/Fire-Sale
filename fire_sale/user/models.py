@@ -21,4 +21,3 @@ class UserProfile(models.Model):
     zip_code = models.CharField(max_length=255, blank=True)
     bio = models.CharField(max_length=255, blank=True)
     user_info = models.OneToOneField(UserInfo, on_delete=models.CASCADE, primary_key=True)
-    

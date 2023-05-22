@@ -23,22 +23,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserInfo',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('full_name', models.CharField(max_length=255)),
                 ('avg_rating', models.FloatField(default=0.0)),
-                ('image', models.CharField(max_length=9999)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='user.user')),
+                ('image', models.CharField(blank=True, max_length=9999)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='user.user')),
             ],
         ),
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('user_info', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='user.userinfo')),
                 ('country', models.CharField(blank=True, max_length=255)),
                 ('address', models.CharField(blank=True, max_length=255)),
                 ('city', models.CharField(blank=True, max_length=255)),
                 ('zip_code', models.CharField(blank=True, max_length=255)),
                 ('bio', models.CharField(blank=True, max_length=255)),
+                ('user_info', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='user.userinfo')),
             ],
         ),
     ]
