@@ -11,6 +11,9 @@ class Item(models.Model):
     price = models.FloatField(default=0)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class ItemStats(models.Model):
     views = models.IntegerField(default=0)

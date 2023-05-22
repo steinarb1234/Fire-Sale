@@ -9,6 +9,9 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     image = models.CharField(max_length=9999, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class CategoryFavorite(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
