@@ -2,3 +2,20 @@
 .listing {
     border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
+
+.category {
+    width: 250px;
+    padding: 10px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+    display: inline-block;
+    height: 250px;
+}
+
+.collapse navbar-collapse container-fluid {
+    background-color: green;
+}
+
+#navbar {
+    background-color: green;
+}
