@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Welcome to the category app!</h1>
+    {% for category in categories %}
+        <h4>{{ category.name }}</h4>
+        <p>{{ category.image }}</p>
+    {% endfor %}
 {% endblock %}

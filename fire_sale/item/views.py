@@ -13,4 +13,3 @@ def index(request):
     return render(request, 'listing/index.html', context={
         'items': items
     })
-
