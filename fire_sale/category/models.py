@@ -4,9 +4,11 @@ from user.models import User
 # Category
 # Create your models here.
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
     image = models.CharField(max_length=9999, blank=True)
+
 
 class CategoryFavorite(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

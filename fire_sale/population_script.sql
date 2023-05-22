@@ -12,8 +12,8 @@ VALUES
 
 INSERT INTO user_userprofile (user_info_id, country, address, city, zip_code, bio)
 VALUES 
-(1, 'USA', '123 Any Street', 'New York', 10001, 'I love coding and databases.'),
-(2, 'Canada', '456 Another Ave', 'Toronto', M5B2G9, 'I am a software developer.'),
+(1, 'USA', '123 Any Street', 'New York', '10001', 'I love coding and databases.'),
+(2, 'Canada', '456 Another Ave', 'Toronto', 'M5B2G9', 'I am a software developer.'),
 
 
 INSERT INTO category_category (name, image)
