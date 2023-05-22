@@ -8,16 +8,16 @@ class Item(models.Model):
     # seller = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class ItemStats(models.Model):
-    # item = models.ForeignKey(Item, on_delete=models.CASCADE)
     views = models.IntegerField()           # TENGJA
     watchers = models.IntegerField()        # TENGJA
-    # offers = models.ForeignKey(User, on_delete=models.CASCADE)
+    # offers = models.ForeignKey(Offer, on_delete=models.CASCADE)
     status = models.CharField(max_length=255)
+    item = models.OneToOneField(Item, on_delete=models.CASCADE)
 
 class ItemDetails(models.Model):
-    item_stats = models.ForeignKey(ItemStats, on_delete=models.CASCADE)
-    condition = models.CharField(max_length=255)
-    description = models.CharField(max_length=9999, blank=True)
+    condition = models.CharField(max_length=255, default="noItem")
+    description = models.CharField(max_length=9999, blank=True, default="noItem")
+    item_stats = models.OneToOneField(ItemStats, on_delete=models.CASCADE)
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
