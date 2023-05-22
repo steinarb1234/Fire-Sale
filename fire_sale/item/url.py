@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     # http://localhost:8000/listings
-    path('', views.index, name="index"),
+    path('', views.index, name="item-index"),
 ]
 

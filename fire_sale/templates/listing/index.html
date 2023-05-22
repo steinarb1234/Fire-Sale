@@ -3,6 +3,10 @@
     <div class="listing">
         <h2>Welcome to the item app!</h2>
     </div>
+    {% for item in items %}
+        <h4>{{ item.name }}</h4>
+        <p>{{ item.price }}</p>
+    {% endfor %}
 {% endblock %}
 
 
