@@ -93,5 +93,14 @@ def index(request):
 
 def get_item_by_id(request, id):
     return render(request, 'item/item_details.html', {
-         'item': get_object_or_404(Item, pk=id)
-     })
+        'item': get_object_or_404(Item, pk=id)
+    })
+
+# def create_item(request):
+#     if request.method == 'POST':
+#         print(1)
+#     else:
+#         form.Item
+#     return render(request, 'item/create_item.html', {
+#         'form': form
+#     })
