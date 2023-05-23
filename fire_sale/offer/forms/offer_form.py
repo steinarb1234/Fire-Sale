@@ -5,7 +5,7 @@ from user.models import UserProfile
 
 class CreateOfferForm(forms.ModelForm):
     
-    message = forms.CharField(required = False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    message = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = Offer
         exclude = ['item', 'buyer', 'seller']

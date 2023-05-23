@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+
 
 from item.forms.item_form import CreateItemForm, EditItemForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
@@ -113,9 +115,12 @@ def create_item(request):
         
         # TODO: Logic layer síun á gögnum
         if form.is_valid():
-            # Save items in inherited model
-            item = form.save()
             
+            # Save items in inherited model
+            item = form.save(commit=False)
+            item.seller_id = int(request.user.id)
+            item.save()
+             
             # Manually save rest of the items
             item_image = ItemImage(image=request.POST['image'], item=item)
             item_image.save()
