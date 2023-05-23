@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from category.models import Category
+
 categories = [
     {'name': 'Fashion', 'image': 'hat_image'},
     {'name': 'Tech', 'image': 'computer_image'},
@@ -14,6 +16,11 @@ categories = [
 
 
 def index(request):
-    return render(request, 'category/index.html', context={
-        'categories': categories
+    # return render(request, 'category/all_categories.html', context={
+    #     'categories': categories
+    # })
+
+    return render(request, 'category/all_categories.html', context={
+        'categories': Category.objects.all()
     })
+
