@@ -1,5 +1,5 @@
 
-.home {
+.underline-solid {
     border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
 
@@ -31,3 +31,7 @@
     display: inline-block;
     font-size: 16px;
   }
+
+.small-item-card {
+    min-width: 200px;
+}
