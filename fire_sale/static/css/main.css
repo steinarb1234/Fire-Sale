@@ -90,6 +90,9 @@
     z-index: 1000;
 }
 
+.card-grid {
+    grid-template-columns: repeat(5, 1fr)
+}
 .full-width-footer {
     width: 100%;
     left: 0;

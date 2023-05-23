@@ -1,19 +1,10 @@
 from django.shortcuts import render
 
-categories = [
-    {'name': 'Fashion', 'image': 'hat_image'},
-    {'name': 'Tech', 'image': 'computer_image'},
-    {'name': 'Home', 'image': 'house_image'},
-    {'name': 'Toys', 'image': 'toy_image'},
-    {'name': 'Sports', 'image': 'sports_image'},
-    {'name': 'Books', 'image': 'book_image'},
-    {'name': 'Other', 'image': 'other_image'}
-]
-
-# Create your views here.
+from item.service import ItemService
 
 
-def index(request):
-    return render(request, 'category/index.html', context={
-        'categories': categories
+def display_items_by_category(request, category_name):
+    return render(request, 'category/index.html', {
+        'category': category_name,
+        'item_list': ItemService.get_items_by_category_name(category_name)
     })
