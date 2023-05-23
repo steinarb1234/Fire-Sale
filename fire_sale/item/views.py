@@ -125,7 +125,7 @@ def create_item(request):
             )
             item_details.save()
 
-            return redirect('item-details', id)
+            return redirect('item-details', item.id)
     else:
         form = CreateItemForm()
     return render(request, 'item/create_item.html', {
