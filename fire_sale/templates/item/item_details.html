@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>{{ item.name }}</h1>
-    <p>{{ item.description }}</p>
+    <h1>{{ item_details.item_stats.item.name }}</h1>
+    <img class="item_img" src="{{ item_details.item_stats.item.itemimage_set.first.image }}">
+    <p>{{ item_details.condition }}</p>
+    <p>{{ item_details.description }}</p>
+    <p>${{ item_details.item_stats.item.price }}</p>
+    <p>Views: {{ item_details.item_stats.views }}</p>
+    <p>Watchers: {{ item_details.item_stats.watchers }}</p>
+    <p>Status: {{ item_details.item_stats.status }}</p>
+
+    <a href="{% url 'delete_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
+    <a href="{% url 'edit_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
 {% endblock %}

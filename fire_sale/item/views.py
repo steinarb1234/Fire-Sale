@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from item.forms.item_form import CreateItemForm
+from item.forms.item_form import CreateItemForm, EditItemForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 
+<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
 
 
+=======
+>>>>>>> 2303aa8aefc6faa9121f1c52e89bbcc93c480bb7
 def index(request):
     return render(request, 'home/index.html', context={
         'favorite_categories': [
@@ -95,13 +98,21 @@ def index(request):
 #         'items': Item.objects.all()
 #     })
 
-def get_item_by_id(request, id):
+# def get_item_by_id(request, id):
+#     return render(request, 'item/item_details.html', {
+#         'item': get_object_or_404(Item, pk=id)
+#     })
+#
+def get_item_details_by_id(request, id):
     return render(request, 'item/item_details.html', {
-        'item': get_object_or_404(Item, pk=id)
+        'item_details': get_object_or_404(ItemDetails, pk=id)
     })
 
+<<<<<<< HEAD
 
 #@login_required
+=======
+>>>>>>> 2303aa8aefc6faa9121f1c52e89bbcc93c480bb7
 def create_item(request):
     if request.method == 'POST':
         form = CreateItemForm(data=request.POST)
@@ -124,10 +135,34 @@ def create_item(request):
                 item_stats=item_stats
             )
             item_details.save()
-            
-            return redirect('item-index')
+
+            return redirect('item-details', id)
     else:
         form = CreateItemForm()
     return render(request, 'item/create_item.html', {
         'form': form
     })
+
+def delete_item(request, id):
+    item = get_object_or_404(Item, pk=id)
+    item.delete()
+    return redirect('item-index')
+
+def edit_item(request, id):
+    instance = get_object_or_404(Item, pk=id)
+    if request.method == 'POST':
+        form = EditItemForm(data=request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('item-details', id)
+    else:
+        form = EditItemForm(instance=instance)
+        print(2)
+    return render(request, 'item/edit_item.html', {
+        'form': form,
+        'id': id
+    })
+
+
+
+
