@@ -29,7 +29,7 @@ VALUES
 ('Fashion'),
 ('Books'),
 ('Plants & gardening'),
-('Electr0incs'),
+('Electronics'),
 ('Cars'),
 ('Bikes'),
 ('Boats');
