@@ -101,12 +101,25 @@ def get_item_by_id(request, id):
 def create_item(request):
     if request.method == 'POST':
         form = CreateItemForm(data=request.POST)
+        
+        # TODO: Logic layer síun á gögnum
         if form.is_valid():
+            # Save items in inherited model
             item = form.save()
-
+            
+            # Manually save rest of the items
             item_image = ItemImage(image=request.POST['image'], item=item)
             item_image.save()
-
+            
+            item_stats = ItemStats(item=item)
+            item_stats.save()
+            
+            item_condition = ItemDetails(condition=request.POST['condition'], item_stats=item_stats)
+            item_description = ItemDetails(description=request.POST['description'], item_stats=item_stats)
+            
+            item_condition.save()
+            item_description.save()
+            
             return redirect('item-index')
     else:
         form = CreateItemForm()
