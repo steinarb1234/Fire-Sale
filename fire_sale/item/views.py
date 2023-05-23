@@ -89,7 +89,7 @@ def index(request):
     })
 
 
-#     return render(request, 'item/index.html', context={
+#     return render(request, 'item/checkout.html', context={
 #         'items': Item.objects.all()
 #     })
 
