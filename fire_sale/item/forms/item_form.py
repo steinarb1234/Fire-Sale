@@ -26,3 +26,6 @@ class EditItemForm(forms.ModelForm):
         model = Item
         exclude = ['id', 'category', 'seller']
         fields = ['name', 'price']
+
+
+
