@@ -2,10 +2,11 @@ from django.forms import ModelForm, widgets
 from django import forms
 from item.models import Item, ItemDetails, ItemStats, ItemImage
 
+
 class CreateItemForm(ModelForm):
     image = forms.URLField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     condition = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    description = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    description = forms.CharField(required=True, widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
     class Meta:
         model = Item
         exclude = ['id']
