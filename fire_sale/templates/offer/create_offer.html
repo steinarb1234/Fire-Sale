@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <h4>Offer</h4>
+    <form class="form form-row" action="{% url 'create_offer' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+    </form>
+{% endblock %}
