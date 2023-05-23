@@ -114,11 +114,12 @@ def create_item(request):
             item_stats = ItemStats(item=item)
             item_stats.save()
             
-            item_condition = ItemDetails(condition=request.POST['condition'], item_stats=item_stats)
-            item_description = ItemDetails(description=request.POST['description'], item_stats=item_stats)
-            
-            item_condition.save()
-            item_description.save()
+            item_details = ItemDetails(
+                condition=request.POST['condition'],
+                description=request.POST['description'],
+                item_stats=item_stats
+            )
+            item_details.save()
             
             return redirect('item-index')
     else:
