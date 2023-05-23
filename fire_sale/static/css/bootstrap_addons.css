@@ -100,3 +100,9 @@
 .vh-100 {
     height: 100vh !important;
 }
+
+
+
+.mb-10 {
+    margin-bottom: 100px !important;
+  }
