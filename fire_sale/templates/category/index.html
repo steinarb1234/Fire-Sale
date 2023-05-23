@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Welcome to the category app!</h1>
-    {% for category in categories %}
-        <div class="category">
-            <p>{{ category.image }}</p>
-            <h4>{{ category.name }}</h4>
-        </div>
-    {% endfor %}
+    <h1>Welcome to {{ category }}!</h1>
+
+    <div class="container d-grid card-grid">
+        {% for item in item_list %}
+            {% include 'item/item_card.html' %}
+        {% endfor %}
+    </div>
 {% endblock %}

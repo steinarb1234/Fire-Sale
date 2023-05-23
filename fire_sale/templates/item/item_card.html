@@ -1,0 +1,8 @@
+<div class="card small-item-card mx-2">
+  <img class="card-img-top" src="{{ item.itemimage_set.first.image }}" alt="{{ item.name }}">
+  <div class="card-body">
+    <h5 class="card-title">{{ item.name|truncatechars:15 }}</h5>
+    <p class="card-text">$ {{ item.price }}</p>
+    <a href="#" class="btn btn-primary">Make offer</a>
+  </div>
+</div>

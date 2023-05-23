@@ -50,3 +50,7 @@
     top: calc(max(5vw, 10vh) + 2*0.5em);
     z-index: 1000;
 }
+
+.card-grid {
+    grid-template-columns: repeat(5, 1fr)
+}
