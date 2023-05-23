@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
-from item.forms.item_form import ItemCreateForm
-from item.models import Item
+from item.forms.item_form import CreateItemForm
+from item.models import Item, ItemImage, ItemDetails, ItemStats
 
 
 # Create your views here.
@@ -17,9 +17,16 @@ def get_item_by_id(request, id):
 
 def create_item(request):
     if request.method == 'POST':
-        print(1)
+        form = CreateItemForm(data=request.POST)
+        if form.is_valid():
+            item = form.save()
+
+            item_image = ItemImage(image=request.POST['image'], item=item)
+            item_image.save()
+
+            return redirect('item-index')
     else:
-        form = ItemCreateForm()
+        form = CreateItemForm()
     return render(request, 'item/create_item.html', {
         'form': form
     })
