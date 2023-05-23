@@ -97,7 +97,7 @@ def get_item_by_id(request, id):
     return render(request, 'item/item_details.html', {
         'item': get_object_or_404(Item, pk=id)
     })
-
+  
 def create_item(request):
     if request.method == 'POST':
         print(1)
