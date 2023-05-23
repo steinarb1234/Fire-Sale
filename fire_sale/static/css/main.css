@@ -35,3 +35,11 @@
 .small-item-card {
     min-width: 200px;
 }
+
+#main-container{
+    margin-top: 120px;
+}
+
+.minh-vw-5 {
+    min-height: 5vw;
+}
