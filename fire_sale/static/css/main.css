@@ -30,4 +30,41 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    width: 90%;
   }
+
+.left_side {
+    width: 20%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.right_side {
+    margin-left: 4%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3%;
+}
+
+.profile_site {
+    display: flex;
+}
+
+.username_rating {
+    display: flex;
+    flex-direction: row;
+}
+
+.username_rating p {
+    margin-right: 10px; /* Adjust this value to set the desired spacing between the elements */
+}
+
+.right_side h1 {
+    font-size: 70px;
+    display: flex;
+    word-break: break-all;
+    margin-bottom: 10%;
+}
