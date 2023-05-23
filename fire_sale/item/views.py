@@ -83,14 +83,15 @@ def index(request):
                   'image': ''
                   }
              ]}
-        ],
+        ]
     })
+
 
 #     return render(request, 'item/index.html', context={
 #         'items': Item.objects.all()
 #     })
 
-# def get_item_by_id(request, id):
-#     return render(request, 'item/item_details.html', {
-#         'item': get_object_or_404(Item, pk=id)
-#     })
+def get_item_by_id(request, id):
+    return render(request, 'item/item_details.html', {
+         'item': get_object_or_404(Item, pk=id)
+     })
