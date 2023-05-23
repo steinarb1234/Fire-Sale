@@ -1,5 +1,5 @@
 
-.listing {
+.underline-solid {
     border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
 
@@ -12,10 +12,26 @@
     height: 250px;
 }
 
-.collapse navbar-collapse container-fluid {
-    background-color: green;
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+.profile {
+    margin-bottom: 10px;
+    display: flex;
 }
 
-#navbar {
-    background-color: green;
+.profile_button {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+.small-item-card {
+    min-width: 200px;
 }

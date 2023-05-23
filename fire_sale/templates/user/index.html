@@ -1,4 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <h1>Welcome to the user app!</h1>
+    <div class="profile">
+            <div class="left-side">
+                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-20" id="profile_image_small" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
+                <button class="profile_button" type="button">My listings</button>
+                <button class="profile_button" type="button">Bids / Offers</button>
+                <button class="profile_button" type="button">Edit profile</button>
+            </div>
+            <div class="right-side">
+                <h1>Jón Jónsson</h1>
+                <p>jonni5</p>
+                <p>Rating</p>
+                <p>Roooo ooooooooo ooooosalega langt bio herna ahjdhsj andskdns als dsjds hiln asjl saljsi o</p>
+            </div>
+    </div>
 {% endblock %}
+
