@@ -37,9 +37,16 @@
 }
 
 #main-container{
-    margin-top: 120px;
+    position: relative;
+    top: calc(max(5vw, 10vh) + 2*0.5em + 40px + 8px);
 }
 
 .minh-vw-5 {
     min-height: 5vw;
+}
+
+.lower-nav-bar {
+    position: fixed;
+    top: calc(max(5vw, 10vh) + 2*0.5em);
+    z-index: 1000;
 }
