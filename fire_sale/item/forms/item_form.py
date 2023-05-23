@@ -11,7 +11,6 @@ class ItemCreateForm(ModelForm):
             'name': widgets.TextInput(attrs={'class': 'form-control'})
         }
 
-
 class CreateItemForm(forms.ModelForm):
     condition = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     description = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
