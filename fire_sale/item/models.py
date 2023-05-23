@@ -18,13 +18,13 @@ class ItemStats(models.Model):
     views = models.IntegerField(default=0)
     watchers = models.IntegerField(default=0)
     # offers = models.ForeignKey(Offer, on_delete=models.CASCADE)
-    status = models.CharField(max_length=255)
+    status = models.CharField(max_length=255, default="Not sold")
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
 
 
 class ItemDetails(models.Model):
-    condition = models.CharField(max_length=255, default="noItem")
-    description = models.CharField(max_length=9999, blank=True, default="noItem")
+    condition = models.CharField(max_length=255, blank=False, default="noItem")
+    description = models.CharField(max_length=9999, blank=True)
     item_stats = models.OneToOneField(ItemStats, on_delete=models.CASCADE, primary_key=True)
 
 

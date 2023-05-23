@@ -38,10 +38,10 @@ INSERT INTO category_category (name, parent_id)
 VALUES
 ('Men´s fashion', '1'),
 ('Women´s fasion', '1'),
-('Computers', '6'),
-('Phones', '6'),
-('Headphones', '6'),
-('Microphones', '6');
+('Computers', '4'),
+('Phones', '4'),
+('Headphones', '4'),
+('Microphones', '4');
 
 INSERT INTO category_categoryviews (category_id, user_id, category_views)
 VALUES
@@ -162,21 +162,16 @@ VALUES
 
 
 INSERT INTO watchlist_watchlistitem (item_id, user_id)
-VALUES 
+VALUES
 (1, 1),
 (2, 1),
 (3, 1),
 (4, 2),
-(5, 2),
 (1, 3),
 (2, 3),
 (3, 4),
 (4, 4),
-(5, 5),
 (1, 5),
 (2, 4),
 (3, 2),
-(4, 1),
-(5, 3);
-
-
+(4, 1);

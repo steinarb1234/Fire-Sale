@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>All categories</h1>
+    {% for category in categories %}
+        {% if not category.parent %}
+            <a href="">{{ category.name }}</a><br>
+            {% for subcategory in categories %}
+                {% if subcategory.parent == category %}
+                    <a href="">{{ subcategory.name }}</a><br>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

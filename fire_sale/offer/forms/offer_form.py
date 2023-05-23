@@ -14,12 +14,10 @@ class CreateOfferForm(forms.ModelForm):
         }
 
 class CheckoutForm(ModelForm):
-    
-    name_of_cardholder = forms.CharField(required = True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    card_number = forms.CharField(required = True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    expiration_date = forms.CharField(required = True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    cvs = forms.CharField(required = True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    
+    name_of_cardholder = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    card_number = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    expiration_date = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    cvs = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = UserProfile
         exclude = ['bio', 'user_info']
@@ -29,4 +27,5 @@ class CheckoutForm(ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control'}),
             'zip_code': forms.TextInput(attrs={'class': 'form-control'})
         }   
-           
+
+
