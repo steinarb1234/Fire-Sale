@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Welcome to {{ category }}!</h1>
+
+    <div class="container d-grid card-grid">
+        {% for item in item_list %}
+            {% include 'item/item_card.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}

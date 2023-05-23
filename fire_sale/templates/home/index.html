@@ -4,21 +4,14 @@
         <h2>Home</h2>
     </div>
     {% for category in favorite_categories %}
-        <div class="container bg-body-secondary m-2 p-2">
-          <div class="row p-3">
+        <div class="container bg-body-secondary my-3 p-4">
+          <div class="row">
               <h4 class="underline-solid w-25 ">{{ category.name }}</h4>
           </div>
           <div class="row p-3">
               <div class="card-deck d-flex flex-nowrap overflow-auto w-100">
                 {% for item in category.items %}
-                <div class="card small-item-card mx-2">
-                  <img class="card-img-top" src="{{ item.image }}" alt="{{ item.name }}">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ item.name|truncatechars:15 }}</h5>
-                    <p class="card-text">$ {{ item.price }}</p>
-                    <a href="#" class="btn btn-primary">Make offer</a>
-                  </div>
-                </div>
+                    {% include 'item/item_card.html' %}
                 {% endfor %}
               </div>
           </div>

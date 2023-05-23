@@ -1,6 +1,6 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,7 +8,7 @@
     </button>
 
     <div class="collapse navbar-collapse container-fluid justify-content-between" id="navbarSearchAndProfile">
-      <img class="nav-link dropdown-toggle rounded-circle img-fluid vh-15" id="logo" href="#" role="button" aria-expanded="false" src="{% static 'images/FIRE_SALE_LOGO.png' %}" alt="Fire Sale! logo">
+      <img class="nav-link img-fluid vh-10 minh-vw-5" id="logo" href="#" role="button" aria-expanded="false" src="{% static 'images/FIRE_SALE_LOGO.png' %}" alt="Fire Sale! logo">
       <form class="d-flex w-50" role="search">
         <input class="form-control me-2 w-100" type="search" placeholder="Search" aria-label="Search">
 
@@ -32,7 +32,7 @@
       </form>
 
       <div class="nav-item dropdown">
-          <img class="nav-link dropdown-toggle rounded-circle img-fluid vh-10" id="profile_image_small" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
+          <img class="nav-link dropdown-toggle rounded-circle img-fluid vh-10 minh-vw-5 p-2" id="profile_image_small" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="#">_full_name_here_</a></li>
             <li><a class="dropdown-item" href="#">_user_rating_here_</a></li>
@@ -50,7 +50,8 @@
   </div>
 </nav>
 
-<div class="container-fluid d-flex justify-content-between bg-body-secondary">
+<!-- Lower nav bar -->
+<div class="container-fluid d-flex justify-content-between flex-nowrap bg-body-secondary lower-nav-bar" role="navigation">
   <div class="me-auto vw-10">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
@@ -77,8 +78,8 @@
       </ul>
   </div>
 
-  <div class="d-flex w-25">
-    <a>Create listing +</a>
-    <a>Watchlist</a>
+  <div class="d-flex justify-content-end align-items-center w-25">
+    <a class="m-2" href="#">Create listing +</a>
+    <a class="m-2" href="#">Watchlist</a>
   </div>
 </div>
