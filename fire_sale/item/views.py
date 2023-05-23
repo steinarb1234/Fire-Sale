@@ -3,6 +3,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from item.forms.item_form import CreateItemForm, EditItemForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 
+from django.contrib.auth.decorators import login_required
+
+
 def index(request):
     return render(request, 'home/index.html', context={
         'favorite_categories': [
@@ -102,6 +105,8 @@ def get_item_details_by_id(request, id):
         'item_details': get_object_or_404(ItemDetails, pk=id)
     })
 
+
+#@login_required
 def create_item(request):
     if request.method == 'POST':
         form = CreateItemForm(data=request.POST)
