@@ -6,11 +6,7 @@ from item.models import Item, ItemDetails, ItemStats, ItemImage
 class ItemCreateForm(ModelForm):
     class Meta:
         model = Item
-<<<<<<< HEAD
         exclude = ['id', 'seller']
-=======
-        exclude = ['id']
->>>>>>> 9ee3b3ae174711eccc793c65dee8b4a6c2b812fd
         widgets = {
             'name': widgets.TextInput(attrs={'class': 'form-control'}),
             'price': widgets.NumberInput(attrs={'class': 'form-control'}),
