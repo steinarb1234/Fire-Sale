@@ -19,7 +19,7 @@ class CreateItemForm(forms.ModelForm):
     
     class Meta:
         model = Item
-        exclude = ['id']
+        exclude = ['id', 'category', 'seller']
         fields = ['name', 'price']
 
 class EditItemForm(forms.ModelForm):
@@ -29,5 +29,5 @@ class EditItemForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        exclude = ['id']
+        exclude = ['id', 'category', 'seller']
         fields = ['name', 'price']
