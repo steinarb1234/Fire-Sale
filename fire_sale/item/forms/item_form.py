@@ -9,7 +9,7 @@ class CreateItemForm(ModelForm):
     description = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = Item
-        exclude = ['id']
+        exclude = ['id', 'seller']
         widgets = {
             'name': widgets.TextInput(attrs={'class': 'form-control'}),
             'price': widgets.NumberInput(attrs={'class': 'form-control'}),
