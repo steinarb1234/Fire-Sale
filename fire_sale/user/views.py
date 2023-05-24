@@ -16,4 +16,4 @@ def register(request):
 
 
 def index(request):
-    return render(request, 'user/index.html')
+    return render(request, 'user/profile.html')
