@@ -76,8 +76,9 @@
 
 #main-container{
     position: relative;
-    top: calc(max(5vw, 10vh) + 2*0.5em + 40px + 8px);
+    top: calc(max(5vw, 10vh) + 2*0.5em + 40px + 32px);
     padding-bottom: 200px;
+    min-height: 100vh;
 }
 
 .minh-vw-5 {
