@@ -72,6 +72,7 @@
 
 .small-item-card {
     min-width: 200px;
+    max-width: 240px;
 }
 
 #main-container{
@@ -92,7 +93,9 @@
 }
 
 .card-grid {
-    grid-template-columns: repeat(5, 1fr)
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 10px;
+    row-gap: 20px;
 }
 .full-width-footer {
     width: 100%;
