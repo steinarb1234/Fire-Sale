@@ -1,8 +1,11 @@
 <div class="card small-item-card mx-2">
-  <img class="card-img-top" src="{{ item.itemimage_set.first.image }}" alt="{{ item.name }}">
+  <img class="card-img-top" src="{{ item.itemimage_set.first.image }}" alt="Image for '{{ item.name }}'">
   <div class="card-body">
     <h5 class="card-title">{{ item.name|truncatechars:15 }}</h5>
     <p class="card-text">$ {{ item.price }}</p>
-    <a href="#" class="btn btn-primary">Make offer</a>
+    <div class="d-flex justify-content-between">
+      <a href="#" class="btn btn-primary">Make offer</a>
+      <a href="#" class="btn rounded-circle border-secondary-subtle" title="Add item to watchlist.">+</a>
+    </div>
   </div>
 </div>
