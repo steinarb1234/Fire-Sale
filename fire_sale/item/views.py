@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from category.models import CategoryViews, Category
 from item.forms.item_form import CreateItemForm, EditItemForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
+from item.service import ItemService
 
 from django.contrib.auth.decorators import login_required
 
@@ -26,7 +27,8 @@ def index(request):
 
 def get_item_details_by_id(request, id):
     return render(request, 'item/item_details.html', {
-        'item_details': get_object_or_404(ItemDetails, pk=id)
+        'item_details': get_object_or_404(ItemDetails, pk=id),
+        'seller_details': ItemService.get_seller_details_from_item_id(id)
     })
 
 
