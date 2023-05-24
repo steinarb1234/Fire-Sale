@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Welcome to {{ category }}!</h1>
+
+    <div class="container d-flex justify-content-between mb-5">
+        <h1>Welcome to {{ category }}!</h1>
+
+        <select name="sort" id="sort-selector">
+            <option value="sort" selected disabled hidden>Sort</option>
+            <option value="alphabet-desc">Alphabetically (descending)</option>
+            <option value="alphabet-asc">Alphabetically (ascending)</option>
+            <option value="price-hi-lo">Price (high to low)</option>
+            <option value="price-lo-hi">Price (low to high)</option>
+        </select>
+    </div>
 
     <div class="container d-grid card-grid">
         {% for item in item_list %}
