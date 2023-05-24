@@ -7,7 +7,7 @@
     <div class="carousel-inner">
         {% for image in item_details.item_stats.item.itemimage_set.all %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                //TODO: Stop images jumping around for some reason when switching between
+                <!-- TODO: Stop images jumping around for some reason when switching between -->
                 <img src="{{ image.image }}" class="d-block w-100" alt="Image {{ forloop.counter1 }}">
             </div>
         {% endfor %}
