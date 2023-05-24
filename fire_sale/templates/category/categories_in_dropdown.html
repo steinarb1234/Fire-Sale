@@ -1,0 +1,15 @@
+<ul class="dropdown-menu">
+<li><a class="dropdown-item" href="/categories">All categories</a></li>
+{% for category in categories %}
+    {% if not category.parent %}
+        <li><a class="dropdown-item" href="{% url 'item_list' category %}">{{ category.name }}</a></li>
+        {% for subcategory in categories %}
+            <ul class="subcategory-in-dropdown">
+                {% if subcategory.parent == category %}
+                    <li><a class="dropdown-item" href="{% url 'item_list' subcategory %}">{{ subcategory.name }}</a></li>
+                {% endif %}
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+</ul>
