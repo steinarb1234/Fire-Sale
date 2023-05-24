@@ -1,5 +1,7 @@
 <div class="card small-item-card mx-2">
-  <img class="card-img-top" src="{{ item.itemimage_set.first.image }}" alt="Image for '{{ item.name }}'">
+  <a href="../items/{{ item.id }}">
+    <img class="card-img-top" src="{{ item.itemimage_set.first.image }}" alt="Image for '{{ item.name }}'">
+  </a>
   <div class="card-body">
     <h5 class="card-title">{{ item.name|truncatechars:15 }}</h5>
     <p class="card-text">$ {{ item.price }}</p>
