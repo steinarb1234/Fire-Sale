@@ -71,8 +71,8 @@
 }
 
 .small-item-card {
+    width: 200px !important;
     min-width: 200px;
-    max-width: 240px;
 }
 
 #main-container{
@@ -96,6 +96,7 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     column-gap: 10px;
     row-gap: 20px;
+    justify-items: center;
 }
 .full-width-footer {
     width: 100%;
@@ -107,7 +108,7 @@
 #main-image-container .carousel-inner .carousel-item{
     height: 400px;
     width: 250px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 #main-item-info-container{

@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="watchlist">
-        <h2>Welcome to the watchlist app!</h2>
+
+    <div class="container d-flex justify-content-between mb-5">
+        <h1>Welcome to your watchlist!</h1>
+        {% include 'sort.html' %}
     </div>
-{% end-block %}
 
-
-
+    <div class="container d-grid card-grid">
+        {% for item in items %}
+            {% include 'item/item_card.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}
