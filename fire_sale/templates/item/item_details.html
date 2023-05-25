@@ -35,4 +35,8 @@
             </div>
         </div>
     </div>
+
+    {% with category_and_items as category %}
+        {% include 'category/category_row.html' %}
+    {% endwith %}
 {% endblock %}

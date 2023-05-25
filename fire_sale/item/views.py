@@ -2,7 +2,7 @@ from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 
-from category.models import CategoryViews, Category
+from category.models import Category
 from item.forms.item_form import CreateItemForm, EditItemForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from item.service import ItemService
@@ -12,23 +12,17 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     registered_user_id = request.user.id
-    category_views = CategoryViews.objects
-
-    if registered_user_id is None:  # If guest user
-        user_category_views = category_views.distinct('category_id')
-    else:  # If registered user
-        user_category_views = category_views.filter(user_id=registered_user_id)
 
     return render(request, 'home/index.html', context={
-        'category_views': user_category_views,
-        'items': Item.objects.all()
+        'categories_and_items': ItemService.get_categories_and_items_by_userid(request.user.id)
     })
 
 
 def get_item_details_by_id(request, id):
     return render(request, 'item/item_details.html', {
         'item_details': get_object_or_404(ItemDetails, pk=id),
-        'seller_details': ItemService.get_seller_details_from_item_id(id)
+        'seller_details': ItemService.get_seller_details_from_item_id(id),
+        'category_and_items': ItemService.get_category_and_items_by_itemid(id)
     })
 
 
