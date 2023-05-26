@@ -14,9 +14,8 @@ def register(request):
             user_info_creation_form.instance.user = user_form
             user_info_creation_form.save()
 
-            # print('User: ' + user_info_creation_form.instance.user.id)
-            user_info = UserInfo(user=user_form.u)
-            user_info.user = request.user.id
+            # print(user_creation_form.data)
+            user_info = UserInfo(user=User.objects.all().first())
             user_info.save()
             
             return redirect('login')
