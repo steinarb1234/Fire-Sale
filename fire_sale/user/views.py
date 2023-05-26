@@ -20,7 +20,7 @@ def register(request):
             user_info_creation_form.instance.user_name = user_form.username
             user_info_creation_form.save()
 
-            # print('User: ' + user_info_creation_form.instance.user.id)
+            # Want to fill the UserInfo() module with nothing, but make the id from the first form saved
             user_info = UserInfo()
             user_info.save()
             
