@@ -22,13 +22,18 @@ class ItemStats(models.Model):
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
 
 
+class ItemConditions(models.Model):
+    condition = models.CharField(max_length=255, blank=False, primary_key=True)
+
+
 class ItemDetails(models.Model):
-    condition = models.CharField(max_length=255, blank=False)
+    condition = models.ForeignKey(ItemConditions, on_delete=models.PROTECT)
     description = models.CharField(max_length=9999, blank=True)
     item_stats = models.OneToOneField(ItemStats, on_delete=models.CASCADE, primary_key=True)
 
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    # image_url = models.ImageField(max_length=9999, blank=True)
     image = models.ImageField(upload_to="images/", blank=True)
 

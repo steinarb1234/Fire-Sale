@@ -7,6 +7,7 @@ VALUES
 ('bjarkibjarki', 'bjarkiss20@ru.is'),
 ('beinteinn ', 'beinteinn@gmail.is');
 
+
 INSERT INTO user_userinfo (user_id, full_name, avg_rating, image)
 VALUES
 (1, 'Steinar Björnsson', 5, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
@@ -111,6 +112,13 @@ VALUES
 ('Phones',  5, 16),
 ('Headphones',  5, 10),
 ('Microphones',  5, 9);
+
+
+INSERT INTO item_itemconditions (condition)
+VALUES
+('New'),
+('Used'),
+('Refurbished');
 
 
 INSERT INTO item_item (name, price, category_id, seller_id)
