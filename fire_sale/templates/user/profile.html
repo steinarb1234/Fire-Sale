@@ -2,11 +2,6 @@
 {% load static %}
 {% block content %}
     <h1>Profile</h1>
-    <form class="form form-horizontal" method="post">
-        {% csrf_token %}
-        {{ form }}
-            <input type="submit" class="btn btn-primary" value="Update"/>
-    </form>
     <div class="profile_site">
             <div class="left_side">
                 <img class="nav-link dropdown-toggle rounded-circle img-fluid w-60" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
@@ -15,13 +10,18 @@
                 <button class="profile_button" type="button">Edit profile</button>
             </div>
             <div class="right_side">
-                <h1>Jón<br>Eftirnafn</h1>
+                <h1>{{ user_instance.full_name }}</h1>
                 <div class="username_rating">
-                    <p>jonni5</p>
-                    <p>Rating</p>
+                    <p>{{ user_instance.user_name }}</p>
+                    <p>Rating: 0: hardCoded</p>
                 </div>
                 <p>Roooo ooooooooo ooooosalega langt bio herna ahjdhsj andskdns als dsjds hiln asjl saljsi o</p>
             </div>
+            <form class="form form-horizontal" method="post">
+                {% csrf_token %}
+                {{ form }}
+            <input type="submit" class="btn btn-primary" value="Update"/>
+            </form>
     </div>
 {% endblock %}
 

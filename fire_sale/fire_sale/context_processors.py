@@ -15,3 +15,7 @@ def navigation_bar_processor(request):
         profile_image_url = user_instance.userinfo.image
     
     return {'profile_image_url': profile_image_url}
+    
+def user_info(request):
+    user = User.objects.get(user_name=request.user)
+    return {'user_information': user}

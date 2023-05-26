@@ -37,13 +37,13 @@
             <div class="nav-link dropdown-toggle rounded-circle vh-10 minh-vw-5 p-2"role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="material-symbols-outlined">person</span></div>
           {% endif %}
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">Hi {{ request.user }}!</a></li> 
+              <li><a class="dropdown-item" href="#">Hi {{ user_information.full_name }}!</a></li> 
               <li><a class="dropdown-item" href="#">_user_rating_here_</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
               <li><a class="dropdown-item" href="/watchlist/">Watchlist</a></li>
               <li><a class="dropdown-item" href="#">My listings</a></li>
-              <li><a class="dropdown-item" href="#">Bids / offers</a></li>
+              <li><a class="dropdown-item" href="/user/my_offers">Bids / offers</a></li>
               <li><a class="dropdown-item" href="#">Settings</a></li>
               <li><a class="dropdown-item"href="{% url 'logout' %}">Logout</a></li>
             </ul>
