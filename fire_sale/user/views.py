@@ -37,3 +37,5 @@ def profile(request):
         "user_instance": User.objects.get(user_name = request.user)
     })
  
+def my_offers(request):
+    return render(request, 'my_offers/my_offers.html')
