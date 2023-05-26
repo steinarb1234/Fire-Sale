@@ -22,6 +22,7 @@ def register(request):
 
             # print('User: ' + user_info_creation_form.instance.user.id)
             user_info = UserInfo()
+            user_info.user_id = User.objects.get(user_name = user_form.username).id
             user_info.save()
             
             return redirect('login')
