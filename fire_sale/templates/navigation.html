@@ -31,7 +31,11 @@
       <!-- Profile image -->
       {% if user.is_authenticated %}
         <div class="nav-item dropdown">
-            <img class="nav-link dropdown-toggle rounded-circle img-fluid vh-10 minh-vw-5 p-2" id="profile_image_small" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
+          {% if profile_image_url %}
+            <img class="nav-link dropdown-toggle rounded-circle img-fluid vh-10 minh-vw-5 p-2" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{{ profile_image_url }}" alt="User profile image">
+          {% else %}
+            <div class="nav-link dropdown-toggle rounded-circle vh-10 minh-vw-5 p-2"role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="material-symbols-outlined">person</span></div>
+          {% endif %}
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Hi {{ request.user }}!</a></li> 
               <li><a class="dropdown-item" href="#">_user_rating_here_</a></li>

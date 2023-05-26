@@ -120,3 +120,16 @@
 .m-2 {
     text-decoration: none;
 }
+
+.card-img-missing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(155, 155, 155, .25);
+}
+
+.card-img-missing span {
+    color: rgba(155, 155, 155, .5);
+    font-size: 6em;
+    text-decoration: dotted rgba(155, 155, 155, .5);
+}
