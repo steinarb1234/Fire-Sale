@@ -42,9 +42,8 @@ class ItemService:
 
         for category in user_category_views.all():
             category_id = category.category_id
-            category_name = Category.objects.get(id=category_id).name
-            items = Item.objects.filter(category_id = category_id)
-            categories_and_items.append({"name": category_name, "items": items})
+            items = Item.objects.filter(category_id=category_id)
+            categories_and_items.append({"name": category_id, "items": items})
         
         return categories_and_items
 
