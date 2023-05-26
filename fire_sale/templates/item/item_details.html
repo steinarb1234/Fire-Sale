@@ -6,10 +6,9 @@
         <div class="col-lg-6 d-flex flex-nowrap">
             <div class="item_img-container d-flex flex-column">
                 {% include 'item/item_image_carousel.html' %}
-                <!-- TODO: Replace "Views:", "Watchers:" and "Status:" with icons -->
-                <p>Views: {{ item_details.item_stats.views }}</p>
-                <p>Watchers: {{ item_details.item_stats.watchers }}</p>
-                <p>Status: {{ item_details.item_stats.status }}</p>
+                <p><span class="material-symbols-outlined">visibility</span>: {{ item_details.item_stats.views }}</p>
+                <p><span class="material-symbols-outlined">favorite</span>: {{ item_details.item_stats.watchers }}</p>
+                <p><span class="material-symbols-outlined">info</span>: {{ item_details.item_stats.status }}</p>
             </div>
 
             <div id="main-item-info-container">
