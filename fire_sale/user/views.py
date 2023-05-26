@@ -20,7 +20,7 @@ def register(request):
             user_info_creation_form.instance.user_name = user_form.username
             user_info_creation_form.save()
 
-            # print('User: ' + user_info_creation_form.instance.user.id)
+            # Want to fill the UserInfo() module with nothing, but make the id from the first form saved
             user_info = UserInfo()
             user_info.user_id = User.objects.get(user_name = user_form.username).id
             user_info.save()
@@ -33,7 +33,9 @@ def register(request):
     return render(request, 'user/register.html', {'user_creation_form': user_creation_form, 'user_info_creation_form': user_info_creation_form})
 
 def profile(request):
-    return render(request, 'user/profile.html')
+    return render(request, 'user/profile.html', {
+        "user_instance": User.objects.get(user_name = request.user)
+    })
  
 def my_offers(request):
     return render(request, 'my_offers/my_offers.html')
