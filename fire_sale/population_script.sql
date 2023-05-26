@@ -424,6 +424,7 @@ VALUES
 
 INSERT INTO item_itemimage (item_id, image)
 VALUES
+--     Fashion
 ('1', 'https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'),
 ('2', 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=795&q=80'),
 ('3', 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'),
@@ -450,6 +451,8 @@ VALUES
 ('23', ''),
 ('24', ''),
 ('25', ''),
+
+-- Books
 ('26', ''),
 ('27', ''),
 ('28', ''),
@@ -470,6 +473,8 @@ VALUES
 ('43', ''),
 ('44', ''),
 ('45', ''),
+
+-- Plants & gardening
 ('46', ''),
 ('47', ''),
 ('48', ''),
@@ -490,6 +495,8 @@ VALUES
 ('63', ''),
 ('64', ''),
 ('65', ''),
+
+-- Electronics
 ('66', ''),
 ('67', ''),
 ('68', ''),
@@ -510,6 +517,8 @@ VALUES
 ('83', ''),
 ('84', ''),
 ('85', ''),
+
+-- Cars
 ('86', ''),
 ('87', ''),
 ('88', ''),
@@ -530,6 +539,8 @@ VALUES
 ('103', ''),
 ('104', ''),
 ('105', ''),
+
+-- Bikes
 ('106', ''),
 ('107', ''),
 ('108', ''),
@@ -550,6 +561,8 @@ VALUES
 ('123', ''),
 ('124', ''),
 ('125', ''),
+
+-- Boats
 ('126', ''),
 ('127', ''),
 ('128', ''),
@@ -570,6 +583,8 @@ VALUES
 ('143', ''),
 ('144', ''),
 ('145', ''),
+
+-- Mens Fashion
 ('146', ''),
 ('147', ''),
 ('148', ''),
@@ -589,9 +604,9 @@ VALUES
 ('162', ''),
 ('163', ''),
 ('164', ''),
+('165', ''),
 
 -- Womens fashion
-('165', ''),
 ('166', ''),
 ('167', ''),
 ('168', ''),
