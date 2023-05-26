@@ -7,11 +7,17 @@ from user.models import UserProfile, User, UserInfo
 
 def register(request):
     if request.method == 'POST':
+        
         user_creation_form = UserCreationForm(request.POST)
         user_info_creation_form = CustomUserCreationForm(request.POST)
+        
         if user_creation_form.is_valid() and user_info_creation_form.is_valid():
+            
+            # Fill in first form
             user_form = user_creation_form.save()
-            user_info_creation_form.instance.user = user_form
+            
+            # Fill in second form
+            user_info_creation_form.instance.user_name = user_form.username
             user_info_creation_form.save()
 
             # print(user_creation_form.data)

@@ -3,8 +3,8 @@
     <h1> Sign up now <h1>
     <form class="form form-horizontal" method="post">
         {% csrf_token %}
-        {{form1}}
-        {{form2}}
+        {{user_creation_form}}
+        {{user_info_creation_form}}
         <input type="submit" class="btn btn-primary" value="Sign up" />
     </form>
 
