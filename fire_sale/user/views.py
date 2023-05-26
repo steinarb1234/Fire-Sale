@@ -35,3 +35,5 @@ def register(request):
 def profile(request):
     return render(request, 'user/profile.html')
  
+def my_offers(request):
+    return render(request, 'my_offers/my_offers.html')
