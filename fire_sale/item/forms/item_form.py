@@ -5,9 +5,9 @@ from item.models import Item, ItemDetails, ItemStats, ItemImage
 
 
 class CreateItemForm(ModelForm):
-    image = forms.URLField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    condition = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    description = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # image = forms.ImageField()
+    # condition = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # description = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = Item
         exclude = ['id', 'seller']
@@ -16,6 +16,18 @@ class CreateItemForm(ModelForm):
             'price': widgets.NumberInput(attrs={'class': 'form-control'}),
             'category': widgets.Select(attrs={'class': 'form-control'})
         }
+
+
+class CreateItemImageForm(ModelForm):
+    class Meta:
+        model = ItemImage
+        fields = ['image']
+
+
+class CreateItemDetailsForm(ModelForm):
+    class Meta:
+        model = ItemDetails
+        fields = ['condition', 'description']
 
 
 class EditItemForm(forms.ModelForm):

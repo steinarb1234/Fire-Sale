@@ -4,9 +4,14 @@
     <div class="underline-solid">
         <h2>Home</h2>
     </div>
-    {% for category in categories_and_items %}
-        {% if category.items|length > 0 %}
-            {% include 'category/category_row.html' %}
-        {% endif %}
-    {% endfor %}
+    <div class="categories-in-home-page">
+        {% for category in categories_and_items %}
+            {% if category.items|length > 0 %}
+                {% if forloop.counter <= 4 %}
+                    {% include 'category/category_row.html' %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <h4><a>See more</a></h4>
+    </div>
 {% endblock %}
