@@ -38,5 +38,5 @@ class ItemDetails(models.Model):
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     # image_url = models.ImageField(max_length=9999, blank=True)
-    image = models.ImageField(upload_to="images/", blank=True)
+    image = models.URLField(max_length=999, blank=True)
 
