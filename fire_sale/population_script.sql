@@ -44,7 +44,7 @@ VALUES
 ('Headphones', 'Electronics'),
 ('Microphones', 'Electronics');
 
-INSERT INTO category_categoryviews (category, user_id, category_views)
+INSERT INTO category_categoryviews (category_id, user_id, category_views)
 VALUES
 ('Fashion', 1, 10),
 ('Books', 1, 15),
