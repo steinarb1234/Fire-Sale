@@ -22,6 +22,7 @@ def register(request):
 
             # Want to fill the UserInfo() module with nothing, but make the id from the first form saved
             user_info = UserInfo()
+            user_info.user_id = User.objects.get(user_name = user_form.username).id
             user_info.save()
             
             return redirect('login')
