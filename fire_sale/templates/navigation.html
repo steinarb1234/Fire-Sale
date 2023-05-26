@@ -33,7 +33,7 @@
         <div class="nav-item dropdown">
             <img class="nav-link dropdown-toggle rounded-circle img-fluid vh-10 minh-vw-5 p-2" id="profile_image_small" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">Hi {{ request.user }}!</a></li> 
+              <li><a class="dropdown-item" href="#">Hi {{ user_information.full_name }}!</a></li> 
               <li><a class="dropdown-item" href="#">_user_rating_here_</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
