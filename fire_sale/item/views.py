@@ -26,7 +26,7 @@ def get_item_details_by_id(request, id):
     })
 
 
-#@login_required
+@login_required
 def create_item(request):
     if request.method == 'POST':
         form = CreateItemForm(data=request.POST)
