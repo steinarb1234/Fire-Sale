@@ -8,14 +8,13 @@ from user.models import UserProfile, User, UserInfo
 def register(request):
     if request.method == 'POST':
         form1 = UserCreationForm(request.POST)
-        form2 = CustomUserCreationForm(request.POST)
+        form2 = CustomUserCreationForm(request.POST, initial={'user_name': form1['username'].value()})
         if form1.is_valid() and form2.is_valid():
+            
             user = form1.save()
-            form2.instance.user = user
+            form2 = CustomUserCreationForm(request.POST, initial={'user_name': user.username})
+            form2.instance.user_name = user.username
             form2.save()
-
-            user_info = UserInfo(user=user.user)
-            user_info.save()
             
             return redirect('login')
     else:
