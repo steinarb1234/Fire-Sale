@@ -21,6 +21,9 @@ class CreateItemForm(ModelForm):
 class CreateItemImageForm(ModelForm):
     class Meta:
         model = ItemImage
+        widgets = {
+            'image': widgets.ClearableFileInput(attrs={'class': 'form-control'})
+        }
         fields = ['image']
 
 

@@ -44,7 +44,7 @@ def checkout(request):
             # item_image = ItemImage(image=request.POST['image'], item=item)
             # item_image.save()
 
-            return redirect('item-index')
+            return redirect('user-profile')
     else:
         form = CheckoutForm()
     return render(request, 'offer/checkout.html', {

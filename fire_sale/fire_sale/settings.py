@@ -37,12 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'item.apps.ItemConfig',
+    # 'item.apps.ItemConfig',
     'category.apps.CategoryConfig',
     'user.apps.UserConfig',
     'offer.apps.OfferConfig',
     'rating.apps.RatingConfig',
-    'watchlist.apps.WatchListConfig'
+    'watchlist.apps.WatchListConfig',
+    'item'
     
 ]
 
