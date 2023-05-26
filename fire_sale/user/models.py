@@ -13,7 +13,7 @@ class User(models.Model):
 
 class UserInfo(models.Model):
     avg_rating = models.FloatField(default=0.0)
-    image = models.CharField(max_length=9999, blank=True, default=None)
+    image = models.CharField(max_length=9999, blank=True, default='')
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
 

@@ -7,22 +7,30 @@ from user.models import UserProfile, User, UserInfo
 
 def register(request):
     if request.method == 'POST':
-        form1 = UserCreationForm(request.POST)
-        form2 = CustomUserCreationForm(request.POST)
-        if form1.is_valid() and form2.is_valid():
-            user = form1.save()
-            form2.instance.user = user
-            form2.save()
+        
+        user_creation_form = UserCreationForm(request.POST)
+        user_info_creation_form = CustomUserCreationForm(request.POST)
+        
+        if user_creation_form.is_valid() and user_info_creation_form.is_valid():
+            
+            # Fill in first form
+            user_form = user_creation_form.save()
+            
+            # Fill in second form
+            user_info_creation_form.instance.user_name = user_form.username
+            user_info_creation_form.save()
 
-            user_info = UserInfo(user=user.user)
+            # print('User: ' + user_info_creation_form.instance.user.id)
+            user_info = UserInfo()
+            user_info.user_id = User.objects.get(user_name = user_form.username).id
             user_info.save()
             
             return redirect('login')
     else:
-        form1 = UserCreationForm()
-        form2 = CustomUserCreationForm()
+        user_creation_form = UserCreationForm()
+        user_info_creation_form = CustomUserCreationForm()
     
-    return render(request, 'user/register.html', {'form1': form1, 'form2': form2})
+    return render(request, 'user/register.html', {'user_creation_form': user_creation_form, 'user_info_creation_form': user_info_creation_form})
 
 def profile(request):
     return render(request, 'user/profile.html')
