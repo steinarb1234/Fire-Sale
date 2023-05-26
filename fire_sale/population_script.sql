@@ -1,20 +1,28 @@
 
-INSERT INTO user_user (user_name, email)
+INSERT INTO auth_user (email,first_name, last_name ,password, last_login, is_superuser, username, is_staff, is_active, date_joined)
 VALUES
-('steinarb1234', 'steinarb20@ru.is'),
-('magnusb', 'magnus.brarnfredsson@gmail.com'),
-('thorhilduramma', 'thorhildurr20@ru.is'),
-('bjarkibjarki', 'bjarkiss20@ru.is'),
-('beinteinn ', 'beinteinn@gmail.is');
+    ('steinarb20@ru.is','Steinar Björnsson','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'steinarb1234', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
+    ('magnus.brarnfredsson@gmail.com','Magnús Bjarnfreðsson','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'magnusb', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
+    ('thorhildurr20@ru.is','Þórhildur Anna Ragnarsdóttir','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'thorhilduramma', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
+    ('bjarkiss20@ru.is','Bjarki Smári Smárason','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'bjarkibjarki', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
+    ('beinteinn@gmail.is','Beinteinn','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'beinteinn', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00');
 
 
-INSERT INTO user_userinfo (user_id, full_name, avg_rating, image)
+INSERT INTO user_user (user_name, full_name, email)
 VALUES
-(1, 'Steinar Björnsson', 5, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
-(2, 'Magnús Bjarnfreðsson', 3, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
-(3, 'Þórhildur Anna Ragnarsdóttir', 4.9, 'https://images.unsplash.com/photo-1579880651719-3cef00eae7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80'),
-(4, 'Bjarki Smári Smárason', 0, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
-(5, 'Beinteinn', 5, 'https://plus.unsplash.com/premium_photo-1677507321948-d3f8b80fe6d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
+('steinarb1234', 'Steinar Björnsson', 'steinarb20@ru.is'),
+('magnusb', 'Magnús Bjarnfreðsson', 'magnus.brarnfredsson@gmail.com'),
+('thorhilduramma', 'Þórhildur Anna Ragnarsdóttir', 'thorhildurr20@ru.is'),
+('bjarkibjarki', 'Bjarki Smári Smárason', 'bjarkiss20@ru.is'),
+('beinteinn ', 'Beinteinn', 'beinteinn@gmail.is');
+
+INSERT INTO user_userinfo (user_id, avg_rating, image)
+VALUES
+(1,  5, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
+(2,  3, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
+(3,  4.9, 'https://images.unsplash.com/photo-1579880651719-3cef00eae7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80'),
+(4,  0, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
+(5,  5, 'https://plus.unsplash.com/premium_photo-1677507321948-d3f8b80fe6d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
 
 
 INSERT INTO user_userprofile (user_info_id, country, address, city, zip_code, bio)
@@ -685,7 +693,7 @@ VALUES
 ('264', '1', '0', 'Not sold'),
 ('265', '16', '0', 'Not sold');
 
-INSERT INTO item_itemdetails (item_stats_id, condition, description)
+INSERT INTO item_itemdetails (item_stats_id, condition_id, description)
 VALUES
 (1, 'Used', 'This is a used item. It has some signs of wear.'),
 (2, 'Refurbished', 'This is a refurbished item. It has been restored to like-new condition.'),

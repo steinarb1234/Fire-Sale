@@ -22,7 +22,7 @@ class CreateItemImageForm(ModelForm):
     class Meta:
         model = ItemImage
         widgets = {
-            'image': widgets.ClearableFileInput(attrs={'class': 'form-control'})
+            'image': widgets.URLInput(attrs={'class': 'form-control'})
         }
         fields = ['image']
 
