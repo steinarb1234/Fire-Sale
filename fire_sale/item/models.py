@@ -1,4 +1,5 @@
 from django.db import models
+
 from user.models import User
 from category.models import Category
 # Create your models here.
@@ -17,18 +18,17 @@ class Item(models.Model):
 class ItemStats(models.Model):
     views = models.IntegerField(default=0)
     watchers = models.IntegerField(default=0)
-    # offers = models.ForeignKey(Offer, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, default="Not sold")
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
 
 
 class ItemDetails(models.Model):
-    condition = models.CharField(max_length=255, blank=False, default="noItem")
+    condition = models.CharField(max_length=255, blank=False)
     description = models.CharField(max_length=9999, blank=True)
     item_stats = models.OneToOneField(ItemStats, on_delete=models.CASCADE, primary_key=True)
 
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    image = models.CharField(max_length=9999)
+    image = models.ImageField(upload_to="images/", blank=True)
 

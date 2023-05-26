@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 
 from category.models import Category
-from item.forms.item_form import CreateItemForm, EditItemForm
+from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from item.service import ItemService
 
@@ -29,35 +29,37 @@ def get_item_details_by_id(request, id):
 @login_required
 def create_item(request):
     if request.method == 'POST':
-        form = CreateItemForm(data=request.POST)
-        
+        item_form = CreateItemForm(data=request.POST)
+        item_image_form = CreateItemImageForm(data=request.POST)
+        item_details_form = CreateItemDetailsForm(data=request.POST)
+
         # TODO: Logic layer síun á gögnum
-        if form.is_valid():
-            
-            # Save items in inherited model
-            item = form.save(commit=False)
+        if item_form.is_valid() and item_image_form.is_valid() and item_details_form.is_valid():
+            item = item_form.save(commit=False)
             item.seller_id = int(request.user.id)
             item.save()
-             
-            # Manually save rest of the items
-            item_image = ItemImage(image=request.POST['image'], item=item)
+
+            item_image = item_image_form.save(commit=False)
+            item_image.item_id = item.id
             item_image.save()
-            
+
             item_stats = ItemStats(item=item)
             item_stats.save()
-            
-            item_details = ItemDetails(
-                condition=request.POST['condition'],
-                description=request.POST['description'],
-                item_stats=item_stats
-            )
+
+            item_details = item_details_form.save(commit=False)
+            item_details.item_stats_id = item_stats.item_id
             item_details.save()
 
             return redirect('item-details', item.id)
     else:
-        form = CreateItemForm()
+        item_form = CreateItemForm()
+        item_image_form = CreateItemImageForm()
+        item_details_form = CreateItemDetailsForm()
+
     return render(request, 'item/create_item.html', {
-        'form': form
+        'item_form': item_form,
+        'item_image_form': item_image_form,
+        'item_details_form': item_details_form
     })
 
 def delete_item(request, id):
