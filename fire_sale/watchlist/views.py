@@ -1,8 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import WatchListItem
 from item.models import Item
 
-@login_required
+#@login_required
 def index(request):
     watchlist = WatchListItem.objects.filter(user=request.user.id)
     item_ids = watchlist.values_list('item_id', flat=True)

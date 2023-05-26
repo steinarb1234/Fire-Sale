@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    <h1>Profile</h1>
+    <form class="form form-horizontal" method="post">
+        {% csrf_token %}
+        {{ form }}
+            <input type="submit" class="btn btn-primary" value="Update"/>
+    </form>
     <div class="profile_site">
             <div class="left_side">
                 <img class="nav-link dropdown-toggle rounded-circle img-fluid w-60" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
