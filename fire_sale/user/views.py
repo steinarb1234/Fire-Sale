@@ -1,15 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django import forms
-from user.forms.userProfile_form import userProfileForm
+from user.forms.user_form import CustomUserCreationForm, UserProfileForm
 from user.models import UserProfile, User, UserInfo
 
-class CustomUserCreationForm(forms.ModelForm):
-    email = forms.EmailField(max_length=255)
-
-    class Meta:
-        model = User
-        fields = ['email']
 
 def register(request):
     if request.method == 'POST':

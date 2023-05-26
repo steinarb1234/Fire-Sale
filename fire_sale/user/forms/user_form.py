@@ -1,7 +1,16 @@
 from django.forms import ModelForm, widgets
+from django import forms
+from user.models import User
 from user.models import UserProfile
 
-class userProfileForm(ModelForm):
+class CustomUserCreationForm(ModelForm):
+    email = forms.EmailField(max_length=255)
+
+    class Meta:
+        model = User
+        fields = ['full_name', 'email']
+        
+class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
         exclude = ['id']

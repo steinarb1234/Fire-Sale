@@ -4,6 +4,7 @@ from django.db import models
 
 # Create your models here for user.
 class User(models.Model):
+    full_name = models.CharField(max_length=255)
     user_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
@@ -11,7 +12,6 @@ class User(models.Model):
         return self.user_name
 
 class UserInfo(models.Model):
-    full_name = models.CharField(max_length=255)
     avg_rating = models.FloatField(default=0.0)
     image = models.CharField(max_length=9999, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
