@@ -26,9 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sort by price
         aValue = parseFloat(a.querySelector('.card-text').textContent.replace('$', ''));
         bValue = parseFloat(b.querySelector('.card-text').textContent.replace('$', ''));
+      } else if (selectedOption === 'date-new-old' || selectedOption === 'date-old-new' || selectedOption === 'sort'){
+        // Sort by date (default)
+        aValue = parseFloat(a.getAttribute("data-fs-item-id").textContent);
+        bValue = parseFloat(b.getAttribute("data-fs-item-id").textContent);
       }
 
-      if (selectedOption === 'name-z-a' || selectedOption === 'price-hi-lo') {
+      if (selectedOption === 'name-z-a' || selectedOption === 'price-hi-lo' || selectedOption === 'date-old-new') {
         // Sort in descending order
         return (aValue < bValue) ? 1 : -1;
       } else {
