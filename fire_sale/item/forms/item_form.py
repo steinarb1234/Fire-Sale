@@ -3,6 +3,7 @@ from django import forms
 from item.models import Item, ItemDetails, ItemStats, ItemImage
 
 
+
 class CreateItemForm(ModelForm):
     image = forms.URLField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     condition = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))

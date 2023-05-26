@@ -1,7 +1,8 @@
+#from django.contrib.auth.models import User
 from django.db import models
 
 
-# Create your models here.
+# Create your models here for user.
 class User(models.Model):
     user_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
