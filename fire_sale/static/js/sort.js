@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sort by price
         aValue = parseFloat(a.querySelector('.card-text').textContent.replace('$', ''));
         bValue = parseFloat(b.querySelector('.card-text').textContent.replace('$', ''));
-      } else if (selectedOption === 'date-new-old' || selectedOption === 'date-old-new'){
-        // Sort by date
+      } else if (selectedOption === 'date-new-old' || selectedOption === 'date-old-new' || selectedOption === 'sort'){
+        // Sort by date (default)
         aValue = parseFloat(a.getAttribute("data-fs-item-id").textContent);
         bValue = parseFloat(b.getAttribute("data-fs-item-id").textContent);
       }
