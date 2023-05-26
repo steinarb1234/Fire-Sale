@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-6 d-flex flex-nowrap">
+            <div class="item_img-container d-flex flex-column">
+                {% include 'item/item_image_carousel.html' %}
+                <p><span class="material-symbols-outlined">visibility</span>: {{ item_details.item_stats.views }}</p>
+                <p><span class="material-symbols-outlined">favorite</span>: {{ item_details.item_stats.watchers }}</p>
+                <p><span class="material-symbols-outlined">info</span>: {{ item_details.item_stats.status }}</p>
+            </div>
+
+            <div id="main-item-info-container">
+                <h1>{{ item_details.item_stats.item.name }}</h1>
+                <p>{{ item_details.description }}</p>
+                <p>Seller's Location: {{ seller_details.location }}</p>
+                <p>Condition: {{ item_details.condition }}</p>
+                <h3>Price: ${{ item_details.item_stats.item.price }}</h3>
+                <h4>Highest Offer: ${{ item_details.item_stats.highest_offer }}</h4>
+                <!-- TODO: Connect these buttons to their respective actions -->
+                <!-- TODO: Make only one pair at a time visible, based on if you are the seller or not -->
+                <button class="btn btn-primary">Make Offer</button>
+                <button class="btn btn-primary">Add to Watchlist</button>
+                <a href="{% url 'delete_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
+                <a href="{% url 'edit_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
+            </div>
+        </div>
+        <div class="col-lg-3 border-start border-secondary-subtle">
+            <div id="seller-info">
+                <h4>Seller Information</h4>
+                <p>Name: {{ seller_details.full_name }}</p>
+                <p>Rating: {{ seller_details.avg_rating }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% with category_and_items as category %}
+        {% include 'category/category_row.html' %}
+    {% endwith %}
+{% endblock %}
