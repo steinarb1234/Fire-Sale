@@ -33,5 +33,7 @@ def register(request):
     return render(request, 'user/register.html', {'user_creation_form': user_creation_form, 'user_info_creation_form': user_info_creation_form})
 
 def profile(request):
-    return render(request, 'user/profile.html')
+    return render(request, 'user/profile.html', {
+        "user_instance": User.objects.get(user_name = request.user)
+    })
  
