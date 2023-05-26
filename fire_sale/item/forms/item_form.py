@@ -27,6 +27,10 @@ class CreateItemImageForm(ModelForm):
 class CreateItemDetailsForm(ModelForm):
     class Meta:
         model = ItemDetails
+        widgets = {
+            'condition': widgets.Select(attrs={'class': 'form-control'}),
+            'description': widgets.NumberInput(attrs={'class': 'form-control'})
+        }
         fields = ['condition', 'description']
 
 
