@@ -7,7 +7,7 @@
     </div>
 
     <div class="container d-grid card-grid">
-        {% for item in item_list %}
+        {% for item, image in item_list %}
             {% include 'item/item_card.html' %}
         {% endfor %}
     </div>
