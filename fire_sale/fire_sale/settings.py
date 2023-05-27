@@ -43,19 +43,27 @@ INSTALLED_APPS = [
     'offer.apps.OfferConfig',
     'rating.apps.RatingConfig',
     'watchlist.apps.WatchListConfig',
-    'item'
+    'item',
+    'debug_toolbar',
     
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CACHE_MIDDLEWARE_ALIAS = 'default'
+# CACHE_MIDDLEWARE_SECONDS = '600'    # number of seconds before each page is cached
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 ROOT_URLCONF = 'fire_sale.urls'
 
@@ -91,7 +99,8 @@ DATABASES = {
         'USER': 'fire-sale-db-user',
         'PASSWORD': 'Abc.12345',
         'HOST': '34.123.136.227',
-        'PORT': '5432'
+        'PORT': '5432',
+        'CONN_MAX_AGE': 600,
     }
 }
 
@@ -143,3 +152,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
 
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+#         'LOCATION': '127.0.0.1:9000',
+#     }
+# }
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
