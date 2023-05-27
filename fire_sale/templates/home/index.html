@@ -1,9 +1,11 @@
-
 {% extends 'base.html' %}
+{#{% load cache %}#}
+{#{% cache 500 category_items %}#}
 {% block content %}
     <div class="underline-solid">
         <h2>Home</h2>
     </div>
+
     <div class="categories-in-home-page">
         {% for category in categories_and_items %}
             {% if category.items|length > 0 %}
@@ -15,3 +17,4 @@
         <h4><a>See more</a></h4>
     </div>
 {% endblock %}
+{#{% endcache %}#}
