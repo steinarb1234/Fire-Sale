@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django import forms
-from user.forms.user_form import CustomUserCreationForm, UserProfileForm
+from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm
 from user.models import UserProfile, User, UserInfo
 
 def register(request):
@@ -39,6 +39,36 @@ def register(request):
                   {'user_creation_form': user_creation_form, 
                    'user_info_creation_form': user_info_creation_form, 
                    'user_profile_form': user_profile_form})
+
+
+
+def updateProfile(request, username):
+
+    user_instance = get_object_or_404(User, user_name=username)
+    user_info_instance = user_instance.userinfo
+    user_profile_instance = user_info_instance.userprofile
+
+    if request.method == 'POST':
+        user_form = CustomUserUpdateForm(request.POST, instance=user_instance)
+        user_profile_form = UserProfileUpdateForm(request.POST, instance=user_profile_instance)
+        
+        if user_form.is_valid() and user_profile_form.is_valid():
+            user_form.save()
+            user_profile = user_profile_form.save(commit=False)
+            user_profile.user_info = user_info_instance
+            user_profile.save()
+            return redirect('user-profile')  # Replace with your correct redirection view
+    else:
+        user_form = CustomUserUpdateForm(instance=user_instance)
+        user_profile_form = UserProfileUpdateForm(instance=user_profile_instance)
+
+    return render(request, 'user/update_user.html', {
+        'user_form': user_form,
+        'user_profile_form': user_profile_form,
+        'username': username
+    })
+
+
 
 
 def userProfile(request):
