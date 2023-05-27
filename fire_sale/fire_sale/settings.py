@@ -100,7 +100,7 @@ DATABASES = {
         'PASSWORD': 'Abc.12345',
         'HOST': '34.123.136.227',
         'PORT': '5432',
-        'CONN_MAX_AGE': 0,   # Muna að hækka í 600! - Steinar
+        'CONN_MAX_AGE': 600,   # Muna að hækka í 600! - Steinar
     }
 }
 
@@ -159,8 +159,8 @@ LOGIN_REDIRECT_URL = '/'
 #     }
 # }
 
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]
+# INTERNAL_IPS = [
+#     # ...
+#     "127.0.0.1",
+#     # ...
+# ]

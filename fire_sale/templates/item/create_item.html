@@ -2,7 +2,7 @@
 {% block content %}
     <br>
     <h4>Create item</h4>
-    <form class="form form-row" action="{% url 'create_item' %}" method="post" enctype="multipart/form-data">
+    <form class="form form-row" action="{% url 'create_item' %}" method="post">
         {% csrf_token %}
         {{ item_form }}
         {{ item_image_form }}

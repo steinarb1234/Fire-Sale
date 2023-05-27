@@ -3,7 +3,6 @@ from django import forms
 from user.models import User
 from user.models import UserProfile
 
-
 class CustomUserCreationForm(ModelForm):
     email = forms.EmailField(max_length=255)
 
