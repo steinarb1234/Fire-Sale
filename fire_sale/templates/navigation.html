@@ -42,9 +42,9 @@
 
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Hi <b>{{ request.user }}</b>!</a></li> 
-              <li><a class="dropdown-item" href="#">Laga rate{{ user_info.avg_rating }} </a></li>
+              <li><a class="dropdown-item" href="#">Rating: {{ user_info.avg_rating }} </a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/user/profile/">Profile</a></li>
               <li><a class="dropdown-item" href="/watchlist/">Watchlist</a></li>
               <li><a class="dropdown-item" href="#">My listings</a></li>
               <li><a class="dropdown-item" href="#">Bids / offers</a></li>
