@@ -8,9 +8,10 @@ class ItemService:
 
     @staticmethod
     def get_items_by_category_name(category_name):
-        category = Category.objects.get(name=category_name)
+        if category_name == "All":
+            return Item.objects.all()
         try:
-            item_list = Item.objects.filter(category_id=category.id)
+            item_list = Item.objects.filter(category_id=category_name)
         except Item.DoesNotExist:
             raise Http404("No items in category.")
         return item_list
