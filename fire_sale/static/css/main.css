@@ -172,3 +172,29 @@
     font-size: 6em;
     text-decoration: dotted rgba(155, 155, 155, .5);
 }
+
+.img-container,
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 5vw;
+  height: 10vh !important;
+  min-width: 5vw;
+  width: 10vh !important;
+  border-radius: 50%;
+  background-color: rgba(155, 155, 155, .25);
+}
+
+.img-container img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icon-container span {
+  font-size: 4em;
+  color: rgba(155, 155, 155, .5);
+}

@@ -32,10 +32,14 @@
       {% if user.is_authenticated %}
         <div class="nav-item dropdown">
           {% if profile_image_url %}
-            <img class="nav-link dropdown-toggle rounded-circle img-fluid vh-10 minh-vw-5 p-2" role="button" data-bs-toggle="dropdown" aria-expanded="false" src="{{ profile_image_url }}" alt="User profile image">
+            <div class="nav-link rounded-circle img-container" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{  profile_image_url }}" alt="User profile image">
+            </div>
           {% else %}
-            <div class="nav-link dropdown-toggle rounded-circle vh-10 minh-vw-5 p-2"role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="material-symbols-outlined">person</span></div>
+            <div class="nav-link rounded-circle icon-container" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">person</span>
           {% endif %}
+
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Hi <b>{{ request.user }}</b>!</a></li> 
               <li><a class="dropdown-item" href="#">Laga rate{{ user_info.avg_rating }} </a></li>
