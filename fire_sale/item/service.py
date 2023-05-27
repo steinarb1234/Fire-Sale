@@ -32,12 +32,12 @@ class ItemService:
 
     @staticmethod
     def get_categories_and_items_by_userid(user_id):
-        category_views = CategoryViews.objects
+        category_views = CategoryViews.objects.prefetch_related('category')
 
-        if user_id is None:  # If guest user
-            user_category_views = category_views.distinct("category_id")
-        else:  # If registered user
-            user_category_views = category_views.filter(user_id=user_id)
+        # if user_id is None:  # If guest user
+        user_category_views = category_views.distinct("category_id")
+        # else:  # If registered user
+        #     user_category_views = category_views.filter(user_id=user_id)
         
         categories_and_items = []
 
