@@ -3,6 +3,11 @@
     border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
 
+.searchButton {
+    margin-left: 1%; /* Adjust as needed */
+    color: black
+}
+
 .category {
     width: 250px;
     padding: 10px;
@@ -33,6 +38,7 @@
     width: 90%;
   }
 
+
 .left_side {
     width: 20%;
     height: 600px;
@@ -42,11 +48,16 @@
     padding: 10px;
 }
 
+.form-horizontal {
+    margin-top: 11%;
+    margin-left: 2%;
+}
+
 .right_side {
-    margin-left: 4%;
+    margin-left: 8%;
     display: flex;
     flex-direction: column;
-    margin-top: 3%;
+    margin-top: 10%;
 }
 
 .profile_site {
@@ -55,15 +66,19 @@
 
 .username_rating {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .username_rating p {
     margin-right: 10px; /* Adjust this value to set the desired spacing between the elements */
 }
 
+.centered {
+    text-align: center;
+}
+
 .right_side h1 {
-    font-size: 70px;
+    font-size: 45px;
     display: flex;
     word-break: break-all;
     margin-bottom: 10%;

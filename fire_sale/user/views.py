@@ -4,7 +4,6 @@ from django import forms
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm
 from user.models import UserProfile, User, UserInfo
 
-# Bæta við öllum upplýsingum...
 def register(request):
     if request.method == 'POST':
         
@@ -18,7 +17,7 @@ def register(request):
             
             # Save custom user info form
             user_info_creation_form.instance.user_name = user_form.username
-            custom_user_form = user_info_creation_form.save()
+            user_info_creation_form.save()
             
             # Create and save UserInfo
             user_info = UserInfo()
@@ -42,9 +41,14 @@ def register(request):
                    'user_profile_form': user_profile_form})
 
 
-def profile(request):
+def userProfile(request):
+    user_instance = User.objects.get(user_name = request.user.username)
+    user_info = UserInfo.objects.get(user=user_instance)
+    user_profile = UserProfile.objects.get(user_info=user_info)
     return render(request, 'user/profile.html', {
-        "user_instance": User.objects.get(user_name = request.user)
+        "user_instance": user_instance,
+        "user_info": user_info,
+        "user_profile": user_profile,
     })
  
 def my_offers(request):

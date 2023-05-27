@@ -16,7 +16,6 @@ class UserInfo(models.Model):
     image = models.CharField(max_length=9999, blank=True, default='')
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-
 class UserProfile(models.Model):
     country = models.CharField(max_length=255, blank=True)
     address = models.CharField(max_length=255, blank=True)

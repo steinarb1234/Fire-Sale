@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <h1>Profile</h1>
     <div class="profile_site">
             <div class="left_side">
-                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-60" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
+                <h1 class="centered">Profile</h1>
+                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
                 <button class="profile_button" type="button">My listings</button>
                 <button class="profile_button" type="button">Bids / Offers</button>
                 <button class="profile_button" type="button">Edit profile</button>
@@ -12,10 +12,11 @@
             <div class="right_side">
                 <h1>{{ user_instance.full_name }}</h1>
                 <div class="username_rating">
-                    <p>{{ user_instance.user_name }}</p>
-                    <p>Rating: 0: hardCoded</p>
+                    <p><b>User name:</b> {{ user_instance.user_name }}</p>
+                    <p><b>Rating:</b> {{ user_info.avg_rating }} </p>
                 </div>
-                <p>Roooo ooooooooo ooooosalega langt bio herna ahjdhsj andskdns als dsjds hiln asjl saljsi o</p>
+                <br>
+                <p>{{ user_profile.bio }}</p>
             </div>
             <form class="form form-horizontal" method="post">
                 {% csrf_token %}
