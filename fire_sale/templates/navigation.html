@@ -1,6 +1,7 @@
 {% load static %}
 {% load custom_filters %}
 
+{#{% load cache %}#}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +46,7 @@
               <li><a class="dropdown-item" href="#">Hi <b>{{ user_instance.full_name|truncate_name }}</b>!</a></li> 
               <li><a class="dropdown-item" href="#">Rate: {{ user_instance.user_info.avg_rating }} </a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/user/profile/">Profile</a></li>
               <li><a class="dropdown-item" href="/watchlist/">Watchlist</a></li>
               <li><a class="dropdown-item" href="#">My listings</a></li>
               <li><a class="dropdown-item" href="#">Bids / offers</a></li>
@@ -63,6 +64,7 @@
       {% endif %}
 
     </div>
+  </div>
   </div>
 </nav>
 
@@ -86,5 +88,4 @@
     {% endif %}
   </div>
 </div>
-
 
