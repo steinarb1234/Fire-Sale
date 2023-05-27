@@ -11,10 +11,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    registered_user_id = request.user.id
-
     return render(request, 'home/index.html', context={
-        'categories_and_items': ItemService.get_categories_and_items_by_userid(request.user.id)
+        'categories_and_items': ItemService.get_categories_and_items_by_userid(request.user.id),
     })
 
 
