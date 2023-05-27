@@ -72,7 +72,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'fire_sale.context_processors.categories_processor',
-                'fire_sale.context_processors.user_info',
             ],
         },
     },
