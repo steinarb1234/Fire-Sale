@@ -37,12 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'item.apps.ItemConfig',
+    # 'item.apps.ItemConfig',
     'category.apps.CategoryConfig',
     'user.apps.UserConfig',
     'offer.apps.OfferConfig',
     'rating.apps.RatingConfig',
-    'watchlist.apps.WatchListConfig'
+    'watchlist.apps.WatchListConfig',
+    'item'
     
 ]
 
@@ -71,7 +72,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'fire_sale.context_processors.categories_processor',
-             
+                'fire_sale.context_processors.user_info',
             ],
         },
     },
@@ -141,3 +142,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
+

@@ -6,4 +6,3 @@ urlpatterns = [
     path('', views.index, name="category-index"),
     path('<str:category_name>', views.display_items_by_category, name="item_list")
 ]
-
