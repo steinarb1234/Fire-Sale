@@ -41,6 +41,9 @@ def register(request):
                    'user_profile_form': user_profile_form})
 
 
+# def user_profile(request):
+#     user_instance = User.objects.get(user_name=request.user.username)
+
 
 def updateProfile(request, username):
 
@@ -69,9 +72,7 @@ def updateProfile(request, username):
     })
 
 
-
-
-def userProfile(request):
+def user_profile(request):
     user_instance = User.objects.get(user_name = request.user.username)
     user_info = UserInfo.objects.get(user=user_instance)
     user_profile = UserProfile.objects.get(user_info=user_info)
@@ -80,6 +81,7 @@ def userProfile(request):
         "user_info": user_info,
         "user_profile": user_profile,
     })
- 
+
+
 def my_offers(request):
     return render(request, 'my_offers/my_offers.html')
