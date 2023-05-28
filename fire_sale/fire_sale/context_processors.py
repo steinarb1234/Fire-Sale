@@ -3,7 +3,7 @@ from user.models import User
 
 
 def categories_processor(request):
-    categories = Category.objects.all()
+    categories = Category.objects.all().prefetch_related('parent')
     return {'categories': categories}
 
 def navigation_bar_processor(request):

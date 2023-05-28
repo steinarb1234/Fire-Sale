@@ -32,7 +32,7 @@ class CreateItemDetailsForm(ModelForm):
         model = ItemDetails
         widgets = {
             'condition': widgets.Select(attrs={'class': 'form-control'}),
-            'description': widgets.NumberInput(attrs={'class': 'form-control'})
+            'description': widgets.Textarea(attrs={'class': 'form-control'})
         }
         fields = ['condition', 'description']
 

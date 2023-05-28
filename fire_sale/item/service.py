@@ -29,6 +29,7 @@ class ItemService:
         user_profile = UserProfile.objects.get(user_info_id=item.seller_id)
         
         seller_details = {
+            "username": user_info.user.user_name,
             "full_name": user_info.user.full_name,
             "avg_rating": user_info.avg_rating,
             "location": f"{user_profile.zip_code}, {user_profile.city}"

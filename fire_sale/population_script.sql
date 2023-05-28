@@ -5,8 +5,8 @@ VALUES
     ('magnus.brarnfredsson@gmail.com','Magnús Bjarnfreðsson','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'magnusb', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
     ('thorhildurr20@ru.is','Þórhildur Anna Ragnarsdóttir','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'thorhilduramma', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
     ('bjarkiss20@ru.is','Bjarki Smári Smárason','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'bjarkibjarki', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
-    ('beinteinn@gmail.is','Beinteinn','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'beinteinn', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00');
-
+    ('beinteinn@gmail.is','Beinteinn','','pbkdf2_sha256$600000$Q7vHLu1QRYc5B886CSA5Dv$zit+GKh3cGIP3MkrhH3LCwydDxdqCvQySDnxKHK+AKs=', '2023-06-26 16:13:34.333000 +00:00', 'false', 'beinteinn', 'false', 'true', '2023-05-26 16:09:03.452857 +00:00'),
+    ('gudbjorn20@ru.is','Guðbjörn Viðar Pálsson','','pbkdf2_sha256$600000$PKUNoNkgagYx84V8ldlfhV$ESUah/+AIQ2Lum6eTh7qTONVBhZ9OUg5bI7xKGGB728=','2023-05-28 11:13:44.040 +00:00','false','gudbjorn','false','true','2023-05-28 11:13:13.442 +00:00');
 
 INSERT INTO user_user (user_name, full_name, email)
 VALUES
@@ -14,7 +14,8 @@ VALUES
 ('magnusb', 'Magnús Bjarnfreðsson', 'magnus.brarnfredsson@gmail.com'),
 ('thorhilduramma', 'Þórhildur Anna Ragnarsdóttir', 'thorhildurr20@ru.is'),
 ('bjarkibjarki', 'Bjarki Smári Smárason', 'bjarkiss20@ru.is'),
-('beinteinn ', 'Beinteinn', 'beinteinn@gmail.is');
+('beinteinn ', 'Beinteinn', 'beinteinn@gmail.is'),
+('gudbjorn','Guðbjörn Viðar','gudbjorn20@ru.is');
 
 INSERT INTO user_userinfo (user_id, avg_rating, image)
 VALUES
@@ -22,7 +23,8 @@ VALUES
 (2,  3, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
 (3,  4.9, 'https://images.unsplash.com/photo-1579880651719-3cef00eae7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80'),
 (4,  0, 'https://images.unsplash.com/photo-1518882570151-157128e78fa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
-(5,  5, 'https://plus.unsplash.com/premium_photo-1677507321948-d3f8b80fe6d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
+(5,  5, 'https://plus.unsplash.com/premium_photo-1677507321948-d3f8b80fe6d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'),
+(6, 0, 'https://this-person-does-not-exist.com/img/avatar-gena65d74247ec8def9d24f755a40ff63c5.jpg');
 
 
 INSERT INTO user_userprofile (user_info_id, country, address, city, zip_code, bio)
@@ -31,7 +33,8 @@ VALUES
 (2, 'Saudi Arabia', '123 Any Street', 'Ryadh', '10001', 'I love coding and databases.'),
 (3, 'Iceland', '123 tossa', 'Vesturgata 4', '10001', 'I love big wine glasses.'),
 (4, 'Canada', '456 Another Ave', 'Toronto', 'M5B2G9', 'I am a software developer.'),
-(5, 'Iceland', 'Ásvallagata 11', 'Reykjavík', '101', 'Mergur og bein.');
+(5, 'Iceland', 'Ásvallagata 11', 'Reykjavík', '101', 'Mergur og bein.'),
+(6, 'Iceland','Menntavegur 1','Reykjavík','102','Vá, svaka flott lýsing fyrir mig. Magnað. Ótrúlegt. Klikkað.');
 
 INSERT INTO category_category (name)
 VALUES

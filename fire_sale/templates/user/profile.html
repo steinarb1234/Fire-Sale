@@ -4,16 +4,16 @@
     <div class="profile_site">
             <div class="left_side">
                 <h1 class="centered">Profile</h1>
-                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/user_image.jpg' %}" alt="User profile image">
+                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
                 <button class="profile_button" type="button">My listings</button>
                 <button class="profile_button" type="button">Bids / Offers</button>
-                <button class="profile_button" type="button">Edit profile</button>
+                <a href="{% url 'my-listings' %}" class="btn btn-primary">My listings</a>
                 <a href="{% url 'update_profile' user.username %}" class="btn btn-primary">Edit Profile</a>
             </div>
             <div class="right_side">
                 <h1>{{ user_instance.full_name }}</h1>
                 <div class="username_rating">
-                    <p><b>User name:</b> {{ user_instance.user_name }}</p>
+                    <p><b>Username:</b> {{ user_instance.user_name }}</p>
                     <p><b>Rating:</b> {{ user_info.avg_rating }} </p>
                 </div>
                 <br>
@@ -22,7 +22,6 @@
             <form class="form form-horizontal" method="post">
                 {% csrf_token %}
                 {{ form }}
-            <input type="submit" class="btn btn-primary" value="Update"/>
             </form>
     </div>
 {% endblock %}

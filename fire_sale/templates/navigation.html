@@ -40,6 +40,7 @@
           {% else %}
             <div class="nav-link rounded-circle icon-container" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="material-symbols-outlined">person</span>
+            </div>
           {% endif %}
 
             <ul class="dropdown-menu dropdown-menu-end">
@@ -48,7 +49,7 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url "user-profile" %}">Profile</a></li>
               <li><a class="dropdown-item" href="{% url "watchlist-index" %}">Watchlist</a></li>
-              <li><a class="dropdown-item" href="#">My listings</a></li>
+              <li><a class="dropdown-item" href="{% url 'my-listings' %}">My listings</a></li>
               <li><a class="dropdown-item" href="{% url "my_offers" %}">Bids / offers</a></li>
               <li><a class="dropdown-item" href="#">Settings</a></li>
               {% if user.is_authenticated %}
