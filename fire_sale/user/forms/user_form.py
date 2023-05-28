@@ -36,10 +36,10 @@ class CustomUserUpdateForm(ModelForm):
             'user_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+        
 
 
 class UserProfileUpdateForm(ModelForm):
-    image = forms.CharField(max_length=9999, required=False, widget=forms.Textarea(attrs={'class': 'form-control'}))
 
     class Meta:
         model = UserProfile
@@ -49,10 +49,11 @@ class UserProfileUpdateForm(ModelForm):
         }
         
 class UserInfoUpdateForm(ModelForm):
+    
     class Meta:
         model = UserInfo
         fields = ['image']
         widgets = {
-            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'image URL': forms.URLInput(attrs={'class': 'form-control'}),
         }
         
