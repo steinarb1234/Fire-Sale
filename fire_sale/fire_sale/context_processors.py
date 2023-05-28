@@ -12,7 +12,7 @@ def navigation_bar_processor(request):
 
     if user.is_authenticated and hasattr(user, 'username'):
         try:
-            user_instance = User.objects.get(user_name = user.username)
+            user_instance = User.objects.get(id = user.id)# LAga með id
         except:
             print(f"""\n\n
                     Could not find a user in User.objects.

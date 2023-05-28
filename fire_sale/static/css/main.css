@@ -85,6 +85,18 @@
 
 }
 
+.edit-heading {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+    margin-bottom: 10px;
+}
+
+
 .small-item-card {
     width: 200px !important;
     min-width: 200px;

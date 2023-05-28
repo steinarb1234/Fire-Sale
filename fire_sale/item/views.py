@@ -3,7 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 
 from category.models import Category
-from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm
+from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
+    EditItemImageForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from item.service import ItemService
 
@@ -60,23 +61,26 @@ def create_item(request):
         'item_details_form': item_details_form
     })
 
+
 def delete_item(request, id):
     item = get_object_or_404(Item, pk=id)
     item.delete()
     return redirect('item-index')
 
+
 def edit_item(request, id):
     instance = get_object_or_404(Item, pk=id)
     if request.method == 'POST':
-        form = EditItemForm(data=request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
+        item_form = EditItemForm(data=request.POST, instance=instance)
+        item_image_form = EditItemImageForm(data=request.POST, instance=instance)
+        if item_form.is_valid():
+            item_form.save()
             return redirect('item-details', id)
     else:
-        form = EditItemForm(instance=instance)
+        item_form = EditItemForm(instance=instance)
         print(2)
     return render(request, 'item/edit_item.html', {
-        'form': form,
+        'form': item_form,
         'id': id
     })
 
