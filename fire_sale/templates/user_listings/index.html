@@ -1,10 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="userListing">
-        <h2>My listings:!</h2>
-    </div>
-    {% for item in items %}
-        <h4>{{ item.name }}</h4>
-        <p>{{ item.price }}</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Handle</th>
+            </tr>
+  </thead>
+  <tbody>
+    {% for item in item_stats %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ item.item.name }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.item.price }}</td>
+            <td>{{ item.item.price }}</td>
+        </tr>
     {% endfor %}
+  </tbody>
+</table>
+
+
+{#    <div class="userListing">#}
+{#        <h2>My listings:</h2>#}
+{#    </div>#}
+{#    {% for item in item_stats %}#}
+{#        <h4>{{ item.item.name }}</h4>#}
+{#        <p>{{ item.item.price }}</p>#}
+{#    {% endfor %}#}
 {% endblock %}
