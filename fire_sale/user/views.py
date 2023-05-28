@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, render, redirect
 from django import forms
+from item.models import Item, ItemStats
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
 from user.models import UserProfile, User, UserInfo
 
@@ -101,3 +102,9 @@ def user_profile(request):
 
 def my_offers(request):
     return render(request, 'my_offers/my_offers.html')
+
+
+def my_listings(request):
+    return render(request, 'user_listings/index.html', context={
+        'item_stats': ItemStats.objects.prefetch_related('item').filter(item__seller_id=request.user.id)
+    })
