@@ -24,7 +24,8 @@
                     <a href="{% url 'delete_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
                     <a href="{% url 'edit_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
                 {% else %}
-                    <a href="{% url 'create_offer' item_id=item_details.item_stats.item.id %}" class="block btn btn-primary">Send an offer</a>
+                    {% url 'create_offer' item_details.item_stats.item.id as the_url %}
+                    <a href="{{ the_url }}" class="block btn btn-primary">Send an offer</a>
                     <button class="btn btn-primary">Add to Watchlist</button>
                 {% endif %}
 

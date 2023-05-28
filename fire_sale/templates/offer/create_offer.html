@@ -2,7 +2,7 @@
 {% block content %}
     <br>
     <h4>Offer</h4>
-    <form class="form form-row" action="{% url 'create_offer' 107 %}" method="post">
+    <form class="form form-row" action="{% url 'create_offer' item_id %}" method="post">
         {% csrf_token %}
         {{ offer_form }}
         {{ offer_details_form }}

@@ -39,6 +39,7 @@ def create_offer(request, item_id):
     return render(request, 'offer/create_offer.html', {
         'offer_form': offer_form,
         'offer_details_form': offer_details_form,
+        'item_id': item_id
     })
 
 
