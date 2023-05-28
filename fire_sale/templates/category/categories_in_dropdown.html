@@ -16,20 +16,22 @@
 
 <ul class="dropdown-menu">
     {% for category in categories %}
-        <li><a class="dropdown-item" href="{% url 'item_list' category %}">{{ category.name }}</a></li>
-        <ul class="subcategory-in-dropdown">
-            {% for subcategory in categories %}
-                {% if subcategory.parent == category %}
-                    <li><a class="dropdown-item" href="{% url 'item_list' subcategory %}">{{ subcategory.name }}</a></li>
-                    <ul class="subsubcategory-in-dropdown">
-                        {% for subsubcategory in categories %}
-                            {% if subsubcategory.parent == subcategory %}
-                                <li><a class="dropdown-item" href="{% url 'item_list' subsubcategory %}">{{ subsubcategory.name }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endfor %}
-        </ul>
+        {% if not category.parent %}
+            <li><a class="dropdown-item" href="{% url 'item_list' category %}">{{ category.name }}</a></li>
+            <ul class="subcategory-in-dropdown">
+                {% for subcategory in categories %}
+                    {% if subcategory.parent == category %}
+                        <li><a class="dropdown-item" href="{% url 'item_list' subcategory %}">{{ subcategory.name }}</a></li>
+                        <ul class="subsubcategory-in-dropdown">
+                            {% for subsubcategory in categories %}
+                                {% if subsubcategory.parent == subcategory %}
+                                    <li><a class="dropdown-item" href="{% url 'item_list' subsubcategory %}">{{ subsubcategory.name }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endfor %}
 </ul>
