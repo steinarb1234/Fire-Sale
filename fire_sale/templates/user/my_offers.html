@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1> My offers </h1>
+  <form class="form form-row" method="post">
+        {% csrf_token %}
+            {{ user_offers }}
+            {{ user_offers_details }}
+            <input type="submit" value="Update" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+    </form>
+{% endblock %}

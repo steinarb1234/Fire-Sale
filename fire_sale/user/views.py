@@ -1,11 +1,13 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.shortcuts import get_object_or_404, render, redirect
-from django import forms
-from item.models import Item, ItemStats
+from django.core.exceptions import ObjectDoesNotExist
+from item.models import ItemStats
+from offer.models import Offer, OfferDetails
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
 from user.models import UserProfile, User, UserInfo
 
 def register(request):
+    
     if request.method == 'POST':
         user_creation_form = UserCreationForm(request.POST)
         user_info_creation_form = CustomUserCreationForm(request.POST)
@@ -54,40 +56,52 @@ def register(request):
 #     user_instance = User.objects.get(user_name=request.user.username)
 
 
-def updateProfile(request, username):
+from django.contrib.auth import get_user_model
+AuthUser = get_user_model()
 
-    user_instance = get_object_or_404(User, user_name=username)
+def updateProfile(request, id):
+    user_instance = get_object_or_404(User, pk=id)
     user_info_instance = user_instance.userinfo
     user_profile_instance = user_info_instance.userprofile
+    auth_user_instance = AuthUser.objects.get(pk=id)
 
     if request.method == 'POST':
         user_form = CustomUserUpdateForm(request.POST, instance=user_instance)
         user_profile_form = UserProfileUpdateForm(request.POST, instance=user_profile_instance)
-        user_info_form = UserInfoUpdateForm(request.POST, instance=user_info_instance)  # New form instance
-        
-        if user_form.is_valid() and user_profile_form.is_valid() and user_info_form.is_valid():  # Validate new form
+        user_info_form = UserInfoUpdateForm(request.POST, instance=user_info_instance)
+
+        if user_form.is_valid() and user_profile_form.is_valid() and user_info_form.is_valid():
             user_form.save()
-            user_info_form.save()  # Save UserInfo form
+            user_info_form.save()
+
+            # Update the related auth_user instance directly
+            auth_user_instance.email = user_form.cleaned_data['email']
+            auth_user_instance.first_name = user_form.cleaned_data['full_name']
+            auth_user_instance.username = user_form.cleaned_data['user_name']
+            auth_user_instance.save()  # Save the updated auth_user instance
+
             user_profile = user_profile_form.save(commit=False)
             user_profile.user_info = user_info_instance
             user_profile.save()
-            return redirect('user-profile')  # Replace with your correct redirection view
+
+            return redirect('user-profile')
     else:
         user_form = CustomUserUpdateForm(instance=user_instance)
         user_profile_form = UserProfileUpdateForm(instance=user_profile_instance)
-        user_info_form = UserInfoUpdateForm(instance=user_info_instance)  # New form instance
+        user_info_form = UserInfoUpdateForm(instance=user_info_instance)
 
     return render(request, 'user/update_user.html', {
         'user_form': user_form,
         'user_profile_form': user_profile_form,
-        'user_info_form': user_info_form,  # Include the new form in context
-        'username': username
+        'user_info_form': user_info_form,
+        'id': id
     })
 
 
 
+
 def user_profile(request):
-    user_instance = User.objects.get(user_name = request.user.username)
+    user_instance = User.objects.get(id = request.user.id)
     user_info = UserInfo.objects.get(user=user_instance)
     user_profile = UserProfile.objects.get(user_info=user_info)
     print(user_instance)
@@ -101,8 +115,17 @@ def user_profile(request):
 
 
 def my_offers(request):
-    return render(request, 'my_offers/my_offers.html')
-
+    try:
+        user_offers = Offer.objects.get(buyer_id=request.user.id)
+        user_offer_details = OfferDetails.objects.get(offer=user_offers)
+    except ObjectDoesNotExist:
+        user_offers = None
+        user_offer_details = None
+    
+    return render(request, 'user/my_offers.html', {
+        "user_offers": user_offers,
+        "user_offer_details": user_offer_details
+    })
 
 def my_listings(request):
     return render(request, 'user_listings/index.html', context={
