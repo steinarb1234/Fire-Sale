@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         bValue = parseFloat(b.querySelector('.card-text').textContent.replace('$', ''));
       } else if (selectedOption === 'date-new-old' || selectedOption === 'date-old-new' || selectedOption === 'sort'){
         // Sort by date (default)
-        aValue = a.getAttribute("data-fs-item-id");
-        bValue = b.getAttribute("data-fs-item-id");
+        aValue = parseInt(a.getAttribute("data-fs-item-id"));
+        bValue = parseInt(b.getAttribute("data-fs-item-id"));
       }
 
       if (selectedOption === 'name-z-a' || selectedOption === 'price-hi-lo' || selectedOption === 'date-new-old' || selectedOption === 'sort') {
