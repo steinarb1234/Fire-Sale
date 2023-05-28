@@ -1,7 +1,7 @@
 <div class="card small-item-card mx-2" data-fs-item-id="{{ item.id }}">
   <a href="{% url 'item-details' item.id %}">
-    {% if image.image %}
-        <img class="card-img-top" src="{{ image.image }}" alt="Image for '{{ item.name }}'">
+    {% if item.itemimage_set %}
+        <img class="card-img-top" src="{{ item.itemimage_set.all.0.image }}" alt="Image for '{{ item.name }}'">
     {% else %}
       <div class="card-img-top card-img-missing"><span class="material-symbols-outlined">image</span></div>
     {% endif %}

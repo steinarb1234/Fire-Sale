@@ -114,8 +114,10 @@ def user_profile(request):
 
 def my_offers(request):
     try:
-        user_offers = Offer.objects.get(buyer_id=request.user.id)
-        user_offer_details = OfferDetails.objects.get(offer=user_offers)
+        user_offers = Offer.objects.filter(buyer_id=request.user.id)
+        user_offer_details = OfferDetails.objects.all()
+        # user_offers.get().det
+        # user_offer_details = OfferDetails.objects.filter('offer_id' in user_offers)
     except ObjectDoesNotExist:
         user_offers = None
         user_offer_details = None
