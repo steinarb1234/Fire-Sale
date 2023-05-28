@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> My offers </h1>
-  <form class="form form-row" method="post">
-        {% csrf_token %}
-            {{ user_offers }}
-            {{ user_offers_details }}
-            <input type="submit" value="Update" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
-    </form>
+
+    {% for offer in user_offers %}
+        <h4>{{ offer.item }}</h4>
+        <p>${{ offer.amount }}</p>
+        <p>Item seller: {{ offer.seller }}</p>
+        <p>Message: {{ offer.offerdetails.message }}</p>
+        <p>Date: {{ offer.offerdetails.start_date }}</p>
+        <p>End Date: {{ offer.offerdetails.end_date }}</p>
+        <p>Item status: {{ offer.item.itemstats.status }}</p>
+
+    {% endfor %}
 {% endblock %}
