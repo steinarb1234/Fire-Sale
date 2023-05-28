@@ -17,19 +17,45 @@
       </a>
 
       <!-- Search -->
-      <form class="d-flex w-75" role="search">
-      <input class="form-control me-2 w-100" type="search" placeholder="Search" aria-label="Search">
-
-      <button class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Shop by category
-        </a>
-          {% include 'category/categories_in_dropdown.html' %}
-      </button>
-      <button 
-        class="searchButton btn btn-outline-success" type="submit">Search
-      </button>
-      </form>
+      <form class="d-flex w-75" role="search" id="search-form" method="GET" action="{% url 'item_list' 'All' %}">
+        <input class="form-control me-2 w-100" type="search" name="q" placeholder="Search" aria-label="Search">
+    
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Shop by category
+            </a>
+            <ul class="dropdown-menu">
+                {% for category in categories %}
+                    {% if not category.parent %}
+                        <li>
+                            <span class="dropdown-item category-option">{{ category.name }}</span>
+                            <ul class="subcategory-in-dropdown">
+                                {% for subcategory in categories %}
+                                    {% if subcategory.parent == category %}
+                                        <li>
+                                            <span class="dropdown-item category-option">{{ subcategory.name }}</span>
+                                            <ul class="subsubcategory-in-dropdown">
+                                                {% for subsubcategory in categories %}
+                                                    {% if subsubcategory.parent == subcategory %}
+                                                        <li>
+                                                            <span class="dropdown-item category-option">{{ subsubcategory.name }}</span>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <button class="searchButton btn btn-outline-success" type="submit">Search</button>
+    </form>
+    
+   
       <!-- Profile image -->
       {% if user.is_authenticated %}
         <div class="nav-item dropdown">
