@@ -19,11 +19,15 @@
                 <h3>Price: ${{ item_details.item_stats.item.price }}</h3>
                 <h4>Highest Offer: ${{ item_details.item_stats.highest_offer }}</h4>
                 <!-- TODO: Connect these buttons to their respective actions -->
-                <!-- TODO: Make only one pair at a time visible, based on if you are the seller or not -->
-                <button class="btn btn-primary">Add to Watchlist</button>
-                <a href="{% url 'create_offer' item_id=item_details.item_stats.item.id %}" class="block btn btn-primary">Send an offer</a>
-                <a href="{% url 'delete_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
-                <a href="{% url 'edit_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
+
+                {% if user_instance.user_name == seller_details.username%}
+                    <a href="{% url 'delete_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
+                    <a href="{% url 'edit_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
+                {% else %}
+                    <a href="{% url 'create_offer' item_id=item_details.item_stats.item.id %}" class="block btn btn-primary">Send an offer</a>
+                    <button class="btn btn-primary">Add to Watchlist</button>
+                {% endif %}
+
             </div>
         </div>
         <div class="col-lg-3 border-start border-secondary-subtle">

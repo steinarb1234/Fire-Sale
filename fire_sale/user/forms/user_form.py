@@ -1,7 +1,6 @@
 from django.forms import ModelForm, widgets
 from django import forms
-from user.models import User
-from user.models import UserProfile
+from user.models import User, UserProfile, UserInfo
 
 class CustomUserCreationForm(ModelForm):
     email = forms.EmailField(max_length=255)
@@ -44,7 +43,16 @@ class UserProfileUpdateForm(ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['bio', 'image']
+        fields = ['bio']
         widgets = {
             'bio': forms.Textarea(attrs={'class': 'form-control'}),
         }
+        
+class UserInfoUpdateForm(ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ['image']
+        widgets = {
+            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+        
