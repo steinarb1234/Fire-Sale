@@ -1,6 +1,9 @@
+from datetime import date
+
 from django.shortcuts import render, redirect
 
-from offer.forms.offer_form import CheckoutForm, CreateOfferForm
+from item.models import Item
+from offer.forms.offer_form import CheckoutForm, CreateOfferForm, CreateOfferDetailsForm
 from offer.models import Offer, OfferDetails
 
 
@@ -12,26 +15,30 @@ def index(request):
     })
 
 
-def create_offer(request):
+def create_offer(request, item_id):
     if request.method == 'POST':
-        form = CreateOfferForm(data=request.POST)
-        if form.is_valid():
+        offer_form = CreateOfferForm(data=request.POST)
+        offer_details_form = CreateOfferDetailsForm(data=request.POST)
+        if offer_form.is_valid() and offer_details_form.is_valid():
             # Save items in inherited model
-            offer = form.save()
+            offer = offer_form.save(commit=False)
+            offer.buyer_id = request.user.id
+            offer.item_id = item_id
+            offer.seller_id = Item.objects.get(pk=item_id).seller_id
+            offer.save()
 
-            item_details = OfferDetails(
-                start_date=request.POST['start_date'],
-                end_date=request.POST['end_date'],
-                message=request.POST['message'],
-                offer=offer
-            )
-            item_details.save()
+            offer_details = offer_details_form.save(commit=False)
+            offer_details.offer_id = offer.id
+            offer_details.start_date = date.today()
+            offer_details.save()
 
-            return redirect('item-details', offer.item_id)
+            return redirect('item-index')
     else:
-        form = CreateOfferForm()
+        offer_form = CreateOfferForm()
+        offer_details_form = CreateOfferDetailsForm()
     return render(request, 'offer/create_offer.html', {
-        'form': form
+        'offer_form': offer_form,
+        'offer_details_form': offer_details_form,
     })
 
 

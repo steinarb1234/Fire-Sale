@@ -10,7 +10,7 @@ VALUES
 
 INSERT INTO user_user (user_name, full_name, email)
 VALUES
-('steinarb1234', 'Steinar Björnsson', 'steinarb20@ru.is'),´
+('steinarb1234', 'Steinar Björnsson', 'steinarb20@ru.is'),
 ('magnusb', 'Magnús Bjarnfreðsson', 'magnus.brarnfredsson@gmail.com'),
 ('thorhilduramma', 'Þórhildur Anna Ragnarsdóttir', 'thorhildurr20@ru.is'),
 ('bjarkibjarki', 'Bjarki Smári Smárason', 'bjarkiss20@ru.is'),
