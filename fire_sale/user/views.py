@@ -98,8 +98,6 @@ def updateProfile(request, id):
     })
 
 
-
-
 def user_profile(request):
     user_instance = User.objects.get(id = request.user.id)
     user_info = UserInfo.objects.get(user=user_instance)
