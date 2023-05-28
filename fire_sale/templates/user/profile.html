@@ -7,7 +7,6 @@
                 <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
                 <button class="profile_button" type="button">My listings</button>
                 <button class="profile_button" type="button">Bids / Offers</button>
-{#                <button class="profile_button" type="button">Edit profile</button>#}
                 <a href="{% url 'update_profile' user.username %}" class="btn btn-primary">Edit Profile</a>
             </div>
             <div class="right_side">
@@ -22,7 +21,6 @@
             <form class="form form-horizontal" method="post">
                 {% csrf_token %}
                 {{ form }}
-            <input type="submit" class="btn btn-primary" value="Update"/>
             </form>
     </div>
 {% endblock %}
