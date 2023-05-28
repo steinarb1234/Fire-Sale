@@ -117,19 +117,16 @@ def user_profile(request):
 def my_offers(request):
     try:
         user_offers = Offer.objects.filter(buyer_id=request.user.id)
-        user_offer_details = OfferDetails.objects.all()
         # user_offers.get().det
-        # user_offer_details = OfferDetails.objects.filter('offer_id' in user_offers)
     except ObjectDoesNotExist:
         user_offers = None
-        user_offer_details = None
     
     return render(request, 'user/my_offers.html', {
         "user_offers": user_offers,
-        "user_offer_details": user_offer_details
     })
 
+
 def my_listings(request):
-    return render(request, 'user_listings/index.html', context={
+    return render(request, 'user_listings/../templates/user/my_listings.html', context={
         'item_stats': ItemStats.objects.prefetch_related('item').filter(item__seller_id=request.user.id)
     })

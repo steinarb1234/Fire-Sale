@@ -1,15 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> My offers </h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Item</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Highest offer</th>
+                <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
+                <th scope="col">Offers</th>         {# Bæta inn ! - Steinar #}
+                <th scope="col">Item status</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offer in user_offers %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></td>
+                <td>${{ offer.amount }}</td>
+                <td></td>
+                <td>${{ offer.item.price }}</td>
+                <td></td>
+                <td>{{ offer.item.itemstats.status }}</td>
+                <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
 
-    {% for offer in user_offers %}
-        <h4>{{ offer.item }}</h4>
-        <p>${{ offer.amount }}</p>
-        <p>Item seller: {{ offer.seller }}</p>
-        <p>Message: {{ offer.offerdetails.message }}</p>
-        <p>Date: {{ offer.offerdetails.start_date }}</p>
-        <p>End Date: {{ offer.offerdetails.end_date }}</p>
-        <p>Item status: {{ offer.item.itemstats.status }}</p>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    {% endfor %}
 {% endblock %}

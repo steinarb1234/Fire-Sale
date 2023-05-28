@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Offer details</h1>
+
+    <h4><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></h4>
+    <p>${{ offer.amount }}</p>
+    <img src="" alt="">
+    <p>Item seller: {{ offer.seller }}</p>
+    <p>Item seller: {{ offer.seller.email }}</p>
+    <p>Item seller: {{ offer.seller.userinfo.avg_rating }}</p>
+    <p>Message: {{ offer.offerdetails.message }}</p>
+    <p>Date: {{ offer.offerdetails.start_date }}</p>
+    <p>End Date: {{ offer.offerdetails.end_date }}</p>
+    <p>Item status: {{ offer.item.itemstats.status }}</p>
+
+    <p>Edit</p>
+    <p>Delete</p>
+{% endblock %}
