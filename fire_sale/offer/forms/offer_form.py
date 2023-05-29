@@ -12,7 +12,6 @@ class CreateOfferForm(forms.ModelForm):
             'amount': widgets.NumberInput(attrs={'class': 'form-control'}),
         }
 
-
 class CreateOfferDetailsForm(forms.ModelForm):
     class Meta:
         model = OfferDetails

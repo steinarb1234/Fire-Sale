@@ -9,8 +9,9 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Amount</th>
-                <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
+                <th scope="col">List price</th>
                 <th scope="col">Details</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,11 +21,21 @@
                 <td>${{ offer.amount }}</td>
                 <td>${{ offer.item.price }}</td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
-
+                <td>
+                    <div class="status-button">
+                        <form method="POST" action="{% url 'change_offer_status' offer.id 'accept' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Accept</button>
+                        </form>
+                        <form method="POST" action="{% url 'change_offer_status' offer.id 'reject' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-
 {% endblock %}
+

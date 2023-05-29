@@ -13,7 +13,6 @@ def offer_details(request, offer_id):
         "offer": offer,
     })
 
-
 @login_required
 def create_offer(request, item_id):
     if request.method == 'POST':
@@ -41,6 +40,17 @@ def create_offer(request, item_id):
         'offer_details_form': offer_details_form,
         'item_id': item_id
     })
+    
+@login_required
+def change_offer_status(request, id, button):
+    if request.method == 'POST':
+        offer_to_change = Offer.objects.get(pk=id)
+        offer_to_change.status = button
+        offer_to_change.save()
+        return redirect('item-offers', item_id=id)
+
+    return redirect('item-offers', item_id=id)
+    
 
 @login_required
 def checkout(request):

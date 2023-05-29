@@ -32,6 +32,10 @@
    
 }
 
+.status-button form {
+  display: inline-block;
+}
+
 #signup-form input, #signup-form .form-control {
     border: 1px solid black;
     border-radius: 2pt;
