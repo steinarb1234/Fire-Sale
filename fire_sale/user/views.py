@@ -123,7 +123,7 @@ def my_offers(request):
 
 def my_listings(request):
     return render(request, 'user/my_listings.html', context={
-        'item_stats': ItemStats.objects.prefetch_related('item').filter(item__seller_id=request.user.id)
+        'item_stats': ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id)
     })
 
 
