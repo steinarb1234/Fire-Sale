@@ -78,7 +78,7 @@
 }
 
 .card-img-top {
-    height: 20%;
+    height: 200px;
     object-fit: cover;
 }
 
@@ -163,6 +163,9 @@
     min-width: 200px;
 }
 
+
+
+
 #main-container{
     position: relative;
     top: calc(max(5vw, 10vh) + 2*0.5em + 40px + 32px);
@@ -246,3 +249,31 @@
   font-size: 4em;
   color: rgba(155, 155, 155, .5);
 }
+
+
+.card-info, .category-name, .see-more {
+    text-decoration: none;
+    color: rgb(30, 30, 30);
+}
+
+.card-info:hover, .category-name:hover, .see-more:hover {
+    text-decoration: underline;
+}
+
+.see-more {
+    width: auto;
+    font-size: 21px ;
+    margin-left: 50px;
+}
+
+.category-name {
+    width: auto;
+    color: rgb(30, 30, 30);
+    font-size: 25px;
+    border-right: 1px solid rgb(155, 155, 155, .5);
+    padding-right: 50px;
+
+}
+
+
+
