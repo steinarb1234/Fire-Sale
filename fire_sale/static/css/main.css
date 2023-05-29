@@ -17,10 +17,71 @@
     height: 250px;
 }
 
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
+.center-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%; 
 }
+
+.form-container {
+    width: 100%;
+    max-width: 300px;
+    padding: 15px;
+    margin: auto;
+   
+}
+
+#signup-form input, #signup-form .form-control {
+    border: 1px solid black;
+    border-radius: 2pt;
+    width: 400px;
+    height: 28px;
+}
+
+#signup-form input:focus {
+    border-color: black;
+    border-width: 2px;
+    box-shadow: none;
+}
+
+
+#signup-form label {
+    font-size: 15px; 
+}
+
+#signup-form .signup_button {
+    border: none;
+    border-radius: 3pt;
+    width: 400px;
+    height: 35px;
+}
+
+.helptext, .helptext ul li {
+    font-size: 15px; 
+}
+
+.form-container h4 {
+    text-align: center;
+}
+
+.signup_button {
+    margin-top: 15pt;
+}
+
+.login_button {
+    width: 100%; 
+}
+
+.id_email {
+    font-size: 10pt;
+}
+
+.card-img-top {
+    height: 20%;
+    object-fit: cover;
+}
+
 .profile {
     margin-bottom: 10px;
     display: flex;
