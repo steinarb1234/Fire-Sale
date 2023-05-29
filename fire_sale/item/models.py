@@ -26,6 +26,7 @@ class ItemStats(models.Model):
     views = models.IntegerField(default=0)
     watchers = models.IntegerField(default=0)
     status = models.ForeignKey(ItemStatuses, on_delete=models.PROTECT)
+    sold_date = models.DateField(null=True, blank=True, default='')
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
 
 

@@ -432,7 +432,7 @@ VALUES
 
 
 
-INSERT INTO item_itemstats (item_id, views, watchers, status)
+INSERT INTO item_itemstats (item_id, views, watchers, status_id)
 VALUES
 ('1', '5', '0', 'Not sold'),
 ('2', '10', '0', 'Not sold'),

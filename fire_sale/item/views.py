@@ -18,10 +18,17 @@ def index(request):
 
 
 def get_item_details_by_id(request, id):
+    item_details = get_object_or_404(ItemDetails.objects.select_related('item_stats__item'), pk=id)
+    seller_details = ItemService.get_seller_details_from_item_id(id)
+    category_and_items = ItemService.get_category_and_items_by_itemid(item_details.item_stats.item.category, id)
+
+    item_images = ItemImage.objects.filter(item=item_details.item_stats.item).prefetch_related('item')
+
     return render(request, 'item/item_details.html', {
-        'item_details': get_object_or_404(ItemDetails, pk=id),
-        'seller_details': ItemService.get_seller_details_from_item_id(id),
-        'category_and_items': ItemService.get_category_and_items_by_itemid(id)
+        'item_details': item_details,
+        'seller_details': seller_details,
+        'category_and_items': category_and_items,
+        'item_images': item_images
     })
 
 

@@ -16,9 +16,8 @@ class CreateOfferForm(forms.ModelForm):
 class CreateOfferDetailsForm(forms.ModelForm):
     class Meta:
         model = OfferDetails
-        fields = ['end_date', 'message']
+        fields = ['message']
         widgets = {
-            'end_date': widgets.DateInput(attrs={'class': 'form-control'}),
             'message': widgets.Textarea(attrs={'class': 'form-control'}),
         }
 
