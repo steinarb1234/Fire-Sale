@@ -53,20 +53,18 @@ def change_offer_status(request, id, button):
     
 
 @login_required
-def checkout(request):
+def checkout(request, offer_id):
     if request.method == 'POST':
         form = CheckoutForm(data=request.POST)
         if form.is_valid():
             item = form.save()
-            #
-            # item_image = ItemImage(image=request.POST['image'], item=item)
-            # item_image.save()
 
-            return redirect('user-profile')
+            return redirect('my-offers')
     else:
         form = CheckoutForm()
     return render(request, 'offer/checkout.html', {
-        'form': form
+        'form': form,
+        'offer_id': offer_id,
     })
 
 
