@@ -3,6 +3,7 @@ from item.models import Item
 from user.models import User
 
 
+
 # Create your models for "Offer" here:
 
 
@@ -12,6 +13,7 @@ class Offer(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_offers')
     amount = models.FloatField(default=0.0)
     status = models.CharField(max_length=255, default="Pending answer")
+
 
 
 class OfferDetails(models.Model):

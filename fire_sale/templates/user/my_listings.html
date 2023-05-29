@@ -11,8 +11,8 @@
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>
                 <th scope="col">Price</th>
-                <th scope="col">Highest offer</th>  {# Bæta inn ! - Steinar #}
-                <th scope="col">Offers</th>         {# Bæta inn ! - Steinar #}
+                <th scope="col">Highest offer</th>
+                <th scope="col">Offers</th>
                 <th scope="col">Views</th>
                 <th scope="col">Watchers</th>
             </tr>
@@ -25,11 +25,26 @@
                 <td>{{ item.status }}</td>
                 <td>${{ item.item.price }}</td>
                 <td><a href="#">${{ item.item.price }}</a></td>
-                <td><a href="{% url 'item-offers' item.item_id %}">N offers</a></td>
+                <td>
+                    {% with offer_count=item.item.offer_set.count %}
+                        {% if offer_count == 0 %}
+                            No offer
+                        {% else %}
+                            <a href="{% url 'item-offers' item.item.id %}">{{ offer_count }} offers</a>
+                        {% endif %}
+                    {% endwith %}
+                </td>
                 <td>{{ item.views }}</td>
                 <td>{{ item.watchers }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}
+
+
+
+
+
+

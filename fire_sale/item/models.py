@@ -30,6 +30,8 @@ class ItemStats(models.Model):
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
 
 
+
+
 class ItemConditions(models.Model):
     condition = models.CharField(max_length=255, blank=False, primary_key=True)
 
