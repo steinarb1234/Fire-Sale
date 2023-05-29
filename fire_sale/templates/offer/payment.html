@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h4>Checkout</h4>
+    <h4>Payment</h4>
     <form class="form form-row" action="{% url 'checkout' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
     </form>
 {% endblock %}
-<!--hafa auto filled in user upplysingar sem á að staðfesta-->
+<!---hafa bara peyment input hér-->
