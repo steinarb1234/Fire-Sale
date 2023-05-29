@@ -42,14 +42,14 @@ def create_offer(request, item_id):
     })
     
 @login_required
-def change_offer_status(request, id, button):
+def change_offer_status(request, id, itemid, button):
     if request.method == 'POST':
         offer_to_change = Offer.objects.get(pk=id)
         offer_to_change.status = button
         offer_to_change.save()
-        return redirect('item-offers', item_id=id)
+        return redirect('item-offers', item_id=itemid)
 
-    return redirect('item-offers', item_id=id)
+    return redirect('item-offers', item_id=itemid)
     
 
 @login_required
