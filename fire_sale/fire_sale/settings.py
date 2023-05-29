@@ -100,7 +100,7 @@ DATABASES = {
         'PASSWORD': 'Abc.12345',
         'HOST': '34.123.136.227',
         'PORT': '5432',
-        # 'CONN_MAX_AGE': 600,   # Muna að hækka í 600! - Steinar
+        'CONN_MAX_AGE': 600,   # Muna að hækka í 600! - Steinar
     }
 }
 
@@ -152,12 +152,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-#         'LOCATION': '127.0.0.1:9000',
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 INTERNAL_IPS = [
     # ...

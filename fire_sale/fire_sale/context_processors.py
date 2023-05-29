@@ -1,7 +1,8 @@
 from category.models import Category
 from user.models import User
+# from django.views.decorators.cache import cache_page
 
-
+# @cache_page(600)
 def categories_processor(request):
     categories = Category.objects.all().prefetch_related('parent')
     return {'categories': categories}
