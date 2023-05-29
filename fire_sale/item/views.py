@@ -10,6 +10,8 @@ from item.service import ItemService
 
 from django.contrib.auth.decorators import login_required
 
+from offer.models import Offer
+
 
 def index(request):
     return render(request, 'home/index.html', context={
@@ -104,5 +106,11 @@ def edit_item(request, id):
     })
 
 
-
+def item_offers(request, item_id):
+    offers = Offer.objects.filter(item_id=item_id)
+    item = Item.objects.get(pk=item_id)
+    return render(request, 'offer/item_offers.html', {
+        "offers": offers,
+        "item": item,
+    })
 

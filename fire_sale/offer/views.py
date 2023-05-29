@@ -13,6 +13,7 @@ def offer_details(request, offer_id):
         "offer": offer,
     })
 
+
 @login_required
 def create_offer(request, item_id):
     if request.method == 'POST':

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="userListing">
+        <h2>Offers for "{{ item }}"</h2>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Amount</th>
+                <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offer in offers %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>${{ offer.amount }}</td>
+                <td>${{ offer.item.price }}</td>
+                <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

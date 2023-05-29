@@ -23,9 +23,9 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="{% url 'item-details' item.item.id %}">{{ item.item.name }}</a></td>
                 <td>{{ item.status }}</td>
-                <td>{{ item.item.price }}</td>
-                <td><a href="#">{{ item.item.price }}</a></td>
-                <td><a href="#"></a></td>
+                <td>${{ item.item.price }}</td>
+                <td><a href="#">${{ item.item.price }}</a></td>
+                <td><a href="{% url 'item-offers' item.item_id %}">offers</a></td>
                 <td>{{ item.views }}</td>
                 <td>{{ item.watchers }}</td>
             </tr>
