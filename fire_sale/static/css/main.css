@@ -45,9 +45,18 @@
     box-shadow: none;
 }
 
+.signup-container h1 {
+    padding-bottom: 20px;
+}
 
-#signup-form label {
-    font-size: 15px; 
+#signup-form label[for="id_username"], #signup-form label[for="id_password1"], #signup-form label[for="id_password2"] {
+    display: block;
+    padding-top: 15px; 
+}
+
+#signup-form label[for="id_full_name"] {
+    display: block;
+    padding-top: 18px; 
 }
 
 #signup-form .signup_button {
@@ -55,6 +64,8 @@
     border-radius: 3pt;
     width: 400px;
     height: 35px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .helptext, .helptext ul li {
@@ -78,7 +89,7 @@
 }
 
 .card-img-top {
-    height: 20%;
+    height: 200px;
     object-fit: cover;
 }
 

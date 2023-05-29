@@ -23,7 +23,7 @@ class UserProfileForm(ModelForm):
             'address': widgets.TextInput(attrs={'class': 'form-control'}),
             'city': widgets.TextInput(attrs={'class': 'form-control'}),
             'zip_code': widgets.TextInput(attrs={'class': 'form-control'}),
-            'bio': widgets.TextInput(attrs={'class': 'form-control'}),
+            'bio': widgets.Textarea(attrs={'class': 'form-control'}),
         }
 
 class CustomUserUpdateForm(ModelForm):
