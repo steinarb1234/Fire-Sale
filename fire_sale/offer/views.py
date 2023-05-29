@@ -1,11 +1,9 @@
 from datetime import date
-
 from django.shortcuts import render, redirect
-
 from item.models import Item
 from offer.forms.offer_form import CheckoutForm, CreateOfferForm, CreateOfferDetailsForm
 from offer.models import Offer, OfferDetails
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -15,7 +13,7 @@ def offer_details(request, offer_id):
         "offer": offer,
     })
 
-
+@login_required
 def create_offer(request, item_id):
     if request.method == 'POST':
         offer_form = CreateOfferForm(data=request.POST)
@@ -43,7 +41,7 @@ def create_offer(request, item_id):
         'item_id': item_id
     })
 
-
+@login_required
 def checkout(request):
     if request.method == 'POST':
         form = CheckoutForm(data=request.POST)

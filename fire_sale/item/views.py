@@ -68,13 +68,13 @@ def create_item(request):
         'item_details_form': item_details_form
     })
 
-
+@login_required
 def delete_item(request, id):
     item = get_object_or_404(Item, pk=id)
     item.delete()
     return redirect('item-index')
 
-
+@login_required
 def edit_item(request, id):
     item_instance = get_object_or_404(Item, pk=id)
     item_image_instance = get_object_or_404(ItemImage, item_id=id)

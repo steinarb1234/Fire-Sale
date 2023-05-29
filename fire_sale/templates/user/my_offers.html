@@ -10,7 +10,8 @@
                 <th scope="col">Highest offer</th>
                 <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
                 <th scope="col">Offers</th>         {# Bæta inn ! - Steinar #}
-                <th scope="col">Item status</th>
+{#                <th scope="col">Item status</th>#}
+                <th scope="col">Offer status</th>
                 <th scope="col">Details</th>
             </tr>
         </thead>
@@ -23,7 +24,8 @@
                 <td></td>
                 <td>${{ offer.item.price }}</td>
                 <td></td>
-                <td>{{ offer.item.itemstats.status }}</td>
+{#                <td>{{ offer.item.itemstats.status }}</td>#}
+                <td>{{ offer.status }}</td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
 
             </tr>
