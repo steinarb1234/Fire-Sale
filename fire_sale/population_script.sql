@@ -131,6 +131,10 @@ VALUES
 ('Used'),
 ('Refurbished');
 
+INSERT INTO item_itemstatuses (status)
+VALUES
+('Not sold'),
+('Sold');
 
 INSERT INTO item_item (name, price, category_id, seller_id)
 VALUES

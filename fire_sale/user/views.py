@@ -98,8 +98,6 @@ def updateProfile(request, id):
     })
 
 
-
-
 def user_profile(request):
     user_instance = User.objects.get(id = request.user.id)
     user_info = UserInfo.objects.get(user=user_instance)
@@ -116,18 +114,17 @@ def user_profile(request):
 
 def my_offers(request):
     try:
-        user_offers = Offer.objects.get(buyer_id=request.user.id)
-        user_offer_details = OfferDetails.objects.get(offer=user_offers)
+        user_offers = Offer.objects.filter(buyer_id=request.user.id)
+        # user_offers.get().det
     except ObjectDoesNotExist:
         user_offers = None
-        user_offer_details = None
     
     return render(request, 'user/my_offers.html', {
         "user_offers": user_offers,
-        "user_offer_details": user_offer_details
     })
 
+
 def my_listings(request):
-    return render(request, 'user_listings/index.html', context={
+    return render(request, 'user_listings/../templates/user/my_listings.html', context={
         'item_stats': ItemStats.objects.prefetch_related('item').filter(item__seller_id=request.user.id)
     })

@@ -2,6 +2,7 @@ from django.http import Http404
 from item.models import Item, ItemImage
 from category.models import CategoryViews, Category
 from user.models import User, UserInfo, UserProfile
+from django.db.models import Prefetch, Count, Case, When, IntegerField, OuterRef
 
 
 class ItemService:
@@ -39,40 +40,28 @@ class ItemService:
 
     @staticmethod
     def get_categories_and_items_by_userid(user_id):
-        category_views = CategoryViews.objects.prefetch_related('category')
+        categories = Category.objects.prefetch_related(
+            Prefetch('item_set', queryset=Item.objects.prefetch_related('itemimage_set'))
+        )
 
-        # if user_id is None:  # If guest user
-        user_category_views = category_views.distinct("category_id")
-        # else:  # If registered user
-        #     user_category_views = category_views.filter(user_id=user_id)
-        
         categories_and_items = []
+        for category in categories:
+            items = category.item_set.all()
+            categories_and_items.append({"name": category.name, "items": items})
 
-        all_items = Item.objects.all()
-        for category in user_category_views.all():
-            category_id = category.category
-            items = all_items.filter(category_id=category_id).values()
-            images = ItemImage.objects.all().filter(item__category_id=category_id).distinct('item_id').values()
-
-            items_zip = tuple(zip(items, images))
-            # for item, image in items_zip:
-            #     print(item, image)
-            categories_and_items.append({"name": category_id, "items": items_zip})
-        
         return categories_and_items
-
-
-    
 
     @staticmethod
     def get_category_and_items_by_itemid(item_id):
-        category = Item.objects.get(id=item_id).category_id
+        category = Category.objects.get(item__id=item_id)
 
-        items = Item.objects.filter(category_id=category).exclude(id=item_id)
+        items = Item.objects.filter(category=category).exclude(id=item_id)
+        item_ids = items.values_list("id", flat=True)
 
-        images = ItemImage.objects.all().filter(item__category_id=category).distinct('item_id').values()
+        item_images = ItemImage.objects.filter(item_id__in=item_ids)
 
-        items_zip = tuple(zip(items, images))
+        items = items.prefetch_related(Prefetch("itemimage_set", queryset=item_images))
 
-        category_and_items = {"name": category, "items": items_zip}
+        category_and_items = {"name": category.name, "items": items}
+
         return category_and_items
