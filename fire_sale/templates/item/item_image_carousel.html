@@ -1,11 +1,11 @@
 <div id="main-image-container" class="carousel slide">
     <div class="carousel-indicators">
-        {% for image in item_details.item_stats.item.itemimage_set.all %}
+        {% for image in item_images %}
             <button type="button" data-bs-target="#main-image-container" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></button>
         {% endfor %}
     </div>
     <div class="carousel-inner">
-        {% for image in item_details.item_stats.item.itemimage_set.all %}
+        {% for image in item_images %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
                 <!-- TODO: Stop images jumping around for some reason when switching between -->
                 <img src="{{ image.image }}" class="d-block w-100" alt="Image {{ forloop.counter1 }}">

@@ -25,17 +25,19 @@ class ItemService:
         
     @staticmethod
     def get_seller_details_from_item_id(item_id):
-        item = Item.objects.get(id=item_id)
-        user_info = UserInfo.objects.get(user_id=item.seller_id)
-        user_profile = UserProfile.objects.get(user_info_id=item.seller_id)
-        
+        item = Item.objects.select_related('seller__userinfo__user', 'seller__userinfo__userprofile').get(id=item_id)
+
+        seller = item.seller
+        user_info = seller.userinfo
+        user = user_info.user
+        user_profile = user_info.userprofile
+
         seller_details = {
-            "username": user_info.user.user_name,
-            "full_name": user_info.user.full_name,
+            "username": user.user_name,
+            "full_name": user.full_name,
             "avg_rating": user_info.avg_rating,
             "location": f"{user_profile.zip_code}, {user_profile.city}"
         }
-
         return seller_details
 
     @staticmethod
@@ -52,16 +54,19 @@ class ItemService:
         return categories_and_items
 
     @staticmethod
-    def get_category_and_items_by_itemid(item_id):
-        category = Category.objects.get(item__id=item_id)
-
-        items = Item.objects.filter(category=category).exclude(id=item_id)
-        item_ids = items.values_list("id", flat=True)
-
-        item_images = ItemImage.objects.filter(item_id__in=item_ids)
-
-        items = items.prefetch_related(Prefetch("itemimage_set", queryset=item_images))
-
+    def get_category_and_items_by_itemid(category, item_id):
+        items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set')
         category_and_items = {"name": category.name, "items": items}
-
         return category_and_items
+    #     category = Category.objects.get(item__id=item_id)
+
+    #     items = Item.objects.filter(category=category).exclude(id=item_id)
+    #     item_ids = items.values_list("id", flat=True)
+
+    #     item_images = ItemImage.objects.filter(item_id__in=item_ids)
+
+    #     items = items.prefetch_related(Prefetch("itemimage_set", queryset=item_images))
+
+    #     category_and_items = {"name": category.name, "items": items}
+
+    #     return category_and_items
