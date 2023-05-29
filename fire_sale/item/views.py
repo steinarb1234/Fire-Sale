@@ -87,9 +87,12 @@ def edit_item(request, id):
         item_image_form = EditItemImageForm(data=request.POST, instance=item_image_instance)
         item_stats_form = EditItemStatsForm(data=request.POST, instance=item_stats_instance)
         item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
-        if item_form.is_valid() and item_image_form.is_valid():
+        if item_form.is_valid() and item_image_form.is_valid() and item_stats_form.is_valid() and \
+                item_details_form.is_valid():
             item_form.save()
             item_image_form.save()
+            item_stats_form.save()
+            item_details_form.save()
 
             return redirect('item-details', id)
     else:
