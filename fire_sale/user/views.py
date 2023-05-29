@@ -1,10 +1,11 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from item.models import ItemStats
 from offer.models import Offer, OfferDetails
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
 from user.models import UserProfile, User, UserInfo
+from django.contrib.auth import get_user_model
 
 def register(request):
     
@@ -49,14 +50,6 @@ def register(request):
                    'user_info_creation_form': user_info_creation_form, 
                    'user_profile_form': user_profile_form})
 
-
-
-
-# def user_profile(request):
-#     user_instance = User.objects.get(user_name=request.user.username)
-
-
-from django.contrib.auth import get_user_model
 AuthUser = get_user_model()
 
 def updateProfile(request, id):
@@ -110,6 +103,7 @@ def user_profile(request):
         "user_info": user_info,
         "user_profile": user_profile,
     })
+
 
 
 def my_offers(request):
