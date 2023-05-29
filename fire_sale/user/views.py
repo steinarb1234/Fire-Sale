@@ -125,3 +125,21 @@ def my_listings(request):
     return render(request, 'user/my_listings.html', context={
         'item_stats': ItemStats.objects.prefetch_related('item').filter(item__seller_id=request.user.id)
     })
+
+
+# def user_navigation_bar(request):
+#     user = request.user
+#     user_instance = None
+#
+#     if user.is_authenticated and hasattr(user, 'username'):
+#         try:
+#             user_instance = User.objects.get(id = user.id)# LAga með id
+#         except:
+#             print(f"""\n\n
+#                     Could not find a user in User.objects.
+#                     user.username: {user.username} \n\n
+#             """)
+#
+#     return render(request, 'navigation.html', {
+#         'user_instance': user_instance
+#     })

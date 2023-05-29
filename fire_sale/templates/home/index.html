@@ -6,7 +6,15 @@
         <h2>Home</h2>
     </div>
 
-    <h4>Your most viewed</h4>
+    {% include 'home/banner.html' %}
+
+{#    <div class="homepage-banner">#}
+{#        <span><h1>Frábær banner!</h1></span>#}
+{#    </div>#}
+
+    <div class="underline-solid">
+        <h2>Your most viewed categories</h2>
+    </div>
     <div class="categories-in-home-page">
         {% for category in categories_and_items %}
             {% if category.items|length > 0 %}
