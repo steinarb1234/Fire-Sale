@@ -57,3 +57,33 @@ def checkout(request):
     return render(request, 'offer/checkout.html', {
         'form': form
     })
+
+
+@login_required
+def payment(request):
+    if request.method == 'POST':
+        form = CheckoutForm(data=request.POST)
+        if form.is_valid():
+            item = form.save()
+
+            return redirect('user-profile')
+    else:
+        form = CheckoutForm()
+    return render(request, 'offer/payment.html', {
+        'form': form
+    })
+
+
+@login_required
+def review(request):
+    if request.method == 'POST':
+        form = CheckoutForm(data=request.POST)
+        if form.is_valid():
+            item = form.save()
+
+            return redirect('user-profile')
+    else:
+        form = CheckoutForm()
+    return render(request, 'offer/review.html', {
+        'form': form
+    })
