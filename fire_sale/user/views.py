@@ -6,6 +6,7 @@ from offer.models import Offer, OfferDetails
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
 from user.models import UserProfile, User, UserInfo
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     
@@ -50,9 +51,11 @@ def register(request):
                    'user_info_creation_form': user_info_creation_form, 
                    'user_profile_form': user_profile_form})
 
-AuthUser = get_user_model()
 
+@login_required
 def updateProfile(request, id):
+    
+    AuthUser = get_user_model()
     user_instance = get_object_or_404(User, pk=id)
     user_info_instance = user_instance.userinfo
     user_profile_instance = user_info_instance.userprofile
@@ -90,7 +93,7 @@ def updateProfile(request, id):
         'id': id
     })
 
-
+@login_required
 def user_profile(request):
     user_instance = User.objects.get(id = request.user.id)
     user_info = UserInfo.objects.get(user=user_instance)
@@ -105,7 +108,7 @@ def user_profile(request):
     })
 
 
-
+@login_required
 def my_offers(request):
     try:
         user_offers = Offer.objects.filter(buyer_id=request.user.id)
