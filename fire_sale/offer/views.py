@@ -9,9 +9,10 @@ from offer.models import Offer, OfferDetails
 
 # Create your views here.
 
-def index(request):
-    return render(request, 'offer/index.html', context={
-        'offer': Offer.objects.all()
+def offer_details(request, offer_id):
+    offer = Offer.objects.get(pk=offer_id)
+    return render(request, 'offer/offer_details.html', {
+        "offer": offer,
     })
 
 
