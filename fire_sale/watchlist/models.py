@@ -6,4 +6,5 @@ from item.models import ItemStats
 
 class WatchListItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(ItemStats, on_delete=models.CASCADE)   
+    item = models.ForeignKey(ItemStats, on_delete=models.CASCADE)
+

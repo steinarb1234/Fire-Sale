@@ -3,7 +3,8 @@
     <h4>Checkout</h4>
     <form class="form form-row" action="{% url 'checkout' offer_id %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ contact_information_form }}
+        {{ payment_form }}
         <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
     </form>
 {% endblock %}
