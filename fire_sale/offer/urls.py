@@ -9,7 +9,7 @@ urlpatterns = [
     path('create_offer/<int:item_id>', views.create_offer, name="create_offer"),
     path('<int:offer_id>/checkout/payment', views.payment, name="payment"),
     path('<int:offer_id>/checkout/payment/review', views.review, name="review"),
-    path('change_offer_stats/<int:id>/<str:button>/', views.change_offer_status, name="change_offer_status"),
+    path('change_offer_stats/<int:id>/<int:itemid>/<str:button>/', views.change_offer_status, name="change_offer_status"),
 ]
 
 
