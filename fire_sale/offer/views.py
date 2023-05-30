@@ -1,6 +1,6 @@
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
-from item.models import Item
+from item.models import Item, ItemStats, ItemStatuses
 from offer.forms.offer_form import ContactInformationForm, CreateOfferForm, CreateOfferDetailsForm, PaymentForm, \
     RatingForm
 from offer.models import Offer, OfferDetails
@@ -60,6 +60,8 @@ def change_offer_status(request, id, itemid, button):
 def checkout(request, offer_id):
     # Að reyna að fá vistuðu uplýsingarnar, veit ekki afh það virkar ekki - Steinar
     offer = get_object_or_404(Offer, pk=offer_id)
+    other_offers_on_item = Offer.objects.filter(item_id=offer.item_id)
+    item_stats = get_object_or_404(ItemStats, pk=offer.item_id)
     user_profile = get_object_or_404(UserProfile, pk=offer.buyer_id)
 
     if request.method == 'POST':
@@ -68,6 +70,16 @@ def checkout(request, offer_id):
         if contact_information_form.is_valid() and payment_form.is_valid():
             contact_information = contact_information_form
             payment = payment_form
+
+            item_stats.status = ItemStatuses(status="Sold")
+            item_stats.save()
+
+            other_offers_on_item.status = "Rejected"
+            for other_offer in other_offers_on_item:
+                other_offer.save()
+
+            offer.status = "Item purchased"
+            offer.save()
 
             return redirect('review', offer_id)
     else:
