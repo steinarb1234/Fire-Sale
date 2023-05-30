@@ -1463,8 +1463,8 @@ VALUES
 
 INSERT INTO offer_offer (amount, buyer_id, item_id, seller_id, status)
 VALUES
-(100.00, 3 , 1, 2, 'Pending answer'),
-(200.00, 2, 2, 3, 'Pending answer'),
+(100.00, 3 , 1, 1, 'Pending answer'),
+(200.00, 2, 2, 2, 'Pending answer'),
 (150.00, 4, 3, 1, 'Pending answer'),
 (300.00, 2, 1, 1, 'Pending answer'),
 (250.00, 1, 2, 2, 'Pending answer');
