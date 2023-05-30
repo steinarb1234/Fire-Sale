@@ -35,7 +35,7 @@ def create_offer(request, item_id):
             offer_details.start_date = date.today()
             offer_details.save()
 
-            return redirect('item-index')
+            return redirect('offer-details', offer.id)
     else:
         offer_form = CreateOfferForm()
         offer_details_form = CreateOfferDetailsForm()
