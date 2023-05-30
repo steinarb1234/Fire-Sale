@@ -30,7 +30,8 @@ def get_item_details_by_id(request, id):
         'item_details': item_details,
         'category_and_items': category_and_items,
         'item_images': item_images,
-        'watchlist_items': watchlist_items
+        'watchlist_items': watchlist_items,
+        'in_watchlist': watchlist_items.filter(user_id = request.user.id).exists()
     })
 
 

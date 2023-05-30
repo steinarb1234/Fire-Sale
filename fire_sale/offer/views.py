@@ -54,7 +54,38 @@ def change_offer_status(request, id, itemid, button):
         return redirect('item-offers', item_id=itemid)
 
     return redirect('item-offers', item_id=itemid)
-    
+
+def edit_offer(request, id, itemid):
+    offer_to_change = get_object_or_404(Offer, pk=id)
+
+    if request.method == "POST":
+        offer_form = CreateOfferForm(data=request.POST, instance=offer_to_change)
+        offer_details_form = CreateOfferDetailsForm(data=request.POST, instance=offer_to_change.offerdetails)
+        
+        if offer_form.is_valid() and offer_details_form.is_valid():
+            offer = offer_form.save(commit=False)
+            offer_details = offer_details_form.save(commit=False)
+            offer_details.offer = offer
+            offer.save()
+            offer_details.save()
+            return redirect('offer-details', offer_id=id)
+    else:
+        offer_form = CreateOfferForm(instance=offer_to_change)
+        offer_details_form = CreateOfferDetailsForm(instance=offer_to_change.offerdetails)
+
+    return render(request, 'offer/edit_offer.html', {
+        'offer_form': offer_form,
+        'offer_details_form': offer_details_form,
+        'offer_to_change': offer_to_change,
+        'id': id,
+        'item_id': itemid
+    })
+
+
+def delete_offer(request, id):
+    offer_to_delete = get_object_or_404(Offer, pk=id)
+    offer_to_delete.delete()
+    return redirect('my-offers')
 
 @login_required
 def checkout(request, offer_id):

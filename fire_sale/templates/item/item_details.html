@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="row">
-        <div class="col-lg-3"></div>
+        <div class="col-lg-2"></div>
 
-        <div class="col-lg-6 d-flex flex-nowrap">
+        <div class="col-lg-8 d-flex flex-nowrap">
             <div class="item_img-container d-flex flex-row">
                 {% include 'item/item_image_carousel.html' %}
             </div>
@@ -13,26 +13,30 @@
                 <h3>Price: ${{ item_details.item_stats.item.price }}</h3>
                 <h4>Highest Offer: ${{ item_details.item_stats.highest_offer }}</h4>
                 <p><span class="material-symbols-outlined">visibility</span>: {{ item_details.item_stats.views }}</p>
-                <p><span class="material-symbols-outlined">favorite</span>: {{ item_details.item_stats.watchers }}</p>
+                <p><span class="material-symbols-outlined">favorite</span>: {{ watchlist_items|length }}</p>
                 <p><span class="material-symbols-outlined">info</span>: {{ item_details.item_stats.status }}</p>
                 <!-- TODO: Connect these buttons to their respective actions -->
 
-                {% if request.user.id == item_details.item_stats.item.seller_id%}
+                {% if request.user.id == item_details.item_stats.item.seller_id %}
                     <a href="{% url 'delete_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
                     <a href="{% url 'edit_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
                 {% else %}
                     {% url 'create_offer' item_details.item_stats.item.id as the_url %}
                     <a href="{{ the_url }}" class="block btn btn-primary">Send an offer</a>
-                    <form method="POST" action="{% url 'add_to_watchlist' item_details.item_stats.item.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Add to Watchlist</button>
-                    </form>
+                    {% if in_watchlist %}
+                        <a href="{% url 'delete_from_watchlist' item_details.item_stats.item.id %}" class="btn btn-primary">Remove from Watchlist</a>
+                    {% else %}
+                        <form method="POST" action="{% url 'add_to_watchlist' item_details.item_stats.item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Add to watchlist</button>
+                        </form>
+                    {% endif %}
                 {% endif %}
 
             </div>
 
         </div>
-        <div class="col-lg-3 border-start border-secondary-subtle">
+        <div class="col-lg-2 border-start border-secondary-subtle">
             <div id="seller-info">
                 <h4>Seller Information</h4>
                 <p>Name: {{ item_details.item_stats.item.seller_id.full_name }}</p>
