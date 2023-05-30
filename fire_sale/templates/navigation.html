@@ -15,6 +15,7 @@
       <!-- Logo -->
       <a class="navbar-brand" href="/">
         <img class="nav-link img-fluid vh-10 minh-vw-5" id="logo" role="button" aria-expanded="false" src="{% static 'images/FIRE_LOGO_3.png' %}" alt="Fire Sale! logo">
+        <!--<img class="nav-link img-fluid logo" id="logo" role="button" aria-expanded="false" src="{% static 'images/FIRE_SALE_LOGO.png' %}" alt="Fire Sale! logo">-->
       </a>
 
       <!-- Search -->
@@ -60,11 +61,11 @@
     </form>
 
     <div class="notificaion-and-user-profile">
-        {#  Notifications  #}
+      {% if user.is_authenticated %}
+           {#  Notifications  #}
         {% include 'user/notifications_dropdown.html' %}
 
-      <!-- Profile image -->
-      {% if user.is_authenticated %}
+          <!-- Profile image -->
         <div class="nav-item dropdown">
           {% if user_instance.userinfo.image %}
             <div class="nav-link rounded-circle img-container" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -118,7 +119,7 @@
   
   <div class="d-flex justify-content-end align-items-center w-25">
     {% if user.is_authenticated %}
-      <a class="m-2" href="{% url "create_item" %}">Create listing +</a>
+      <a class="m-2" href="{% url "create-item" %}">Create listing +</a>
       <a class="m-2" href="{% url "watchlist-index" %}">Watchlist</a>
     {% endif %}
   </div>

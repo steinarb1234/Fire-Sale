@@ -115,7 +115,6 @@ input[name="image"] {
 }
 
 .card-heart-filled {
-    color: #d90000;
     font-variation-settings:
       'FILL' 1,
       'wght' 400,
@@ -221,7 +220,8 @@ input[name="image"] {
 
 .lower-nav-bar {
     position: fixed;
-    top: calc(max(5vw, 10vh) + 2*0.3125rem + 2*0.5em);
+    top: 76px;
+    /*top: calc(max(5vw, 10vh) + 2*0.3125rem + 2*0.5em);*/
     z-index: 1000;
 }
 
@@ -406,6 +406,12 @@ label [for="country-select"] {
     margin-bottom: 40px;
   }
 
+
+.logo {
+    height: 50px;
+    width: 50px;
+}
+
 .offer-details-main-left > *:not(h1) {
     margin-left: 55px;
   }
@@ -432,4 +438,3 @@ label [for="country-select"] {
     text-align: center;
     width: 100%;
   }
-  

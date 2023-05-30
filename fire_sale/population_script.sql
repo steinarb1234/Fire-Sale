@@ -235,14 +235,6 @@ VALUES
 (5, 'Iceland', 'Ásvallagata 11', 'Reykjavík', '101', 'Mergur og bein.'),
 (6, 'Iceland','Menntavegur 1','Reykjavík','102','Vá, svaka flott lýsing fyrir mig. Magnað. Ótrúlegt. Klikkað.');
 
-
-INSERT INTO user_notifications (message, datetime, receiver_id)
-VALUES
-('Hello world!', '2023-05-28 11:13:44.040 +00:00', 1),
-('Goodbye world!', '2023-05-28 11:13:44.040 +00:00', 1),
-('hello world!', '2023-05-28 11:13:44.040 +00:00', 1),
-('hello world!', '2023-05-28 11:13:44.040 +00:00', 1);
-
 INSERT INTO category_category (name)
 VALUES
 ('All');
@@ -1488,6 +1480,11 @@ VALUES
 ('2023-03-01', 'Offer valid for the month of March', 3),
 ('2023-04-01', 'Offer valid for the month of April', 4),
 ('2023-05-01', 'Offer valid for the month of May', 5);
+
+
+INSERT INTO user_notifications (message, datetime, receiver_id, href)
+VALUES
+('New message Loooooooooooooooooooooooooooooong message!', '2023-05-28 11:13:44.040 +00:00', 1, '/offers/5');
 
 
 INSERT INTO watchlist_watchlistitem (item_id, user_id)

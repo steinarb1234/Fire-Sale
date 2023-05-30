@@ -1,12 +1,13 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
-from item.models import ItemStats
+from item.models import Item
 from offer.models import Offer, OfferDetails
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
-from user.models import UserProfile, User, UserInfo, Notifications
+from user.models import UserProfile, User, UserInfo, Notification
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max
 
 def register(request):
     
@@ -98,9 +99,7 @@ def user_profile(request):
     user_instance = User.objects.get(id = request.user.id)
     user_info = UserInfo.objects.get(user=user_instance)
     user_profile = UserProfile.objects.get(user_info=user_info)
-    print(user_instance)
-    print(user_info)
-    print(user_profile)
+
     return render(request, 'user/profile.html', {
         "user_instance": user_instance,
         "user_info": user_info,
@@ -112,29 +111,42 @@ def user_profile(request):
 def my_offers(request):
     try:
         user_offers = Offer.objects.filter(buyer_id=request.user.id)
-        # user_offers.get().det
+        item_ids = user_offers.values_list('item__id', flat=True)
+        highest_price = Offer.objects.filter(item__id__in=item_ids).aggregate(highest_price=Max('amount'))['highest_price']
+
     except ObjectDoesNotExist:
         user_offers = None
     
     return render(request, 'user/my_offers.html', {
         "user_offers": user_offers,
+        "highest_price": highest_price
     })
+
 
 
 def my_listings(request):
+    # Get all items where the current user is the seller
+    user_items = Item.objects.filter(seller=request.user.id)
+
+    # Get the highest price per item
+    highest_prices = Offer.objects.filter(item__in=user_items).values('item_id').annotate(highest_price=Max('amount'))
+
+    highest_prices_dict = {item['item_id']: item['highest_price'] for item in highest_prices}
+
     return render(request, 'user/my_listings.html', context={
-        'item_stats': ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id)
+        'item_stats': user_items,
+        "highest_prices_dict": highest_prices_dict,
     })
+
 
 def notifications(request):
+    notifications = Notification.objects.filter(receiver=request.user.id)
+    for notification in notifications:
+        if notification.href_parameter:
+            notification.href = resolve_url(notification.href, notification.href_parameter)
+        else:
+            notification.href = resolve_url(notification.href)
+
     return render(request, 'user/notifications.html', context={
-        'notifications': Notifications.objects.filter(receiver=request.user.id)
+        'notifications': notifications
     })
-
-
-def notifications_in_dropdown(request):
-    return render(request, 'user/notifications.html', context={
-        'notifications': Notifications.objects.filter(receiver=request.user.id)
-    })
-
-

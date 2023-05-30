@@ -28,7 +28,7 @@
                 <td data-sort-amount>${{ offer.amount }}</td>
                 <td></td>
                 <td>${{ offer.item.price }}</td>
-                <td></td>
+                <td>${{ highest_price }}</td>
 {#                <td>{{ offer.item.itemstats.status }}</td>#}
                 <td>{{ offer.status }}</td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>

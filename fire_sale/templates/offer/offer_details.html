@@ -3,21 +3,24 @@
 
 <div class="offer-details-main-container">
     <div class="offer-details-main-left">
-        <h1>Offer details</h1>
-        <h4><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></h4>
+        {% if offer.buyer.id == request.user.id %}
+            <h1>Your offer for "<a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a>"</h1>
+        {% elif offer.seller.id == request.user.id %}
+            <h1>Offer for "<a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a>"</h1>
+        {% endif %}
         <div class="item_img-container d-flex flex-row">
             {% include 'item/item_image_carousel.html' %}
         </div>
     </div>
 
     <div class="offer-details-main-right">
-        <p>Your offer: {{ offer.amount }}</p>
-        <p>Highest offer: ---</p>
+        <p>Offer amount: ${{ offer.amount }}</p>
+        <p>Highest offer: $---</p>
         <p>Item seller: {{ offer.seller }}</p>
         <p>Item seller: {{ offer.seller.email }}</p>
-        <p>Item seller: {{ offer.seller.userinfo.avg_rating }}</p>
+        <p>Seller rating: {{ offer.seller.userinfo.avg_rating }}</p>
         <p>Message: {{ offer.offerdetails.message }}</p>
-        <p>Date: {{ offer.offerdetails.start_date }}</p>
+        <p>Offer date: {{ offer.offerdetails.start_date }}</p>
         <p>Item status: {{ offer.item.itemstats.status }}</p>
         <p>Offer status: {{ offer.status }}</p>
     </div>
