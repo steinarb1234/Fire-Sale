@@ -11,9 +11,9 @@
                 <th scope="col">Date</th>
                 <th scope="col">Item</th>
                 <th scope="col">Amount</th>
-                <th scope="col">Highest offer</th>
+                <th scope="col">Offers</th> 
                 <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
-                <th scope="col">Offers</th>         {# Bæta inn ! - Steinar #}
+                <th scope="col">Highest offer</th>         {# Bæta inn ! - Steinar #}
 {#                <th scope="col">Item status</th>#}
                 <th scope="col">Offer status</th>
                 <th scope="col">Details</th>
@@ -23,7 +23,7 @@
         <tbody data-sortable-table>
         {% for offer in user_offers %}
             <tr>
-                <th scope="row" data-sort-date>{{offer.offerdetails.start_date|date:"d/m/y"}}
+                <th scope="row" data-sort-date>{{offer.offerdetails.start_date|date:"d/m/y"}}</th>
                 <td data-sort-name><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></td>
                 <td data-sort-amount>${{ offer.amount }}</td>
                 <td></td>

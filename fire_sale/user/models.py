@@ -33,3 +33,7 @@ class UserProfile(models.Model):
     user_info = models.OneToOneField(UserInfo, on_delete=models.CASCADE, primary_key=True)
 
 
+class Notifications(models.Model):
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(max_length=255, blank=True, null=True)
+    datetime = models.DateTimeField()

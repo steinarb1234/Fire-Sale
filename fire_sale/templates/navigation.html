@@ -79,8 +79,8 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url "user-profile" %}">Profile</a></li>
               <li><a class="dropdown-item" href="{% url "watchlist-index" %}">Watchlist</a></li>
-              <li><a class="dropdown-item" href="{% url 'my-listings' %}">My listings</a></li>
-              <li><a class="dropdown-item" href="{% url "my-offers" %}">Bids / offers</a></li>
+                <li><a class="dropdown-item" href="{% url "my-offers" %}">Buying</a></li>
+              <li><a class="dropdown-item" href="{% url 'my-listings' %}">Selling</a></li>
               {% if user.is_authenticated %}
                 <li><a class="dropdown-item"href="{% url 'logout' %}">Logout</a></li>
               {% endif %}
