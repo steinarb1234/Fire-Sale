@@ -146,5 +146,3 @@ def notifications(request):
     return render(request, 'user/notifications.html', context={
         'notifications': Notifications.objects.filter(receiver=request.user.id)
     })
-
-

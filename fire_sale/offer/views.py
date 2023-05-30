@@ -5,7 +5,7 @@ from offer.forms.offer_form import ContactInformationForm, CreateOfferForm, Crea
     RatingForm
 from offer.models import Offer, OfferDetails
 from django.contrib.auth.decorators import login_required
-
+from item.models import Item, ItemImage, ItemDetails, ItemStats
 from user.models import User, UserProfile
 
 
@@ -13,8 +13,10 @@ from user.models import User, UserProfile
 
 def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
+    item_images = ItemImage.objects.filter(item=offer.item)
     return render(request, 'offer/offer_details.html', {
         "offer": offer,
+        'item_images': item_images,
     })
 
 @login_required
@@ -80,7 +82,6 @@ def edit_offer(request, id, itemid):
         'id': id,
         'item_id': itemid
     })
-
 
 def delete_offer(request, id):
     offer_to_delete = get_object_or_404(Offer, pk=id)

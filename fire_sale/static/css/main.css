@@ -12,7 +12,7 @@
 
 .searchButton {
     margin-left: 1%;
-    color: black
+    color: black;
 }
 
 .category {
@@ -115,7 +115,6 @@ input[name="image"] {
 }
 
 .card-heart-filled {
-    color: #d90000;
     font-variation-settings:
       'FILL' 1,
       'wght' 400,
@@ -221,7 +220,8 @@ input[name="image"] {
 
 .lower-nav-bar {
     position: fixed;
-    top: calc(max(5vw, 10vh) + 2*0.3125rem + 2*0.5em);
+    top: 76px;
+    /*top: calc(max(5vw, 10vh) + 2*0.3125rem + 2*0.5em);*/
     z-index: 1000;
 }
 
@@ -330,8 +330,12 @@ input[name="image"] {
 
 .search-and-dropdown-container {
     display: flex;
+    width: 100%;
 }
 
+.search-input {
+    width: 100%;
+}
 
 .notificaion-and-user-profile {
     display: flex;
@@ -387,20 +391,50 @@ label [for="country-select"] {
     padding-top: 15px;
 }
 
-
 .offer-details {
     display: flex;
     flex-wrap: nowrap;
+  }
+  
+.offer-details-main-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+.offer-details-main-left {
+    flex-basis: 50%;
+    margin-bottom: 40px;
+  }
+
+
+.logo {
+    height: 50px;
+    width: 50px;
 }
 
-
-/*
-.left-offer-details {
-
-}
-
-
-.right-offer-details {
-
-}
-*/
+.offer-details-main-left > *:not(h1) {
+    margin-left: 55px;
+  }
+  
+.offer-details-main-left h4 {
+    margin-top: 35px;
+    margin-bottom: 30px;
+  }
+  
+.offer-details-main-right {
+    flex-basis: 50%;
+    margin-top: 135px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+.offer-details-buttons {
+    margin-top: 30px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }

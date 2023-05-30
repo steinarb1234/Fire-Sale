@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import WatchListItem
 from .forms.watchlist_form import WatchListCreationForm
 from item.models import Item
+from django.db.models import Exists, OuterRef
+
 
 @login_required
 def add_to_watchlist(request, item_id):
@@ -25,11 +27,13 @@ def delete_from_watchlist(request, item_id):
     watchlist_item.delete()
     return redirect('item-details', id=item_id)
 
+
 @login_required
 def index(request):
-    watchlist = WatchListItem.objects.filter(user=request.user.id)
-    item_ids = watchlist.values_list('item_id', flat=True)
-    items = Item.objects.filter(id__in=item_ids)
+    watchlist_items = WatchListItem.objects.filter(user_id=request.user.id)
+    items = Item.objects.filter(id__in=watchlist_items.values('item_id')).annotate(
+        is_in_watchlist=Exists(watchlist_items.filter(item_id=OuterRef('pk')))
+    )
     return render(request, 'watchlist/index.html', {
         'items': items
     })

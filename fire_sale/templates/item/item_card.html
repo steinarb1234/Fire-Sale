@@ -12,8 +12,9 @@
           <p class="card-text">$ {{ item.price }}</p>
       </a>
    <div class="d-flex justify-content-between"> 
-    <a href="#" class="btn rounded-circle d-flex align-items-center material-symbols-outlined card-heart" title="Add item to watchlist.">
-      favorite</a>
+    <a href="#" class="btn rounded-circle d-flex align-items-center material-symbols-outlined card-heart {% if item.is_in_watchlist %}card-heart-filled{% endif %}" title="Add item to watchlist.">
+      favorite
+    </a>
     </div>
   </div>
 </div>

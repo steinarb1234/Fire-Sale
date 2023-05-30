@@ -23,7 +23,7 @@ def index(request):
 from django.db.models import Max
 def get_item_details_by_id(request, id):
     item_details = get_object_or_404(ItemDetails.objects.select_related('item_stats__item', 'item_stats__item__category', 'item_stats__item__seller', 'condition'), pk=id)
-    category_and_items = ItemService.get_category_and_items_by_itemid(item_details.item_stats.item.category, id)
+    category_and_items = ItemService.get_category_and_items_by_itemid(item_details.item_stats.item.category, id, request.user.id)
     item_images = ItemImage.objects.filter(item=item_details.item_stats.item).prefetch_related('item')
     watchlist_items = WatchListItem.objects.filter(item_id=id)
     highest_price = Offer.objects.filter(item_id=id).aggregate(Max('amount'))['amount__max'] or 0

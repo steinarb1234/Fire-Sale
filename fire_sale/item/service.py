@@ -2,7 +2,8 @@ from django.http import Http404
 from item.models import Item, ItemImage
 from category.models import CategoryViews, Category
 from user.models import User, UserInfo, UserProfile
-from django.db.models import Prefetch, Count, Case, When, IntegerField, OuterRef
+from watchlist.models import WatchListItem
+from django.db.models import Prefetch, Count, Case, When, IntegerField, Exists, OuterRef
 
 
 class ItemService:
@@ -45,28 +46,23 @@ class ItemService:
         categories = Category.objects.prefetch_related(
             Prefetch('item_set', queryset=Item.objects.prefetch_related('itemimage_set'))
         )
+        watchlist_items = WatchListItem.objects.filter(user_id=user_id, item=OuterRef('pk'))
+
 
         categories_and_items = []
         for category in categories:
-            items = category.item_set.all()
+            items = category.item_set.all().annotate(is_in_watchlist=Exists(watchlist_items))
             categories_and_items.append({"name": category.name, "items": items})
 
         return categories_and_items
 
     @staticmethod
-    def get_category_and_items_by_itemid(category, item_id):
+    def get_category_and_items_by_itemid(category, item_id, user=None):
         items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set')
+
+        if user:
+            watchlist_items = WatchListItem.objects.filter(user=user)
+            items = items.annotate(is_in_watchlist=Exists(watchlist_items.filter(item_id=OuterRef('pk'))))
+
         category_and_items = {"name": category.name, "items": items}
         return category_and_items
-    #     category = Category.objects.get(item__id=item_id)
-
-    #     items = Item.objects.filter(category=category).exclude(id=item_id)
-    #     item_ids = items.values_list("id", flat=True)
-
-    #     item_images = ItemImage.objects.filter(item_id__in=item_ids)
-
-    #     items = items.prefetch_related(Prefetch("itemimage_set", queryset=item_images))
-
-    #     category_and_items = {"name": category.name, "items": items}
-
-    #     return category_and_items
