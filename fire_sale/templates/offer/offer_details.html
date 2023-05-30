@@ -49,5 +49,6 @@
             <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-success">Edit</a>
             <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Delete</a>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
+
