@@ -55,12 +55,7 @@ class ItemService:
         return categories_and_items
 
     @staticmethod
-    def get_category_and_items_by_itemid(category, item_id, user=None):
+    def get_category_and_items_by_itemid(category, item_id):
         items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set', 'itemstats')
-
-        if user:
-            watchlist_items = WatchListItem.objects.filter(user=user)
-            items = items.annotate(is_in_watchlist=Exists(watchlist_items.filter(item_id=OuterRef('pk'))))
-
         category_and_items = {"name": category.name, "items": items}
         return category_and_items
