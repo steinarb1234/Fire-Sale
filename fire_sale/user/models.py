@@ -36,4 +36,5 @@ class UserProfile(models.Model):
 class Notifications(models.Model):
     receiver = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=255, blank=True, null=True)
+    href = models.URLField(max_length=999, blank=True, null=True)
     datetime = models.DateTimeField()

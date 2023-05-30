@@ -1,5 +1,7 @@
 from category.models import Category
-from user.models import User
+from user.models import User, Notifications
+
+
 # from django.views.decorators.cache import cache_page
 
 # @cache_page(600)
@@ -21,3 +23,11 @@ def navigation_bar_processor(request):
             """)
 
     return {'user_instance': user_instance}
+
+
+def notifications_processor(request):
+    notifications = Notifications.objects.filter(receiver=request.user.id)
+    return {'notifications': notifications}
+
+
+

@@ -3,12 +3,12 @@
     <h4 class="edit-heading">Edit profile</h4>
     <form class="form form-row" action="{% url 'update_profile' id %}" method="post">
         {% csrf_token %}
-        <div class="form-container">
-            {{ user_form }}
-            {{ user_profile_form }}
-            {{ user_info_form }}
-            <br>
-            <input type="submit" value="Update" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
-        </div>
+
+        {{ user_form }}
+        {{ user_profile_form }}
+        {{ user_info_form }}
+        <br>
+        <input type="submit" value="Update" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+    
     </form>
 {% endblock %}
