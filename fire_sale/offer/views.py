@@ -60,9 +60,18 @@ def create_offer(request, item_id):
 @login_required
 def change_offer_status(request, id, itemid, button):
     if request.method == 'POST':
-        offer_to_change = Offer.objects.get(pk=id)
-        offer_to_change.status = button
-        offer_to_change.save()
+        offer = Offer.objects.get(pk=id)
+        offer.status = button
+        offer.save()
+
+        notification_to_seller = Notification()
+        notification_to_seller.message = f'Your offer for "{offer.item}" has been {offer.status}!'
+        notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
+        notification_to_seller.href = 'offer-details'
+        notification_to_seller.href_parameter = offer.id
+        notification_to_seller.receiver = offer.buyer
+        notification_to_seller.save()
+
         return redirect('item-offers', item_id=itemid)
 
     return redirect('item-offers', item_id=itemid)

@@ -46,7 +46,7 @@ class ItemService:
         categories = Category.objects.prefetch_related(
             Prefetch('item_set', queryset=Item.objects.prefetch_related('itemimage_set', 'itemstats'))
         )
-        
+
         categories_and_items = []
         for category in categories:
             items = category.item_set.all()
@@ -56,7 +56,7 @@ class ItemService:
 
     @staticmethod
     def get_category_and_items_by_itemid(category, item_id, user=None):
-        items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set')
+        items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set', 'itemstats')
 
         if user:
             watchlist_items = WatchListItem.objects.filter(user=user)
