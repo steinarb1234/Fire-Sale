@@ -1,3 +1,10 @@
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
 
 .underline-solid {
     border-bottom: solid 2px rgba(155, 155, 155, .5);
@@ -95,6 +102,18 @@
 .card-img-top {
     height: 200px;
     object-fit: cover;
+}
+
+.card-heart {
+    color: #d90000;
+}
+
+.card-heart-filled {
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 48
 }
 
 .profile {
