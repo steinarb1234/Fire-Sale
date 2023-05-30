@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
 from item.models import ItemStats
 from offer.models import Offer, OfferDetails
@@ -127,6 +127,10 @@ def my_listings(request):
     })
 
 def notifications(request):
+    notifications = Notifications.objects.filter(receiver=request.user.id)
+    for notification in notifications:
+        notification.href = resolve_url(notification.href)
+
     return render(request, 'user/notifications.html', context={
-        'notifications': Notifications.objects.filter(receiver=request.user.id)
+        'notifications': notifications
     })
