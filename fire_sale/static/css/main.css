@@ -60,6 +60,11 @@
     padding-bottom: 20px;
 }
 
+input[name="image"] {
+  margin-top: 10pt;
+  margin-bottom: 10pt;
+}
+
 #signup-form label[for="id_username"], #signup-form label[for="id_password1"], #signup-form label[for="id_password2"] {
     display: block;
     padding-top: 15px; 
