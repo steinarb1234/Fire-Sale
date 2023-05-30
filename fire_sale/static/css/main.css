@@ -12,7 +12,7 @@
 
 .searchButton {
     margin-left: 1%;
-    color: black
+    color: black;
 }
 
 .category {
@@ -329,8 +329,12 @@ input[name="image"] {
 
 .search-and-dropdown-container {
     display: flex;
+    width: 100%;
 }
 
+.search-input {
+    width: 100%;
+}
 
 .notificaion-and-user-profile {
     display: flex;
