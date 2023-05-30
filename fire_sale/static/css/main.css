@@ -109,6 +109,7 @@
 }
 
 .card-heart-filled {
+    color: #d90000;
     font-variation-settings:
       'FILL' 1,
       'wght' 400,
