@@ -23,7 +23,7 @@
         <tbody data-sortable-table>
         {% for offer in user_offers %}
             <tr>
-                <td scope="row" data-sort-date>{{offer.offerdetails.start_date|date:"d/m/y"}} <td>
+                <th scope="row" data-sort-date>{{offer.offerdetails.start_date|date:"d/m/y"}}
                 <td data-sort-name><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></td>
                 <td data-sort-amount>${{ offer.amount }}</td>
                 <td></td>
