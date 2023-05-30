@@ -17,6 +17,7 @@
 {#                <th scope="col">Item status</th>#}
                 <th scope="col">Offer status</th>
                 <th scope="col">Details</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody data-sortable-table>
@@ -31,6 +32,21 @@
 {#                <td>{{ offer.item.itemstats.status }}</td>#}
                 <td>{{ offer.status }}</td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
+                <td>
+                    <div class="status-button">
+                        {% if offer.status == 'Accepted' %}
+                            <form method="POST" action="{% url 'checkout' offer.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Go to checkout</button>
+                            </form>
+                        {% endif %}
+{#                        <form method="POST" action="{% url 'change_offer_status' offer.id 'Rejected' %}">#}
+{#                            {% csrf_token %}#}
+{#                            <button type="submit" class="btn btn-danger">Reject</button>#}
+{#                        </form>#}
+                    </div>
+                </td>
+
             </tr>
         {% endfor %}
         </tbody>

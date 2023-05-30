@@ -6,9 +6,12 @@ from category.models import Category
 from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
     EditItemImageForm, EditItemStatsForm, EditItemDetailsForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
+from watchlist.models import WatchListItem
 from item.service import ItemService
 
 from django.contrib.auth.decorators import login_required
+
+from offer.models import Offer
 
 
 def index(request):
@@ -18,17 +21,16 @@ def index(request):
 
 
 def get_item_details_by_id(request, id):
-    item_details = get_object_or_404(ItemDetails.objects.select_related('item_stats__item'), pk=id)
-    seller_details = ItemService.get_seller_details_from_item_id(id)
+    item_details = get_object_or_404(ItemDetails.objects.select_related('item_stats__item', 'item_stats__item__category', 'item_stats__item__seller', 'condition'), pk=id)
     category_and_items = ItemService.get_category_and_items_by_itemid(item_details.item_stats.item.category, id)
-
     item_images = ItemImage.objects.filter(item=item_details.item_stats.item).prefetch_related('item')
-
+    watchlist_items = WatchListItem.objects.filter(item_id=id)
+    print(watchlist_items)
     return render(request, 'item/item_details.html', {
         'item_details': item_details,
-        'seller_details': seller_details,
         'category_and_items': category_and_items,
-        'item_images': item_images
+        'item_images': item_images,
+        'watchlist_items': watchlist_items
     })
 
 
@@ -85,9 +87,12 @@ def edit_item(request, id):
         item_image_form = EditItemImageForm(data=request.POST, instance=item_image_instance)
         item_stats_form = EditItemStatsForm(data=request.POST, instance=item_stats_instance)
         item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
-        if item_form.is_valid() and item_image_form.is_valid():
+        if item_form.is_valid() and item_image_form.is_valid() and item_stats_form.is_valid() and \
+                item_details_form.is_valid():
             item_form.save()
             item_image_form.save()
+            item_stats_form.save()
+            item_details_form.save()
 
             return redirect('item-details', id)
     else:
@@ -104,5 +109,11 @@ def edit_item(request, id):
     })
 
 
-
+def item_offers(request, item_id):
+    offers = Offer.objects.filter(item_id=item_id)
+    item = Item.objects.get(pk=item_id)
+    return render(request, 'offer/item_offers.html', {
+        "offers": offers,
+        "item": item,
+    })
 

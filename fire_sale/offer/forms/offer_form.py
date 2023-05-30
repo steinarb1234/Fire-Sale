@@ -1,6 +1,7 @@
 from django import forms
-from django.forms import ModelForm, widgets
+from django.forms import ModelForm, widgets, Form
 from offer.models import Offer, OfferDetails
+from rating.models import Rating
 from user.models import UserProfile
 
 
@@ -12,7 +13,6 @@ class CreateOfferForm(forms.ModelForm):
             'amount': widgets.NumberInput(attrs={'class': 'form-control'}),
         }
 
-
 class CreateOfferDetailsForm(forms.ModelForm):
     class Meta:
         model = OfferDetails
@@ -22,19 +22,32 @@ class CreateOfferDetailsForm(forms.ModelForm):
         }
 
 
-class CheckoutForm(ModelForm):
-    name_of_cardholder = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    card_number = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    expiration_date = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    cvs = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+class ContactInformationForm(ModelForm):
+    full_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = UserProfile
-        exclude = ['bio', 'user_info']
-        widget = {
-            'country': forms.TextInput(attrs={'class': 'form-control'}),
+        fields = ['country', 'address', 'city', 'zip_code']
+        widgets = {
+            'country': forms.Select(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'city': forms.TextInput(attrs={'class': 'form-control'}),
             'zip_code': forms.TextInput(attrs={'class': 'form-control'})
-        }   
+        }
 
+
+class PaymentForm(Form):
+    name_of_cardholder = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    card_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    expiration_date = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    cvs = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+class RatingForm(ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['rating', 'message']
+        widgets = {
+            'rating': forms.NumberInput(attrs={'class': 'form-control'}),
+            'message': forms.Textarea(attrs={'class': 'form-control'}),
+        }
 

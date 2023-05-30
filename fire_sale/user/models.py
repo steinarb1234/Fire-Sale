@@ -16,10 +16,20 @@ class UserInfo(models.Model):
     image = models.CharField(max_length=9999, blank=True, default='')
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
+
+class Country(models.Model):
+    country = models.CharField(max_length=255, primary_key=True)
+
+    def __str__(self):
+        return self.country
+
+
 class UserProfile(models.Model):
-    country = models.CharField(max_length=255, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
     address = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=255, blank=True)
     zip_code = models.CharField(max_length=255, blank=True)
     bio = models.CharField(max_length=255, blank=True)
     user_info = models.OneToOneField(UserInfo, on_delete=models.CASCADE, primary_key=True)
+
+

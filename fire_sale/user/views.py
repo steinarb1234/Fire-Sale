@@ -53,13 +53,13 @@ def register(request):
 
 
 @login_required
-def updateProfile(request, id):
+def update_profile(request, id):
     
-    AuthUser = get_user_model()
+    auth_user = get_user_model()
     user_instance = get_object_or_404(User, pk=id)
     user_info_instance = user_instance.userinfo
     user_profile_instance = user_info_instance.userprofile
-    auth_user_instance = AuthUser.objects.get(pk=id)
+    auth_user_instance = auth_user.objects.get(pk=id)
 
     if request.method == 'POST':
         user_form = CustomUserUpdateForm(request.POST, instance=user_instance)
@@ -122,6 +122,6 @@ def my_offers(request):
 
 
 def my_listings(request):
-    return render(request, 'user_listings/../templates/user/my_listings.html', context={
-        'item_stats': ItemStats.objects.prefetch_related('item').filter(item__seller_id=request.user.id)
+    return render(request, 'user/my_listings.html', context={
+        'item_stats': ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id)
     })

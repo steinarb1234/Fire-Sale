@@ -16,7 +16,7 @@ class Item(models.Model):
 
 
 class ItemStatuses(models.Model):
-    status = models.CharField(max_length=255, default="Not sold", primary_key=True)
+    status = models.CharField(max_length=255, primary_key=True)
 
     def __str__(self):
         return self.status
@@ -25,9 +25,11 @@ class ItemStatuses(models.Model):
 class ItemStats(models.Model):
     views = models.IntegerField(default=0)
     watchers = models.IntegerField(default=0)
-    status = models.ForeignKey(ItemStatuses, on_delete=models.PROTECT)
-    sold_date = models.DateField(null=True, blank=True, default='')
+    status = models.ForeignKey(ItemStatuses, on_delete=models.PROTECT, default="Not sold")
+    sold_date = models.DateField(null=True, blank=True)
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
+
+
 
 
 class ItemConditions(models.Model):

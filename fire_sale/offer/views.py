@@ -1,9 +1,13 @@
 from datetime import date
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from item.models import Item
-from offer.forms.offer_form import CheckoutForm, CreateOfferForm, CreateOfferDetailsForm
+from offer.forms.offer_form import ContactInformationForm, CreateOfferForm, CreateOfferDetailsForm, PaymentForm, \
+    RatingForm
 from offer.models import Offer, OfferDetails
 from django.contrib.auth.decorators import login_required
+
+from user.models import User, UserProfile
+
 
 # Create your views here.
 
@@ -40,50 +44,71 @@ def create_offer(request, item_id):
         'offer_details_form': offer_details_form,
         'item_id': item_id
     })
+    
+@login_required
+def change_offer_status(request, id, itemid, button):
+    if request.method == 'POST':
+        offer_to_change = Offer.objects.get(pk=id)
+        offer_to_change.status = button
+        offer_to_change.save()
+        return redirect('item-offers', item_id=itemid)
+
+    return redirect('item-offers', item_id=itemid)
+    
 
 @login_required
-def checkout(request):
-    if request.method == 'POST':
-        form = CheckoutForm(data=request.POST)
-        if form.is_valid():
-            item = form.save()
-            #
-            # item_image = ItemImage(image=request.POST['image'], item=item)
-            # item_image.save()
+def checkout(request, offer_id):
+    # Að reyna að fá vistuðu uplýsingarnar, veit ekki afh það virkar ekki - Steinar
+    offer = get_object_or_404(Offer, pk=offer_id)
+    user_profile = get_object_or_404(UserProfile, pk=offer.buyer_id)
 
-            return redirect('user-profile')
+    if request.method == 'POST':
+        contact_information_form = ContactInformationForm(data=request.POST, instance=user_profile)
+        payment_form = PaymentForm(data=request.POST)
+        if contact_information_form.is_valid() and payment_form.is_valid():
+            contact_information = contact_information_form
+            payment = payment_form
+
+            return redirect('review', offer_id)
     else:
-        form = CheckoutForm()
+        contact_information_form = ContactInformationForm(instance=user_profile)
+        payment_form = PaymentForm()
+        rating_form = RatingForm()
     return render(request, 'offer/checkout.html', {
-        'form': form
+        'contact_information_form': contact_information_form,
+        'payment_form': payment_form,
+        'offer_id': offer_id,
     })
 
 
 @login_required
 def payment(request):
     if request.method == 'POST':
-        form = CheckoutForm(data=request.POST)
-        if form.is_valid():
-            item = form.save()
+        payment_form = PaymentForm(data=request.POST)
+        if payment_form.is_valid():
+            payment = payment_form
 
             return redirect('user-profile')
     else:
-        form = CheckoutForm()
+        payment_form = PaymentForm()
     return render(request, 'offer/payment.html', {
-        'form': form
+        'payment_form': payment_form,
     })
 
 
 @login_required
-def review(request):
+def review(request, offer_id):
     if request.method == 'POST':
-        form = CheckoutForm(data=request.POST)
-        if form.is_valid():
-            item = form.save()
+        rating_form = RatingForm(data=request.POST)
+        if rating_form.is_valid():
+            rating = rating_form.save(commit=False)
+            rating.offer_id = offer_id
+            rating.save()
 
             return redirect('user-profile')
     else:
-        form = CheckoutForm()
+        rating_form = RatingForm()
     return render(request, 'offer/review.html', {
-        'form': form
+        'rating_form': rating_form,
+        'offer_id': offer_id,
     })
