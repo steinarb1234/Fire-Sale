@@ -20,7 +20,9 @@
       <!-- Search -->
       <form class="searchbar d-flex w-75" role="search" id="search-form" method="GET" action="{% url 'item_list' 'All' %}">
         <div class="search-and-dropdown-container">
-            <input class="form-control me-2 w-100" type="search" name="q" placeholder="Search" aria-label="Search">
+            <div class="search-input">
+                <input class="form-control me-2 w-100" type="search" name="q" placeholder="Search" aria-label="Search">
+            </div>
             <div class="search-dropdown-container nav-item dropdown">
                 <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Search by category
