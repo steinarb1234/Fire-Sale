@@ -335,3 +335,18 @@ label [for="country-select"] {
     display: block;
     padding-top: 15px;
 }
+
+
+.offer-details {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.left-offer-details {
+
+}
+
+
+.right-offer-details {
+
+}
