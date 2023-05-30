@@ -1,4 +1,6 @@
 from datetime import date
+
+import django.utils.datetime_safe
 from django.shortcuts import render, redirect, get_object_or_404
 from item.models import Item, ItemStats, ItemStatuses
 from offer.forms.offer_form import ContactInformationForm, CreateOfferForm, CreateOfferDetailsForm, PaymentForm, \
@@ -6,7 +8,7 @@ from offer.forms.offer_form import ContactInformationForm, CreateOfferForm, Crea
 from offer.models import Offer, OfferDetails
 from django.contrib.auth.decorators import login_required
 from item.models import Item, ItemImage, ItemDetails, ItemStats
-from user.models import User, UserProfile
+from user.models import User, UserProfile, Notification
 
 
 # Create your views here.
@@ -36,6 +38,14 @@ def create_offer(request, item_id):
             offer_details.offer_id = offer.id
             offer_details.start_date = date.today()
             offer_details.save()
+
+            notification_to_seller = Notification()
+            notification_to_seller.message = f'Your item "{offer.item}" has received an offer of ${offer.amount}!'
+            notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
+            notification_to_seller.href = 'offer-details'
+            notification_to_seller.href_parameter = offer.id
+            notification_to_seller.receiver = offer.seller
+            notification_to_seller.save()
 
             return redirect('offer-details', offer.id)
     else:

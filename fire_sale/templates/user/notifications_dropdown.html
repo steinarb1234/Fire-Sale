@@ -9,11 +9,9 @@
     <li><hr class="dropdown-divider"></li>
     {% for notification in notifications reversed %}
     <li class="dropdown-item">
-
-        <b>{{ notification.datetime }}</b><br>
-        {{ notification.message }}<br>
         <a href="{{ notification.href }}">
-            See details
+            <b>{{ notification.datetime }}</b><br>
+            {{ notification.message }}
         </a>
     </li>
     {% endfor %}

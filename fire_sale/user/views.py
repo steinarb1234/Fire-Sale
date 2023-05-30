@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from item.models import Item
 from offer.models import Offer, OfferDetails
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
-from user.models import UserProfile, User, UserInfo, Notifications
+from user.models import UserProfile, User, UserInfo, Notification
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
@@ -140,7 +140,7 @@ def my_listings(request):
 
 
 def notifications(request):
-    notifications = Notifications.objects.filter(receiver=request.user.id)
+    notifications = Notification.objects.filter(receiver=request.user.id)
     for notification in notifications:
         if notification.href_parameter:
             notification.href = resolve_url(notification.href, notification.href_parameter)

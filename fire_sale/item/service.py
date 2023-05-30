@@ -1,5 +1,5 @@
 from django.http import Http404
-from item.models import Item, ItemImage
+from item.models import Item, ItemImage, ItemStats
 from category.models import CategoryViews, Category
 from user.models import User, UserInfo, UserProfile
 from watchlist.models import WatchListItem
@@ -44,14 +44,12 @@ class ItemService:
     @staticmethod
     def get_categories_and_items_by_userid(user_id):
         categories = Category.objects.prefetch_related(
-            Prefetch('item_set', queryset=Item.objects.prefetch_related('itemimage_set'))
+            Prefetch('item_set', queryset=Item.objects.prefetch_related('itemimage_set', 'itemstats'))
         )
-        watchlist_items = WatchListItem.objects.filter(user_id=user_id, item=OuterRef('pk'))
-
-
+        
         categories_and_items = []
         for category in categories:
-            items = category.item_set.all().annotate(is_in_watchlist=Exists(watchlist_items))
+            items = category.item_set.all()
             categories_and_items.append({"name": category.name, "items": items})
 
         return categories_and_items
