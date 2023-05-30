@@ -18,8 +18,8 @@
                 <!-- TODO: Connect these buttons to their respective actions -->
 
                 {% if request.user.id == item_details.item_stats.item.seller_id %}
-                    <a href="{% url 'delete_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
-                    <a href="{% url 'edit_item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
+                    <a href="{% url 'delete-item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
+                    <a href="{% url 'edit-item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
                 {% else %}
                     {% url 'create_offer' item_details.item_stats.item.id as the_url %}
                     <a href="{{ the_url }}" class="block btn btn-primary">Send an offer</a>

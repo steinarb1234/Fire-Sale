@@ -99,9 +99,7 @@ def user_profile(request):
     user_instance = User.objects.get(id = request.user.id)
     user_info = UserInfo.objects.get(user=user_instance)
     user_profile = UserProfile.objects.get(user_info=user_info)
-    print(user_instance)
-    print(user_info)
-    print(user_profile)
+
     return render(request, 'user/profile.html', {
         "user_instance": user_instance,
         "user_info": user_info,
@@ -141,11 +139,13 @@ def my_listings(request):
     })
 
 
-
 def notifications(request):
     notifications = Notifications.objects.filter(receiver=request.user.id)
     for notification in notifications:
-        notification.href = resolve_url(notification.href)
+        if notification.href_parameter:
+            notification.href = resolve_url(notification.href, notification.href_parameter)
+        else:
+            notification.href = resolve_url(notification.href)
 
     return render(request, 'user/notifications.html', context={
         'notifications': notifications

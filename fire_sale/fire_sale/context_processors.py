@@ -1,3 +1,5 @@
+from django.shortcuts import resolve_url
+
 from category.models import Category
 from user.models import User, Notifications
 
@@ -27,6 +29,12 @@ def navigation_bar_processor(request):
 
 def notifications_processor(request):
     notifications = Notifications.objects.filter(receiver=request.user.id)
+    for notification in notifications:
+        if notification.href_parameter:
+            notification.href = resolve_url(notification.href, notification.href_parameter)
+        else:
+            notification.href = resolve_url(notification.href)
+
     return {'notifications': notifications}
 
 
