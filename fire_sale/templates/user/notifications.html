@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container d-flex justify-content-between mb-5">
+    <h1>Notifications</h1>
+    </div>
+    {% for notification in notifications %}
+        <p>{{ notification.message }}</p>
+    {% endfor %}
+
+{% endblock %}
