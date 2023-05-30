@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<h1> My offers </h1>
+
+<div class="container d-flex justify-content-between mb-5">
+    <h1>My offers</h1>
+    {% include 'sort.html' %}
+</div>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Date</th>
                 <th scope="col">Item</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Highest offer</th>
@@ -16,12 +20,12 @@
                 <th scope="col">Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody data-sortable-table>
         {% for offer in user_offers %}
             <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></td>
-                <td>${{ offer.amount }}</td>
+                <td scope="row" data-sort-date>{{offer.offerdetails.start_date|date:"d/m/y"}} <td>
+                <td data-sort-name><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></td>
+                <td data-sort-amount>${{ offer.amount }}</td>
                 <td></td>
                 <td>${{ offer.item.price }}</td>
                 <td></td>
