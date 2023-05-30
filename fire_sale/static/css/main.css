@@ -392,22 +392,50 @@ label [for="country-select"] {
     padding-top: 15px;
 }
 
-
 .offer-details {
     display: flex;
     flex-wrap: nowrap;
-}
+  }
+  
+.offer-details-main-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+.offer-details-main-left {
+    flex-basis: 50%;
+    margin-bottom: 40px;
+  }
 
-.left-offer-details {
-
-}
-
-
-.right-offer-details {
-
-}
 
 .logo {
     height: 50px;
     width: 50px;
 }
+
+.offer-details-main-left > *:not(h1) {
+    margin-left: 55px;
+  }
+  
+.offer-details-main-left h4 {
+    margin-top: 35px;
+    margin-bottom: 30px;
+  }
+  
+.offer-details-main-right {
+    flex-basis: 50%;
+    margin-top: 135px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+.offer-details-buttons {
+    margin-top: 30px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
