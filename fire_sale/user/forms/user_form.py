@@ -19,7 +19,7 @@ class UserProfileForm(ModelForm):
         exclude = ['id', 'user_info']
         # Bæta við database fyrir countries
         widgets = {
-            'country': widgets.TextInput(attrs={'class': 'form-control'}),
+            'country': widgets.Select(attrs={'class': 'form-control'}),
             'address': widgets.TextInput(attrs={'class': 'form-control'}),
             'city': widgets.TextInput(attrs={'class': 'form-control'}),
             'zip_code': widgets.TextInput(attrs={'class': 'form-control'}),

@@ -25,14 +25,25 @@
                 <td>{{ offer.status }}</td>
                 <td>
                     <div class="status-button">
-                        <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Accepted' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Accept</button>
-                        </form>
-                        <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Rejected' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Reject</button>
-                        </form>
+                        {% if offer.status == "Accepted" %}
+                            <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Pending answer' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Pend</button>
+                            </form>
+                            <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Rejected' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </form>
+                        {% else %}
+                            <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Accepted' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Accept</button>
+                            </form>
+                            <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Rejected' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </form>
+                        {% endif %}
                     </div>
                 </td>
             </tr>
@@ -40,4 +51,3 @@
         </tbody>
     </table>
 {% endblock %}
-
