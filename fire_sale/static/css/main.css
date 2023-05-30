@@ -285,10 +285,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 5vw;
-  height: 10vh !important;
-  min-width: 5vw;
-  width: 10vh !important;
+  min-height: 3vw;
+  height: 1vh !important;
+  min-width: 3vw;
+  width: 1vh !important;
   border-radius: 50%;
   background-color: rgba(155, 155, 155, .25);
 }
@@ -304,6 +304,32 @@
 .icon-container span {
   font-size: 4em;
   color: rgba(155, 155, 155, .5);
+}
+
+
+.searchbar {
+    display: flex;
+    align-items: center;
+}
+
+
+.search-dropdown-container {
+    display: flex;
+    background-color: lightgray;
+    align-items: center;
+    height: 38px;
+    border: 1px solid rgb(155,155,155);
+    padding: 5px;
+}
+
+.search-and-dropdown-container {
+    display: flex;
+}
+
+
+.notificaion-and-user-profile {
+    display: flex;
+    gap: 25px;
 }
 
 

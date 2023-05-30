@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from item.models import ItemStats
 from offer.models import Offer, OfferDetails
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
-from user.models import UserProfile, User, UserInfo
+from user.models import UserProfile, User, UserInfo, Notifications
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 
@@ -125,3 +125,10 @@ def my_listings(request):
     return render(request, 'user/my_listings.html', context={
         'item_stats': ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id)
     })
+
+def notifications(request):
+    return render(request, 'user/notifications.html', context={
+        'notifications': Notifications.objects.filter(receiver=request.user.id)
+    })
+
+
