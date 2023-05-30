@@ -9,7 +9,7 @@
     <li><hr class="dropdown-divider"></li>
     {% for notification in notifications reversed %}
     <li>
-        <a class="dropdown-item" href="{% url "user-profile" %}">
+        <a class="dropdown-item" href="{% url notification.href %}">
             <b>{{ notification.datetime }}:</b><br>-  {{ notification.message }}
         </a>
     </li>
