@@ -20,3 +20,5 @@ class OfferDetails(models.Model):
     offer = models.OneToOneField(Offer, on_delete=models.CASCADE, primary_key=True)
     start_date = models.DateField()
     message = models.CharField(max_length=255)
+
+
