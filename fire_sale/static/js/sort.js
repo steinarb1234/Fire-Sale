@@ -1,5 +1,14 @@
 const parseDate = (dateString) => {
+
+  if (!dateString || typeof dateString !== "string") {
+    throw new Error(`Invalid date string: ${dateString}`);
+  }
+
   const parts = dateString.split("/");
+  if (parts.length !== 3) {
+    throw new Error(`Invalid date format: ${dateString}`);
+  }
+
   const day = parseInt(parts[0], 10);
   const month = parseInt(parts[1], 10) - 1; // Month is zero-based in JavaScript Date object
   const year = 2000 + parseInt(parts[2], 10); // Assuming year is in the range 2000-2099
@@ -100,10 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
           bValue = parseFloat(b.querySelector('[data-sort-amount]').textContent.replace('$', ''));
         } else if (selectedOption === 'date-new-old' || selectedOption === 'date-old-new' || selectedOption === 'sort'){
           // Sort by date (default)
-          aValue = parseDate(a.getAttribute("[data-sort-date]"));
-          bValue = parseDate(b.getAttribute("[data-sort-date]"));
+          aValue = parseDate(a.querySelector("[data-sort-date]").textContent);
+          bValue = parseDate(b.querySelector("[data-sort-date]").textContent);
         }
-        console.log(`a: ${aValue} -  b: ${bValue}`)
 
 
         if (selectedOption === 'name-a-z') {
