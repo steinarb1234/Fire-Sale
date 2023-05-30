@@ -13,7 +13,7 @@ def index(request):
 def display_items_by_category(request, category_name):
     query = request.GET.get('q')
 
-    item_list = CategoryService.get_search_results(category_name, query)
+    item_list = CategoryService.get_search_results(category_name, query, user=request.user)
 
     return render(request, 'category/index.html', {
         'category': category_name,

@@ -109,7 +109,6 @@
 }
 
 .card-heart-filled {
-    color: #d90000;
     font-variation-settings:
       'FILL' 1,
       'wght' 400,
@@ -360,13 +359,4 @@ label [for="country-select"] {
 .offer-details {
     display: flex;
     flex-wrap: nowrap;
-}
-
-.left-offer-details {
-
-}
-
-
-.right-offer-details {
-
 }

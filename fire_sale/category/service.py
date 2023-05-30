@@ -1,11 +1,12 @@
 from category.models import Category
+from watchlist.models import WatchListItem
 from item.models import Item, ItemImage, ItemStats
-from django.db.models import Prefetch, Q
+from django.db.models import Prefetch, Q, Exists, OuterRef
 
 
 class CategoryService:
     @staticmethod
-    def get_search_results(category_name, query):
+    def get_search_results(category_name, query, user=None):
         items = Item.objects.all().prefetch_related(
             Prefetch('itemimage_set', queryset=ItemImage.objects.all().order_by('id'))
         )
@@ -23,5 +24,9 @@ class CategoryService:
             items = items.filter(name__icontains=query)
 
         items = items.filter(itemstats__status='Not sold')
+
+        if user:
+            watchlist_items = WatchListItem.objects.filter(user_id=user.id)
+            items = items.annotate(is_in_watchlist=Exists(watchlist_items.filter(item_id=OuterRef('pk'))))
 
         return items
