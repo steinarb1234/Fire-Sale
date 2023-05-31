@@ -23,5 +23,19 @@
                 {{ form }}
             </form>
     </div>
+
+
+        {% for rating in user_ratings %}
+            <div>
+                <p>{{ rating.offer_id.item_id }}</p>
+                <p>{{ rating.date }}
+                    <div id="stars-{{ rating.offer_id }}">
+                        {# Javacript fills here #}
+                    </div>
+                </p>
+                <p>{{ rating.rating }}/5 stars</p>
+                <p>{{ rating.message }}</p>
+            </div>
+        {% endfor %}
 {% endblock %}
 

@@ -82,6 +82,7 @@ TEMPLATES = [
                 'fire_sale.context_processors.categories_processor',
                 'fire_sale.context_processors.navigation_bar_processor',
                 'fire_sale.context_processors.notifications_processor',
+                'fire_sale.context_processors.user_rating_processor',
             ],
         },
     },

@@ -1,6 +1,8 @@
+from django.db.models import Avg
 from django.shortcuts import resolve_url
 
 from category.models import Category
+from rating.models import Rating
 from user.models import User, Notification
 
 
@@ -38,4 +40,17 @@ def notifications_processor(request):
     return {'notifications': notifications}
 
 
+
+def user_rating_processor(request):
+    user_ratings = Rating.objects.filter(offer__seller_id=request.user.id)
+    if user_ratings:
+        average_rating = round(list(user_ratings.aggregate(Avg('rating')).values())[0], 1)
+        return {
+            "user_ratings": user_ratings,
+            'average_rating': average_rating
+        }
+    else:
+        return {
+            "user_ratings": user_ratings,
+        }
 

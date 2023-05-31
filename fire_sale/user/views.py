@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
 from item.models import Item
 from offer.models import Offer, OfferDetails
+from rating.models import Rating
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
 from user.models import UserProfile, User, UserInfo, Notification
 from django.contrib.auth import get_user_model
@@ -99,11 +100,13 @@ def user_profile(request):
     user_instance = User.objects.get(id = request.user.id)
     user_info = UserInfo.objects.get(user=user_instance)
     user_profile = UserProfile.objects.get(user_info=user_info)
+    user_ratings = Rating.objects.filter(offer__seller_id=request.user.id)
 
     return render(request, 'user/profile.html', {
         "user_instance": user_instance,
         "user_info": user_info,
         "user_profile": user_profile,
+        "user_ratings": user_ratings,
     })
 
 

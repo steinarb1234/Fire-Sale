@@ -125,3 +125,6 @@ def item_offers(request, item_id):
         "item": item,
     })
 
+
+
+
