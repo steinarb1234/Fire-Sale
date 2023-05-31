@@ -16,6 +16,7 @@
       <a class="navbar-brand" href="/">
         
         <img class="nav-link img-fluid logo" id="logo" role="button" aria-expanded="false" src="{% static 'images/FIRE_SALE_LOGO_FINAL.png' %}" alt="Fire Sale! logo">
+        <!--<img class="nav-link img-fluid logo" role="button" aria-expanded="false" src="{% static 'images/logo-fire-color.png' %}" alt="Fire Sale! logo">-->
       </a>
 
       <!-- Search -->
@@ -80,13 +81,13 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="{% url "user-profile" %}">
                   <b>{{ user_instance.full_name|truncate_name }}</b><br>
-                  Average rating: {{ user_instance.userinfo.avg_rating }} ⭐
+                  Average rating: {{ average_rating }} ⭐
               </a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url "user-profile" %}">Profile</a></li>
               <li><a class="dropdown-item" href="{% url "watchlist-index" %}">Watchlist</a></li>
-                <li><a class="dropdown-item" href="{% url "my-offers" %}">My offers</a></li>
-              <li><a class="dropdown-item" href="{% url 'my-listings' %}">My listings</a></li>
+                <li><a class="dropdown-item" href="{% url "my-offers" %}">Bids/offers</a></li>
+              <li><a class="dropdown-item" href="{% url 'my-listings' %}">Selling</a></li>
               {% if user.is_authenticated %}
                 <li><a class="dropdown-item"href="{% url 'logout' %}">Logout</a></li>
               {% endif %}

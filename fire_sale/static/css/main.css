@@ -374,16 +374,28 @@ input[name="image"] {
     margin: 5px;
 }
 
+.masthead-container {
+    text-decoration: none;
+    color: initial;
+}
+
+.masthead-container:hover {
+
+}
 
 .masthead {
     height: 500px;
     min-height: 500px;
-    background-image: url('https://i.ytimg.com/vi/0oBx7Jg4m-o/maxresdefault.jpg');
+    background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     margin-top: 30px;
     margin-bottom: 30px;
+}
+
+.masthead:hover {
+    background-image: url('https://plus.unsplash.com/premium_photo-1684783848349-fe1d51ab831b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
 }
 
 label [for="country-select"] {
@@ -406,10 +418,14 @@ label [for="country-select"] {
     margin-bottom: 40px;
   }
 
+.navbar-brand {
+    height: 76px;
+}
+
 
 .logo {
-    height: 50px;
-    width: 50px;
+    height: 100%;
+    object-fit: scale-down;
 }
 
 .offer-details-main-left > *:not(h1) {
@@ -452,3 +468,14 @@ label [for="country-select"] {
     margin-left: 16.5%;
     margin-top: 25px;
   }
+
+
+.star {
+  font-size: 24px;
+  color: gray;
+}
+.star.filled {
+  color: gold;
+}
+
+

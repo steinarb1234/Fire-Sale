@@ -40,7 +40,7 @@ class ItemConditions(models.Model):
 
 class ItemDetails(models.Model):
     condition = models.ForeignKey(ItemConditions, on_delete=models.PROTECT)
-    description = models.CharField(max_length=9999, blank=True)
+    description = models.TextField(max_length=9999, blank=True)
     item_stats = models.OneToOneField(ItemStats, on_delete=models.CASCADE, primary_key=True)
 
 
