@@ -25,11 +25,11 @@
                     {% url 'create_offer' item_details.item_stats.item.id as the_url %}
                     <a href="{{ the_url }}" class="block btn btn-primary">Send an offer</a>
                     {% if in_watchlist %}
-                        <a href="{% url 'delete_from_watchlist' item_details.item_stats.item.id %}" class="btn btn-primary">Remove from Watchlist</a>
+                        <a href="{% url 'delete_from_watchlist' item_details.item_stats.item.id %}" class="btn btn-outline-primary">Remove from Watchlist</a>
                     {% else %}
                         <form method="POST" action="{% url 'add_to_watchlist' item_details.item_stats.item.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Add to watchlist</button>
+                            <button type="submit" class="btn btn-outline-primary">Add to watchlist</button>
                         </form>
                     {% endif %}
                     </div>

@@ -2,9 +2,10 @@
     /* Color pallete */
     --fs-color-background-primary: #fff;
     --fs-color-background-secondary: #e9ecef;
-    --fs-color-primary: #ff5d31;
+    --fs-color-primary: #da431a;
+    --fs-color-primary-darker: #c4340d;
     --fs-color-secondary: #ffa200;
-    --fs-color-success: #77db54;
+    --fs-color-success: #65d63c;
     --fs-color-danger: #ff4231;
     --fs-color-warning: #fbd118;
     --fs-color-info: #29b1eb;
@@ -459,6 +460,19 @@ label [for="country-select"] {
     height: 76px;
 }
 
+.navbar-lower-links {
+    text-decoration: none;
+    color: black;
+    margin: 0 0.5em;
+}
+
+.navbar-lower-links:hover {
+    text-decoration: underline;
+}
+
+.navbar-lower-links span{
+    font-weight: bold;
+}
 
 .logo {
     height: 100%;
@@ -513,3 +527,23 @@ label [for="country-select"] {
 }
 
 
+ /* To handle small screen size */
+#screen-too-small-message {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    .navbar, .lower-nav-bar, footer, #main-container {
+      display: none !important;
+    }
+  
+    #screen-too-small-message {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 80vw;
+      height: 100vh;
+      margin: auto;
+    }
+  }

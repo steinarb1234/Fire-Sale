@@ -20,6 +20,13 @@
         {% endblock %}
     </div>
 
+    <div id="screen-too-small-message">
+        <h1>Screensize too small!</h1>
+        <p>Unfortunately the website does not yet support screens under 1000 pixels in width.
+            Please check back later to see if we have added support for such screens or try again on another device.
+        </p>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/sort.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -54,4 +61,5 @@
     </script>
 </body>
 {% include 'footer.html' %}
+
 </html>

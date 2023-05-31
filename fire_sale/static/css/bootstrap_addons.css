@@ -17,3 +17,45 @@
 .rounded-right {
     border-radius: 0 0.25rem 0.25rem 0;
 }
+
+
+.text-primary {
+    color: var(--fs-color-primary) !important;
+}
+
+
+.btn-primary {
+    background-color: var(--fs-color-primary) !important;
+    border-color: var(--fs-color-primary)  !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--fs-color-primary-darker) !important;
+    border-color: var(--fs-color-primary-darker) !important;
+}
+
+.btn-outline-primary {
+    color: var(--fs-color-primary) !important;
+    border-color: var(--fs-color-primary) !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+}
+
+.btn-outline-primary:hover {
+    color: white !important;
+    background-color: var(--fs-color-primary) !important;
+}
+
+.btn-outline-success {
+    color: var(--fs-color-success) !important;
+    border-color: var(--fs-color-success) !important;
+    border-width: medium !important;
+    font-weight: 400 !important;
+}
+
+.btn-outline-success:hover {
+    color: white !important;
+    background-color: var(--fs-color-success) !important;
+}
