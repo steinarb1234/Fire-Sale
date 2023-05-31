@@ -2,26 +2,42 @@
 {% load static %}
 {% block content %}
     <div class="profile_site">
-            <div class="left_side">
-                <h1 class="centered">Profile</h1>
-                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
-                <a href="{% url 'my-offers' %}" class="btn btn-primary">My offers</a>
-                <a href="{% url 'my-listings' %}" class="btn btn-primary">My listings</a>
-                <a href="{% url 'update_profile' user.id %}" class="btn btn-primary">Edit Profile</a>
+        <div class="left_side">
+            <h1 class="centered">Profile</h1>
+            <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
+            <a href="{% url 'my-offers' %}" class="btn btn-primary">My offers</a>
+            <a href="{% url 'my-listings' %}" class="btn btn-primary">My listings</a>
+            <a href="{% url 'update_profile' user.id %}" class="btn btn-primary">Edit Profile</a>
+        </div>
+        <div class="right_side">
+            <h1>{{ user_instance.full_name }}</h1>
+
+            <div class="username_rating">
+                <p><b>Username:</b> {{ user_instance.user_name }}</p>
+                <p><b>Rating:</b> {{ user_info.avg_rating }} </p>
+                <br>
+                <p><b>Biography: </b> {{ user_profile.bio }}</p>
             </div>
-            <div class="right_side">
-                <h1>{{ user_instance.full_name }}</h1>
-                <div class="username_rating">
-                    <p><b>Username:</b> {{ user_instance.user_name }}</p>
-                    <p><b>Rating:</b> {{ user_info.avg_rating }} </p>
-                    <br>
-                    <p><b>Biography: </b> {{ user_profile.bio }}</p>
-                </div>
-            </div>
-            <form class="form form-horizontal" method="post">
-                {% csrf_token %}
-                {{ form }}
-            </form>
+        </div>
+        <form class="form form-horizontal" method="post">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+
     </div>
+
+
+        {% for rating in user_ratings %}
+            <div>
+                <p>{{ rating.offer_id.item_id }}</p>
+                <p>{{ rating.date }}
+                    <div id="stars-{{ rating.offer_id }}">
+                        {# Javacript fills here #}
+                    </div>
+                </p>
+                <p>{{ rating.rating }}/5 stars</p>
+                <p>{{ rating.message }}</p>
+            </div>
+        {% endfor %}
 {% endblock %}
 

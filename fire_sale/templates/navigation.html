@@ -80,7 +80,7 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="{% url "user-profile" %}">
                   <b>{{ user_instance.full_name|truncate_name }}</b><br>
-                  Average rating: {{ user_instance.userinfo.avg_rating }} ⭐
+                  Average rating: {{ average_rating }} ⭐
               </a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url "user-profile" %}">Profile</a></li>
