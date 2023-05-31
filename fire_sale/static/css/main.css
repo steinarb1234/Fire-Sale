@@ -10,10 +10,9 @@
     --fs-color-info: #29b1eb;
 
     /* Size variables */
-    --logo-size: 5vh;
-    --nav-item-size: 5vh;
-    --nav-item-min-size: 3vw;
-    --nav-main-bar-height: calc(max(var(--nav-item-size), var(--nav-item-min-size)) + 2*0.5rem + 2*0.3125rem);
+    --logo-size: 76px;
+    --nav-item-size: 60px;
+    --nav-main-bar-height: calc(var(--logo-size) + 2*0.5rem);
 }
 
 
@@ -335,8 +334,6 @@ display: inline-block;
   align-items: center;
   height: var(--nav-item-size);
   width: var(--nav-item-size);
-  min-height: var(--nav-item-min-size);
-  min-width: var(--nav-item-min-size);
   border-radius: 50%;
   background-color: rgba(155, 155, 155, .25);
 }
@@ -381,6 +378,7 @@ display: inline-block;
 .notificaion-and-user-profile {
     display: flex;
     gap: 25px;
+    margin-left: 1rem;
 }
 
 
