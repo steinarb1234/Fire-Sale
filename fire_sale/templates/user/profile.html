@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div class="profile_site">
-            <div class="left_side">
+    <div class="d-flex">
+            <div class="profile-left-side">
                 <h1 class="centered">Profile</h1>
-                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
+                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile-image-small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
                 <a href="{% url 'my-offers' %}" class="btn btn-primary">My offers</a>
                 <a href="{% url 'my-listings' %}" class="btn btn-primary">My listings</a>
                 <a href="{% url 'update_profile' user.id %}" class="btn btn-primary">Edit Profile</a>
             </div>
-            <div class="right_side">
+            <div class="profile-right-side">
                 <h1>{{ user_instance.full_name }}</h1>
-                <div class="username_rating">
+                <div class="username-rating">
                     <p><b>Username:</b> {{ user_instance.user_name }}</p>
                     <p><b>Rating:</b> {{ user_info.avg_rating }} </p>
                     <br>
