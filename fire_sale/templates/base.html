@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap_addons.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -32,12 +32,13 @@
 
           for (var i = 0; i < 5; i++) {
             var star = document.createElement('span');
-            star.className = 'star';
-            star.textContent = (i < Math.round(rating)) ? '\u2605' : '\u2606';
+            star.className = 'material-icons star';
+            star.textContent = (i < Math.round(rating)) ? 'star' : 'star_border';
             stars.appendChild(star);
           }
         {% endfor %}
     </script>
+    {# Avergage rating in dropdown menu #}
     <script>
         var rating = {{ average_rating }}; // Get the rating from your Django view
 
@@ -45,8 +46,8 @@
 
         for (var i = 0; i < 5; i++) {
         var star = document.createElement('span');
-        star.className = 'star';
-        star.textContent = (i < Math.round(rating)) ? '\u2605' : '\u2606'; // Unicode character for filled star and unfilled star
+        star.className = 'material-icons star';
+        star.textContent = (i < Math.round(rating)) ? 'star' : 'star_border'; // Unicode character for filled star and unfilled star
         stars.appendChild(star);
         }
     </script>

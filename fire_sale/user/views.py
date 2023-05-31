@@ -102,6 +102,7 @@ def user_profile(request):
     user_profile = UserProfile.objects.get(user_info=user_info)
     user_ratings = Rating.objects.filter(offer__seller_id=request.user.id)
 
+
     return render(request, 'user/profile.html', {
         "user_instance": user_instance,
         "user_info": user_info,
