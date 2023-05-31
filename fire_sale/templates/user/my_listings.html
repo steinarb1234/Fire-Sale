@@ -22,7 +22,7 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="{% url 'item-details' item.item.id %}">{{ item.item.name }}</a></td>
-                <td>{{ item.item.id }}</td>
+                <td>{{ item.status }}</td>
                 <td>${{ item.item.price }}</td>
                  <td>
                     {% for offer in highest_prices_dict.items %}

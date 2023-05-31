@@ -7,6 +7,8 @@
             <h1>Your offer for "<a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a>"</h1>
         {% elif offer.seller.id == request.user.id %}
             <h1>Offer for "<a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a>"</h1>
+        {% else %}
+            <h1>What are you doing here?</h1>
         {% endif %}
         <div class="item_img-container d-flex flex-row">
             {% include 'item/item_image_carousel.html' %}

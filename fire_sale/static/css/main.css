@@ -66,6 +66,16 @@
     z-index: 1000;
 }
 
+.navbar-lower-links {
+    text-decoration: none;
+    color: black;
+    margin: 0 0.5em;
+}
+
+.navbar-lower-links:hover {
+    text-decoration: underline;
+}
+
 .navbar-brand {
     height: 76px;
 }

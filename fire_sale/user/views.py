@@ -123,7 +123,7 @@ def my_offers(request):
     
     return render(request, 'user/my_offers.html', {
         "user_offers": user_offers,
-        "highest_price": highest_price
+        "highest_price": highest_price,
     })
 
 
