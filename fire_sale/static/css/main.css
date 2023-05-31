@@ -362,10 +362,10 @@ display: inline-block;
 
 .search-dropdown-container {
     display: flex;
-    background-color: lightgray;
+    background-color: rgba(220, 220, 220, 0.5);
     align-items: center;
     height: 38px;
-    border: 1px solid rgb(155,155,155);
+    border: 1px solid lightgrey;
     padding: 5px;
 }
 
