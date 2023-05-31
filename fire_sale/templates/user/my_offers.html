@@ -10,12 +10,13 @@
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Item</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Offers</th> 
+                <th scope="col">Offer status</th>
+                <th scope="col">Offer amount</th>
+
                 <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
                 <th scope="col">Highest offer</th>         {# Bæta inn ! - Steinar #}
+                <th scope="col">Offers</th>
 {#                <th scope="col">Item status</th>#}
-                <th scope="col">Offer status</th>
                 <th scope="col">Details</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -25,12 +26,13 @@
             <tr>
                 <th scope="row" data-sort-date>{{offer.offerdetails.start_date|date:"d/m/y"}}</th>
                 <td data-sort-name><a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a></td>
+                <td>{{ offer.status }}</td>
                 <td data-sort-amount>${{ offer.amount }}</td>
-                <td></td>
+
                 <td>${{ offer.item.price }}</td>
                 <td>${{ highest_price }}</td>
+                <td></td>
 {#                <td>{{ offer.item.itemstats.status }}</td>#}
-                <td>{{ offer.status }}</td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
                 <td>
                     <div class="status-button">
