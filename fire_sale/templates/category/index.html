@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{#    <a href="{{request.META.HTTP_REFERER}}" style="color: black; display: flex; align-items: center; text-decoration: none; position: absolute">#}
+{#        <span class="material-symbols-outlined">#}
+{#            arrow_back#}
+{#        </span>#}
+{#        Go back#}
+{#    </a>#}
     <div class="container d-flex justify-content-between mb-5">
         <h1>Welcome to {{ category }}!</h1>
         {% include 'sort.html' %}

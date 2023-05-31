@@ -1,4 +1,5 @@
 from django.db.models import Sum, Max
+from django.forms import formset_factory, modelformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from category.models import Category
@@ -8,7 +9,7 @@ from item.models import Item, ItemImage, ItemDetails, ItemStats
 from watchlist.models import WatchListItem
 from item.service import ItemService
 from django.contrib.auth.decorators import login_required
-from offer.models import Offer
+from offer.models import Offer, OfferDetails
 
 
 def index(request):
@@ -125,6 +126,23 @@ def item_offers(request, item_id):
         "item": item,
     })
 
+def item_offers_buyers(request, item_id):
+    offers = Offer.objects.filter(item_id=item_id)
+    item = Item.objects.get(pk=item_id)
+    return render(request, 'offer/item_offers_buyer_view.html', {
+        "offers": offers,
+        "item": item,
+    })
 
-
+# def input_url_view(request):
+#     UrlFormSet = modelformset_factory(ItemImage, form=CreateItemImageForm, extra=1)
+#     if request.method == 'POST':
+#         formset = UrlFormSet(request.POST)
+#         if formset.is_valid():
+#             formset.save()
+#             # You can add a message or redirect here
+#     else:
+#         formset = UrlFormSet(queryset=ItemImage.objects.none())
+#
+#     return render(request, 'item/create_item.html', {'formset': formset})
 
