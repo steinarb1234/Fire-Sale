@@ -493,6 +493,14 @@ label [for="country-select"] {
 
 }
 
+.notification-dropdown-item {
+    text-decoration: none;
+    color: black;
+}
+
+.notification-dropdown-item:hover {
+    text-decoration: underline;
+}
  /* To handle small screen size */
  #screen-too-small-message {
     display: none;

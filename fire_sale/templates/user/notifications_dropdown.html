@@ -6,16 +6,16 @@
 </div>
 
 <ul class="dropdown-menu dropdown-menu-end">
-    <li class="dropdown-item"><a href="{% url "notifications" %}"><b>Notifications:</b></a></li>
+    <li class="dropdown-item"><a class="notification-dropdown-item" href="{% url "notifications" %}"><b>Notifications:</b></a></li>
     <li><hr class="dropdown-divider"></li>
     {% for notification in notifications reversed %}
     <li class="dropdown-item">
-        <a href="{{ notification.href }}">
+        <a href="{{ notification.href }}" class="notification-dropdown-item">
             <b>{{ notification.datetime }}</b><br>
             {{ notification.message }}
         </a>
     </li>
     {% endfor %}
     <li><hr class="dropdown-divider"></li>
-    <li class="dropdown-item"><a href="{% url "notifications" %}">See all ></a></li>
+    <li class="dropdown-item"><a href="{% url "notifications" %}" class="notification-dropdown-item">See all ></a></li>
 </ul>
