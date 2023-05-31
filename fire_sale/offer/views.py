@@ -1,5 +1,7 @@
 from datetime import date
+from django.template.loader import render_to_string
 from django.db.models import Sum, Max
+from django.http import JsonResponse
 import django.utils.datetime_safe
 from django.shortcuts import render, redirect, get_object_or_404
 from item.models import Item, ItemStats, ItemStatuses
@@ -9,7 +11,7 @@ from offer.models import Offer, OfferDetails
 from django.contrib.auth.decorators import login_required
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from user.models import User, UserProfile, Notification
-
+from django.http import HttpRequest
 
 # Create your views here.
 
@@ -23,13 +25,28 @@ def offer_details(request, offer_id):
         'highest_price': highest_price
     })
 
+
+def open_offer_window(request, item_id):
+    print(item_id)
+    print("ajax")
+    offer_form = CreateOfferForm()
+    offer_details_form = CreateOfferDetailsForm()
+    html_form = render_to_string('offer/create_offer.html', {
+        'offer_form': offer_form,
+        'offer_details_form': offer_details_form,
+        'item_id': item_id
+    }, request=request)
+    return JsonResponse({'html_form': html_form})
+    
+
 @login_required
 def create_offer(request, item_id):
+        
     if request.method == 'POST':
+        print('posting')
         offer_form = CreateOfferForm(data=request.POST)
         offer_details_form = CreateOfferDetailsForm(data=request.POST)
         if offer_form.is_valid() and offer_details_form.is_valid():
-            # Save items in inherited model
             offer = offer_form.save(commit=False)
             offer.buyer_id = request.user.id
             offer.item_id = item_id
@@ -58,6 +75,7 @@ def create_offer(request, item_id):
         'offer_details_form': offer_details_form,
         'item_id': item_id
     })
+    
     
 @login_required
 def change_offer_status(request, id, itemid, button):

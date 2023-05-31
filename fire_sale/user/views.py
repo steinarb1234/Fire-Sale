@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
-from item.models import Item
+from item.models import Item, ItemStats
 from offer.models import Offer, OfferDetails
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
 from user.models import UserProfile, User, UserInfo, Notification
@@ -125,16 +125,13 @@ def my_offers(request):
 
 
 def my_listings(request):
-    # Get all items where the current user is the seller
+
     user_items = Item.objects.filter(seller=request.user.id)
-
-    # Get the highest price per item
     highest_prices = Offer.objects.filter(item__in=user_items).values('item_id').annotate(highest_price=Max('amount'))
-
     highest_prices_dict = {item['item_id']: item['highest_price'] for item in highest_prices}
 
     return render(request, 'user/my_listings.html', context={
-        'item_stats': user_items,
+        'item_stats': ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id),
         "highest_prices_dict": highest_prices_dict,
     })
 
