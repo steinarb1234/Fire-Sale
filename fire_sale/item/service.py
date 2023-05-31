@@ -23,13 +23,28 @@ class ItemService:
 
         item_zip = tuple(zip(item_list, images))
         return item_zip
+
+    @staticmethod
+    def get_categories_and_items_by_userid(user_id):
+        watchlist_items = WatchListItem.objects.filter(user_id=user_id).select_related('item')
+
+        categories = Category.objects.prefetch_related(
+            Prefetch('item_set',
+                queryset=Item.objects.prefetch_related('itemimage_set')
+                               .annotate(is_in_watchlist=Exists(watchlist_items.filter(item=OuterRef('pk'))))
+            )
+        )
+
+        categories_and_items = []
+        for category in categories:
+            categories_and_items.append({"name": category.name, "items": category.item_set.all()})
+
+        return categories_and_items
         
     @staticmethod
     def get_seller_details_from_item_id(item_id):
         item = Item.objects.select_related('seller__userinfo__user', 'seller__userinfo__userprofile').get(id=item_id)
 
-        seller = item.seller
-        user_info = seller.userinfo
         user = user_info.user
         user_profile = user_info.userprofile
 
@@ -42,20 +57,11 @@ class ItemService:
         return seller_details
 
     @staticmethod
-    def get_categories_and_items_by_userid(user_id):
-        categories = Category.objects.prefetch_related(
-            Prefetch('item_set', queryset=Item.objects.prefetch_related('itemimage_set', 'itemstats'))
-        )
+    def get_category_and_items_by_itemid(category, item_id, user=None):
+        items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set')
 
-        categories_and_items = []
-        for category in categories:
-            items = category.item_set.all()
-            categories_and_items.append({"name": category.name, "items": items})
-
-        return categories_and_items
-
-    @staticmethod
-    def get_category_and_items_by_itemid(category, item_id):
-        items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set', 'itemstats')
+        if user:
+            watchlist_items = WatchListItem.objects.filter(user=user).select_related('item')
+            items = items.annotate(is_in_watchlist=Exists(watchlist_items.filter(item_id=OuterRef('pk'))))
         category_and_items = {"name": category.name, "items": items}
         return category_and_items

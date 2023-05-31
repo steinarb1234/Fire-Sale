@@ -1,16 +1,13 @@
-from django.db.models import Sum
+from django.db.models import Sum, Max
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
-
 from category.models import Category
 from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
     EditItemImageForm, EditItemStatsForm, EditItemDetailsForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from watchlist.models import WatchListItem
 from item.service import ItemService
-
 from django.contrib.auth.decorators import login_required
-
 from offer.models import Offer
 
 
@@ -22,19 +19,25 @@ def index(request):
 
 from django.db.models import Max
 def get_item_details_by_id(request, id):
-    item_details = get_object_or_404(ItemDetails.objects.select_related('item_stats__item', 'item_stats__item__category', 'item_stats__item__seller', 'condition'), pk=id)
+    item_details = get_object_or_404(ItemDetails.objects.select_related(
+        'item_stats__item',
+        'item_stats__item__category',
+        'item_stats__item__seller',
+        'condition'
+    ), pk=id)
 
-    category_and_items = ItemService.get_category_and_items_by_itemid(item_details.item_stats.item.category, id)
-    item_images = ItemImage.objects.filter(item=item_details.item_stats.item).prefetch_related('item')
-    # watchlist_items = WatchListItem.objects.filter(item_id=id)
+    item = item_details.item_stats.item
+    category_and_items = ItemService.get_category_and_items_by_itemid(item.category, id, request.user.id)
+    item_images = ItemImage.objects.filter(item=item).select_related('item')
+    watchlist_items = WatchListItem.objects.filter(item_id=id, user=request.user.id).select_related('user')
     highest_price = Offer.objects.filter(item_id=id).aggregate(Max('amount'))['amount__max'] or 0
 
     return render(request, 'item/item_details.html', {
         'item_details': item_details,
         'category_and_items': category_and_items,
         'item_images': item_images,
-        # 'watchlist_items': watchlist_items,
-        # 'in_watchlist': watchlist_items.filter(user_id=request.user.id).exists(),
+        'watchlist_items': watchlist_items,
+        'in_watchlist': watchlist_items.exists(),
         'highest_price': highest_price,
     })
 
