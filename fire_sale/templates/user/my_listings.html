@@ -21,9 +21,9 @@
         {% for item in item_stats %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td><a href="{% url 'item-details' item.item.id %}">{{ item.name }}</a></td>
-                <td>{{ item.item.id }}</td>
-                <td>${{ item.price }}</td>
+                <td><a href="{% url 'item-details' item.item.id %}">{{ item.item.name }}</a></td>
+                <td>{{ item.status }}</td>
+                <td>${{ item.item.price }}</td>
                  <td>
                     {% for offer in highest_prices_dict.items %}
                         {% if offer.0 == item.id %}
