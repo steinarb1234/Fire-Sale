@@ -487,3 +487,13 @@ label [for="country-select"] {
     padding-right: 30px;
 
 }
+
+
+.notification-dropdown-item {
+    text-decoration: none;
+    color: black;
+}
+
+.notification-dropdown-item:hover {
+    text-decoration: underline;
+}
