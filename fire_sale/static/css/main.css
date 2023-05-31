@@ -379,9 +379,7 @@ input[name="image"] {
     color: initial;
 }
 
-.masthead-container:hover {
 
-}
 
 .masthead {
     height: 500px;
@@ -429,7 +427,8 @@ label [for="country-select"] {
 }
 
 .offer-details-main-left > *:not(h1) {
-    margin-left: 55px;
+    margin-left: 200px;
+    margin-top: 80px;
   }
   
 .offer-details-main-left h4 {
@@ -439,7 +438,7 @@ label [for="country-select"] {
   
 .offer-details-main-right {
     flex-basis: 50%;
-    margin-top: 135px;
+    margin-top: 110px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -453,6 +452,7 @@ label [for="country-select"] {
     align-items: center;
     text-align: center;
     width: 100%;
+    margin-left: 135px;
   }
 
 #logo {
