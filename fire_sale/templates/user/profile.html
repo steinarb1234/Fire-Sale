@@ -10,13 +10,12 @@
             <a href="{% url 'update_profile' user.id %}" class="btn btn-primary">Edit Profile</a>
         </div>
         <div class="right_side">
-            <h1>{{ user_instance.full_name }}</h1>
+            <h2>{{ user_instance.full_name }}</h2>
 
             <div class="username_rating">
                 <p><b>Username:</b> {{ user_instance.user_name }}</p>
-                <p><b>Rating:</b> {{ user_info.avg_rating }} </p>
-                <br>
-                <p><b>Biography: </b> {{ user_profile.bio }}</p>
+                <p><b>Average rating:</b> {{ average_rating }} </p>
+                <p><b>Biography: </b><br>{{ user_profile.bio }}</p>
             </div>
         </div>
         <form class="form form-horizontal" method="post">

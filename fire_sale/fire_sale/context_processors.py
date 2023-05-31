@@ -43,9 +43,14 @@ def notifications_processor(request):
 
 def user_rating_processor(request):
     user_ratings = Rating.objects.filter(offer__seller_id=request.user.id)
-    average_rating = round(list(user_ratings.aggregate(Avg('rating')).values())[0], 1)
-    return {
-        "user_ratings": user_ratings,
-        'average_rating': average_rating
-    }
+    if user_ratings:
+        average_rating = round(list(user_ratings.aggregate(Avg('rating')).values())[0], 1)
+        return {
+            "user_ratings": user_ratings,
+            'average_rating': average_rating
+        }
+    else:
+        return {
+            "user_ratings": user_ratings,
+        }
 
