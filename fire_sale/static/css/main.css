@@ -414,10 +414,14 @@ label [for="country-select"] {
     margin-bottom: 40px;
   }
 
+.navbar-brand {
+    height: 76px;
+}
+
 
 .logo {
-    height: 50px;
-    width: 50px;
+    height: 100%;
+    object-fit: scale-down;
 }
 
 .offer-details-main-left > *:not(h1) {
