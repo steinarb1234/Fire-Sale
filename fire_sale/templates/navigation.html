@@ -122,8 +122,8 @@
   
   <div class="d-flex justify-content-end align-items-center w-25">
     {% if user.is_authenticated %}
-      <a class="m-2" href="{% url "create-item" %}">Create listing +</a>
-      <a class="m-2" href="{% url "watchlist-index" %}">Watchlist</a>
+      <a class="navbar-lower-links" href="{% url "create-item" %}">Create listing <span class="text-primary">+</span></a>
+      <a class="navbar-lower-links" href="{% url "watchlist-index" %}">Watchlist</a>
     {% endif %}
   </div>
 </div>
