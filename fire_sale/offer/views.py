@@ -1,5 +1,5 @@
 from datetime import date
-
+from django.db.models import Sum, Max
 import django.utils.datetime_safe
 from django.shortcuts import render, redirect, get_object_or_404
 from item.models import Item, ItemStats, ItemStatuses
@@ -16,9 +16,11 @@ from user.models import User, UserProfile, Notification
 def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
     item_images = ItemImage.objects.filter(item=offer.item)
+    highest_price = Offer.objects.filter(item_id=offer_id).aggregate(Max('amount'))['amount__max'] or 0
     return render(request, 'offer/offer_details.html', {
         "offer": offer,
         'item_images': item_images,
+        'highest_price': highest_price
     })
 
 @login_required
