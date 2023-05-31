@@ -1,31 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{#    <div class="profile_site">#}
-{#        <div class="left_side">#}
-{#            <h1>Profile</h1>#}
-{#            <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">#}
-{#            <a href="{% url 'my-offers' %}" class="btn btn-primary">My offers</a>#}
-{#            <a href="{% url 'my-listings' %}" class="btn btn-primary">My listings</a>#}
-{#            <a href="{% url 'update_profile' user.id %}" class="btn btn-primary">Edit Profile</a>#}
-{#        </div>#}
-{#        <div class="right_side">#}
-{#            <h2>{{ user_instance.full_name }}</h2>#}
-{##}
-{#            <div class="username_rating">#}
-{#                <p><b>Username:</b> {{ user_instance.user_name }}</p>#}
-{#                <p><b>Average rating:</b> {{ average_rating }} </p>#}
-{##}
-{#                <p><b>Biography: </b><br>{{ user_profile.bio }}</p>#}
-{#            </div>#}
-{#        </div>#}
-{#        <form class="form form-horizontal" method="post">#}
-{#            {% csrf_token %}#}
-{#            {{ form }}#}
-{#        </form>#}
-{##}
-{#    </div>#}
-
     <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
     <h1>Profile</h1>
         <div style="width: 70%">
@@ -72,6 +47,9 @@
 
     <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
     <h2 style="margin-top: 50px">Ratings</h2>
+        {% if not user_ratings %}
+            <p>No ratings found</p>
+        {% endif %}
         {% for rating in user_ratings %}
             <div style="width: 50%; padding: 10px; border-bottom: 1px solid lightgray">
                     <p>{{ rating.offer_id.user_id.user_name }}</p>
