@@ -9,4 +9,4 @@ class Rating(models.Model):
     offer = models.OneToOneField(Offer, on_delete=models.CASCADE)
     message = models.CharField(max_length=255)
     date = models.DateField(null=True, blank=True, default=timezone.now)
-    rating = models.IntegerField()
+    rating = models.FloatField()
