@@ -30,8 +30,8 @@ def delete_from_watchlist(request, item_id):
 
 @login_required
 def index(request):
-    watchlist_items = WatchListItem.objects.filter(user_id=request.user.id)
-    items = Item.objects.filter(id__in=watchlist_items.values('item_id')).annotate(
+    watchlist_items = WatchListItem.objects.filter(user_id=request.user.id).select_related('item')
+    items = Item.objects.filter(id__in=watchlist_items.values('item_id')).prefetch_related('itemimage_set').annotate(
         is_in_watchlist=Exists(watchlist_items.filter(item_id=OuterRef('pk')))
     )
     return render(request, 'watchlist/index.html', {

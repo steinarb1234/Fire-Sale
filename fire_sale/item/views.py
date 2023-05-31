@@ -21,16 +21,25 @@ def index(request):
 
 
 def get_item_details_by_id(request, id):
-    item_details = get_object_or_404(ItemDetails.objects.select_related('item_stats__item', 'item_stats__item__category', 'item_stats__item__seller', 'condition'), pk=id)
-    category_and_items = ItemService.get_category_and_items_by_itemid(item_details.item_stats.item.category, id, request.user.id)
-    item_images = ItemImage.objects.filter(item=item_details.item_stats.item).prefetch_related('item')
-    watchlist_items = WatchListItem.objects.filter(item_id=id)
+    item_details = get_object_or_404(ItemDetails.objects.select_related(
+        'item_stats__item',
+        'item_stats__item__category',
+        'item_stats__item__seller',
+        'condition'
+    ), pk=id)
+
+    item = item_details.item_stats.item
+    category_and_items = ItemService.get_category_and_items_by_itemid(item.category, id, request.user.id)
+
+    item_images = ItemImage.objects.filter(item=item).select_related('item')
+    watchlist_items = WatchListItem.objects.filter(item_id=id, user=request.user.id).select_related('user')
+
     return render(request, 'item/item_details.html', {
         'item_details': item_details,
         'category_and_items': category_and_items,
         'item_images': item_images,
         'watchlist_items': watchlist_items,
-        'in_watchlist': watchlist_items.filter(user_id = request.user.id).exists()
+        'in_watchlist': watchlist_items.exists()
     })
 
 
