@@ -446,3 +446,17 @@ label [for="country-select"] {
     text-align: center;
     width: 100%;
   }
+
+#logo {
+    max-height: 200px; /* Adjust the value as needed */
+    width: auto;
+  }
+
+#item-details-btn > * {
+    margin-bottom: 10px;
+  }
+
+.condition-and-description {
+    margin-left: 16.5%;
+    margin-top: 25px;
+  }
