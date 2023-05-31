@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h4>Create item</h4>
-    <form class="form form-row" action="{% url 'create_item' %}" method="post">
+    <form class="form form-row" action="{% url 'create-item' %}" method="post">
         {% csrf_token %}
         {{ item_form }}
         {{ item_image_form }}

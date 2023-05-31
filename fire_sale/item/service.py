@@ -1,5 +1,5 @@
 from django.http import Http404
-from item.models import Item, ItemImage
+from item.models import Item, ItemImage, ItemStats
 from category.models import CategoryViews, Category
 from user.models import User, UserInfo, UserProfile
 from watchlist.models import WatchListItem
@@ -63,6 +63,5 @@ class ItemService:
         if user:
             watchlist_items = WatchListItem.objects.filter(user=user).select_related('item')
             items = items.annotate(is_in_watchlist=Exists(watchlist_items.filter(item_id=OuterRef('pk'))))
-
         category_and_items = {"name": category.name, "items": items}
         return category_and_items

@@ -220,8 +220,8 @@ input[name="image"] {
 
 .lower-nav-bar {
     position: fixed;
-    top: 76px;
-    /*top: calc(max(5vw, 10vh) + 2*0.3125rem + 2*0.5em);*/
+    /*top: 76px;*/
+    top: calc(max(5vw, 10vh) + 2*0.3125rem + 2*0.5em);
     z-index: 1000;
 }
 
