@@ -438,3 +438,8 @@ label [for="country-select"] {
     text-align: center;
     width: 100%;
   }
+
+#logo {
+    max-height: 200px; /* Adjust the value as needed */
+    width: auto;
+  }
