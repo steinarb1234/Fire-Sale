@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from category.models import Category
 from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
-    EditItemImageForm, EditItemStatsForm, EditItemDetailsForm
+EditItemImageForm, EditItemStatsForm, EditItemDetailsForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from watchlist.models import WatchListItem
 from item.service import ItemService
