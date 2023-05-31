@@ -37,16 +37,15 @@
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary">Add to watchlist</button>
                         </form>
-                    </div>
                     {% endif %}
+                    </div>
                 {% endif %}
-
             </div>
 
         </div>
         <div class="col-lg-2 border-start border-secondary-subtle">
             <div id="seller-info">
-                <h4>Seller Information</h4>
+                <h4>Seller information</h4>
                 <p>Name: {{ item_details.item_stats.item.seller.full_name }}</p>
                 <p>Rating: {{ item_details.item_stats.item.seller.user_info.avg_rating }}</p>
                 <p>Location: {{ item_details.item_stats.item.seller.user_info.user_profile.country }}</p>

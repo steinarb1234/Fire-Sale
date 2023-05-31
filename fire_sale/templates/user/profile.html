@@ -1,27 +1,63 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div class="profile_site">
-            <div class="left_side">
-                <h1 class="centered">Profile</h1>
-                <img class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
-                <a href="{% url 'my-offers' %}" class="btn btn-primary">My offers</a>
-                <a href="{% url 'my-listings' %}" class="btn btn-primary">My listings</a>
-                <a href="{% url 'update_profile' user.id %}" class="btn btn-primary">Edit Profile</a>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+    <h1>Profile</h1>
+        <div style="width: 70%">
+            <div style="display: flex; align-items: center; gap: 15%; margin: 40px; justify-content: center">
+                <img style="object-fit: contain; width: 120px" class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
+                <div>
+                    <h2>{{ user_instance.full_name }}</h2>
+                </div>
+                <a href="{% url 'update_profile' user.id %}" style="background-color: lightgray; color: black; border-color: lightgray; display: flex; align-items: center; gap: 5px; justify-content: center; font-weight: 500" class="btn btn-primary">
+                    <span style="color: dimgrey" class="material-symbols-outlined">
+                        edit
+                    </span>
+                    Edit profile
+                </a>
             </div>
-            <div class="right_side">
-                <h1>{{ user_instance.full_name }}</h1>
-                <div class="username_rating">
+            <div style="display: flex; justify-content: center">
+                <div>
                     <p><b>Username:</b> {{ user_instance.user_name }}</p>
-                    <p><b>Rating:</b> {{ user_info.avg_rating }} </p>
-                    <br>
-                    <p><b>Biography: </b> {{ user_profile.bio }}</p>
+                    <p><b>Email:</b> {{ user_instance.email }}</p>
+                    <p><b>Average rating:</b> {{ average_rating }} </p>
+                    <p><b>Location: </b><br>
+                        {{ user_profile.country_id }}<br>
+                        {{ user_profile.city }}, {{ user_profile.zip_code }}<br>
+                        {{ user_profile.address }}<br>
+                    </p>
+                    <p><b>Biography: </b><br>{{ user_profile.bio }}</p>
+
+
+                    <div style="display: flex; flex-direction: column; gap: 10px; width: 200px; font-weight: 500">
+        {#                <a href="{% url 'update_profile' user.id %}" style="background-color: lightgray; color: black; border-color: lightgray; display: flex; align-items: center; gap: 5px; justify-content: center; font-weight: 500" class="btn btn-primary">#}
+        {#                    <span style="color: dimgrey" class="material-symbols-outlined">#}
+        {#                        edit#}
+        {#                    </span>#}
+        {#                    Edit Profile#}
+        {#                </a>#}
+                        <a href="{% url 'my-offers' %}" class="btn btn-primary" style="font-weight: 500">My offers</a>
+                        <a href="{% url 'my-listings' %}" class="btn btn-primary" style="font-weight: 500">My listings</a>
+                    </div>
                 </div>
             </div>
-            <form class="form form-horizontal" method="post">
-                {% csrf_token %}
-                {{ form }}
-            </form>
+        </div>
+    </div>
+
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+    <h2 style="margin-top: 50px">Ratings</h2>
+        {% if not user_ratings %}
+            <p>No ratings found</p>
+        {% endif %}
+        {% for rating in user_ratings %}
+            <div style="width: 50%; padding: 10px; border-bottom: 1px solid lightgray">
+                    <p>{{ rating.offer_id.user_id.user_name }}</p>
+                    <p>{{ rating.offer_id.item_id }}</p>
+                    <div id="stars-{{ rating.id }}">{# Javacript fills stars here #}</div>
+                    <p>{{ rating.date }}</p>
+                    <p>{{ rating.message }}</p>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
-

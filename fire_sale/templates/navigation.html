@@ -15,16 +15,17 @@
       <!-- Logo -->
       <a class="navbar-brand" href="/">
         
-        <img class="nav-link img-fluid logo" id="logo" role="button" aria-expanded="false" src="{% static 'images/FIRE_SALE_LOGO.png' %}" alt="Fire Sale! logo">
+        <img class="nav-link img-fluid logo" id="logo" role="button" aria-expanded="false" src="{% static 'images/FIRE_SALE_LOGO_FINAL.png' %}" alt="Fire Sale! logo">
+        <!--<img class="nav-link img-fluid logo" role="button" aria-expanded="false" src="{% static 'images/FIRE_SALE_LOGO_FINAL.png' %}" alt="Fire Sale! logo">-->
       </a>
 
       <!-- Search -->
       <form class="searchbar d-flex w-75" role="search" id="search-form" method="GET" action="{% url 'item_list' 'All' %}">
         <div class="search-and-dropdown-container">
             <div class="search-input">
-                <input class="form-control me-2 w-1000" type="search" name="q" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2 w-1000 rounded-left" type="search" name="q" placeholder="Search" aria-label="Search">
             </div>
-            <div class="search-dropdown-container nav-item dropdown">
+            <div class="search-dropdown-container nav-item dropdown rounded-right">
                 <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Search by category
                 </a>
@@ -79,8 +80,10 @@
 
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="{% url "user-profile" %}">
-                  <b>{{ user_instance.full_name|truncate_name }}</b><br>
-                  Average rating: {{ user_instance.userinfo.avg_rating }} ⭐
+{#                  <b>{{ user_instance.full_name|truncate_name }}</b><br>#}
+                  <b>{{ user_instance.full_name }}</b><br>
+                  <div class="center-form" id="average-stars"></div>
+                  Average rating: {{ average_rating }}
               </a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url "user-profile" %}">Profile</a></li>
@@ -119,8 +122,9 @@
   
   <div class="d-flex justify-content-end align-items-center w-25">
     {% if user.is_authenticated %}
-      <a class="m-2" href="{% url "create-item" %}">Create listing +</a>
-      <a class="m-2" href="{% url "watchlist-index" %}">Watchlist</a>
+      <a class="navbar-lower-links" href="{% url "create-item" %}">Create listing <span class="text-primary">+</span></a>
+      <a class="navbar-lower-links" href="{% url "watchlist-index" %}">Watchlist</a>
     {% endif %}
   </div>
 </div>
+
