@@ -1,25 +1,31 @@
 <div id="main-image-container" class="carousel slide">
-    <div class="carousel-indicators">
-        {% for image in item_images %}
-            <button type="button" data-bs-target="#main-image-container" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></button>
-        {% endfor %}
-    </div>
-    <div class="carousel-inner">
-        {% for image in item_images %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">->
-                <img src="{{ image.image }}" class="d-block w-100" alt="Image {{ forloop.counter1 }}">
+    {% if item_images %}
+        {% if item_images|length > 1 %}
+            <div class="carousel-indicators">
+                {% for image in item_images %}
+                    <button type="button" data-bs-target="#main-image-container" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></button>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
-    <a class="carousel-control-prev" href="#main-image-container" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon material-symbols-outlined" aria-hidden="true">
-            arrow_back_ios
-        </span>
-        <span class="visually-hidden">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#main-image-container" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon material-symbols-outlined" aria-hidden="true">
-            arrow_forward_ios</span>
-        <span class="visually-hidden">Next</span>
-    </a>
+            <a class="carousel-control-prev" href="#main-image-container" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon material-symbols-outlined" aria-hidden="true">
+                    arrow_back_ios
+                </span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#main-image-container" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon material-symbols-outlined" aria-hidden="true">
+                    arrow_forward_ios</span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        {% endif %}
+        <div class="carousel-inner">
+            {% for image in item_images %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">->
+                    <img src="{{ image.image }}" class="d-block w-100" alt="Image {{ forloop.counter1 }}">
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card-img-top card-img-missing"><span class="material-symbols-outlined">image</span></div>
+    {% endif %}
 </div>

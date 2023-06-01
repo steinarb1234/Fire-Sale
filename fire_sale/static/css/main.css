@@ -286,6 +286,10 @@ label [for="country-select"] {
         filter: drop-shadow(3px 3px 3px rgba(68, 68, 221, 0.15));
     }
 
+    .small-item-card a {
+        text-decoration: none;
+    }
+
     .card-img-top {
         height: 200px;
         object-fit: cover;

@@ -24,7 +24,6 @@
                 <p><span class="material-symbols-outlined">favorite</span>: {{ watchlist_items.count }}</p>
                 <p><span class="material-symbols-outlined">info</span>: {{ item_details.item_stats.status }}</p>
 
-                <!-- TODO: Connect these buttons to their respective actions -->
                 <div class="space-item"></div>
                 {% if request.user.id == item_details.item_stats.item.seller_id %}
                     <a href="{% url 'delete-item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>

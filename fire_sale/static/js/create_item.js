@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const formsetContainer = document.getElementById('formset-container');
     const formTemplate = document.querySelector('#form-template');
     const totalFormsInput = document.querySelector('#id_form-TOTAL_FORMS');
+    
+    if (!addButton || !formsetContainer || !formTemplate || !totalFormsInput) {
+      return
+    }
+
     let formCount = totalFormsInput.value; // Initial form count
   
     addButton.addEventListener('click', () => {
