@@ -1,15 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 
-
+<script>
+    $(document).ready(function() {
+        // Hide the filter checkboxes initially
+        $(".filter-my-offers").hide();
+    
+        // Toggle filter checkboxes visibility when filter link is clicked
+        $("#filter-link").click(function() {
+            $(".filter-my-offers").toggle();
+        });
+    
+        // Handle filtering based on checkbox selections
+        $(":checkbox").change(function() {
+            let selectedFilters = [];
+    
+            // Get the values of checked checkboxes
+            $(":checkbox:checked").each(function() {
+                selectedFilters.push($(this).val());
+            });
+    
+            // Show/hide rows based on checkbox selections
+            $("#offer-table-container tbody tr").each(function() {
+                let offerStatus = $(this).find("td:eq(2)").text(); // Get the offer status from the table cell
+    
+                // Show the row if the offer status is in the selected filters or no filters are selected
+                if (selectedFilters.length === 0 || selectedFilters.includes(offerStatus)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+    </script>
+    
+    
 
 <div class="container d-flex justify-content-between mb-5">
     <h1>My offers</h1>
     {% include 'sort.html' %}
 </div>
 
-<a href="#" onclick="toggleFilter()">Filter</a>
-<div class="filter-my-offers" style="display: none;">
+<a href="#" id="filter-link">Filter</a>
+<div class="filter-my-offers">
         <div class="filter-title">
           <h id="filter-title">Offer status</h>
           <h id="filter-title">Item status</h>
@@ -28,6 +62,7 @@
         </div>
 </div>
 
+<div id="offer-table-container">
     <table class="table">
         <thead>
             <tr>
@@ -86,5 +121,6 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
 
 {% endblock %}

@@ -469,6 +469,14 @@ label [for="country-select"] {
     margin-left: 600px;
 }
 
+#filter-link {
+    color:rgb(30, 30, 30);
+    font-weight: 600;
+    margin-left: 8px;
+    margin-bottom: 100px;
+}
+
+
 /* === Sign in === */
 
 .center-form {
@@ -603,4 +611,8 @@ label [for="country-select"] {
       margin: auto;
     }
   }
+
+
+
+
 
