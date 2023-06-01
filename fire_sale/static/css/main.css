@@ -194,7 +194,8 @@ input[name="image"] {
 }
 
 .status-button form {
-display: inline-block;
+    display: inline-block;
+    font-weight: 500;
 }
 
 .helptext, .helptext ul li {

@@ -47,7 +47,7 @@ class RatingForm(ModelForm):
         model = Rating
         fields = ['rating', 'message']
         widgets = {
-            'rating': forms.NumberInput(attrs={'class': 'form-control'}),
-            'message': forms.Textarea(attrs={'class': 'form-control'}),
+            'rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 5}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'min': 0, 'max': 5}),
         }
 
