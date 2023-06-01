@@ -1,7 +1,9 @@
-from django.db.models import Max
+from django.db.models import Max, Avg
 from django.forms import formset_factory, modelformset_factory
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
+
+from rating.models import Rating
 from user.models import UserProfile, UserInfo
 from category.models import Category
 from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
@@ -33,7 +35,8 @@ def get_item_details_by_id(request, id):
 
     seller_id = item_details.item_stats.item.seller_id
     user_location = UserProfile.objects.get(user_info__user_id=seller_id).country
-    # user_rating = UserInfo.objects.get(user__id=seller_id).avg_rating
+    user_rating = round(Rating.objects.filter(offer_id__seller=seller_id).aggregate(Avg('rating'))['rating__avg'], 1)\
+                  or 'No ratings'
     item = item_details.item_stats.item
     category_and_items = ItemService.get_category_and_items_by_itemid(item.category, id, request.user.id)
     item_images = ItemImage.objects.filter(item=item).select_related('item')
@@ -43,7 +46,7 @@ def get_item_details_by_id(request, id):
 
     return render(request, 'item/item_details.html', {
         'user_location': user_location,
-        # 'user_rating' : user_rating,
+        'user_rating' : user_rating,
         'item_details': item_details,
         'category_and_items': category_and_items,
         'item_images': item_images,
@@ -174,7 +177,7 @@ def edit_item(request, id):
 
 
 
-
+@login_required()
 def item_offers(request, item_id):
     offers = Offer.objects.filter(item_id=item_id)
     item = Item.objects.get(pk=item_id)
@@ -183,6 +186,7 @@ def item_offers(request, item_id):
         "item": item,
     })
 
+@login_required
 def item_offers_buyers(request, item_id):
     offers = Offer.objects.filter(item_id=item_id)
     item = Item.objects.get(pk=item_id)
@@ -190,16 +194,3 @@ def item_offers_buyers(request, item_id):
         "offers": offers,
         "item": item,
     })
-
-# def input_url_view(request):
-#     UrlFormSet = modelformset_factory(ItemImage, form=CreateItemImageForm, extra=1)
-#     if request.method == 'POST':
-#         formset = UrlFormSet(request.POST)
-#         if formset.is_valid():
-#             formset.save()
-#             # You can add a message or redirect here
-#     else:
-#         formset = UrlFormSet(queryset=ItemImage.objects.none())
-#
-#     return render(request, 'item/create_item.html', {'formset': formset})
-

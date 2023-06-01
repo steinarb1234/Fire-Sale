@@ -1,10 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
 
+<script>
+    $(document).ready(function() {
+        // Hide the filter checkboxes initially
+        $(".filter-my-offers").hide();
+    
+        // Toggle filter checkboxes visibility when filter link is clicked
+        $("#filter-link").click(function() {
+            $(".filter-my-offers").toggle();
+        });
+    
+        // Handle filtering based on checkbox selections
+        $(":checkbox").change(function() {
+            let selectedFilters = [];
+    
+            // Get the values of checked checkboxes
+            $(":checkbox:checked").each(function() {
+                selectedFilters.push($(this).val());
+            });
+    
+            // Show/hide rows based on checkbox selections
+            $("#offer-table-container tbody tr").each(function() {
+                let offerStatus = $(this).find("td:eq(2)").text(); // Get the offer status from the table cell
+    
+                // Show the row if the offer status is in the selected filters or no filters are selected
+                if (selectedFilters.length === 0 || selectedFilters.includes(offerStatus)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+    </script>
+    
+    
+
 <div class="container d-flex justify-content-between mb-5">
     <h1>My offers</h1>
     {% include 'sort.html' %}
 </div>
+
+<a href="#" id="filter-link">Filter</a>
+<div class="filter-my-offers">
+        <div class="filter-title">
+          <h id="filter-title">Offer status</h>
+          <h id="filter-title">Item status</h>
+        </div>
+        <div class="filter-checkboxes">
+          <div class="status-filter">
+            <div><input type="checkbox" value="Accepted" id="accepted"><label for="accepted">Accepted</label></div>
+            <div><input type="checkbox" value="Pending answer" id="pending-answer"><label for="pending-answer">Pending answer</label></div>
+            <div><input type="checkbox" value="Item purchased" id="item-purchased"><label for="item-purchased">Item purchased</label></div>
+            <div><input type="checkbox" value="Rejected" id="rejected"><label for="rejected">Rejected</label></div>
+          </div>
+          <div class="status-filter">
+            <div><input type="checkbox" value="Sold" id="sold"><label for="sold">Sold</label></div>
+            <div><input type="checkbox" value="Not sold" id="not-sold"><label for="not-sold">Not sold</label></div>
+          </div>
+        </div>
+</div>
+
+<div id="offer-table-container">
     <table class="table">
         <thead>
             <tr>
@@ -13,7 +71,8 @@
                 <th scope="col">Offer status</th>
                 <th scope="col">Offer amount</th>
                 <th scope="col">List price</th>  
-                <th scope="col">Highest offer</th>         
+                <th scope="col">Highest offer</th>
+                <th scope="col">Offers</th>
                 <th scope="col">Details</th>
                 <th scope="col">Item status</th>
                 {% if offer.status != 'Accepted' %}
@@ -61,5 +120,6 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
 
 {% endblock %}

@@ -32,8 +32,7 @@
                 <h1>{{ item_details.item_stats.item.name }}</h1>
                 <h3>Price: ${{ item_details.item_stats.item.price }}</h3>
                 <h4>Highest Offer: ${{ highest_price }}</h4>
-                <a href="{% url 'item-offers-buyers' item_details.item_stats.item.id %}" class="bid-count">[{{ item_details.item_stats.item.offer_set.count }} bids]</a>
-
+                <a href="{% url 'item-offers-buyers' item_details.item_stats.item.id %}" class="bid-count">[{{ item_details.item_stats.item.offer_set.count }} offers]</a>
                 <div class="space-item"></div>
 
                 {% if request.user.id == item_details.item_stats.item.seller_id %}

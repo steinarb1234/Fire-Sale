@@ -4,7 +4,7 @@
     <form class="form form-row" action="{% url 'checkout' offer_id %}" method="post">
         {% csrf_token %}
         {{ rating_form }}
-        <input type="submit" value="Submit" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+        <input type="submit" value="Submit" class="btn btn-primary pull-right review-form" />
     </form>
 {% endblock %}
 <!--review yfir allt nema kortauppl.-->

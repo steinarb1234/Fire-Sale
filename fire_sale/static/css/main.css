@@ -194,7 +194,8 @@ input[name="image"] {
 }
 
 .status-button form {
-display: inline-block;
+    display: inline-block;
+    font-weight: 500;
 }
 
 .helptext, .helptext ul li {
@@ -467,6 +468,34 @@ label [for="country-select"] {
     margin-bottom: 40px;
   }
 
+.filter-checkboxes {
+    display:flex
+}
+
+.status-filter {
+    display: flex;
+    margin-right: 40px;
+}
+
+.status-filter > * {
+    margin-right: 30px;
+}
+
+.filter-my-offers {
+    margin-left: 10px;
+}
+
+#item-status.filter-title {
+    margin-left: 600px;
+}
+
+#filter-link {
+    color:rgb(30, 30, 30);
+    font-weight: 600;
+    margin-left: 8px;
+    margin-bottom: 100px;
+}
+
 
 /* === Sign in === */
 
@@ -602,4 +631,25 @@ label [for="country-select"] {
       margin: auto;
     }
   }
+
+.most-viewed-categories {
+    margin-top: 50px; margin-bottom: -15px;
+}
+
+.review-form, checkout-form {
+    clear:both; margin: 10px 0
+}
+
+.notification-icon {
+    display: flex; align-items: center
+}
+
+.search-by-category {
+    width: 207.05px
+}
+
+
+
+
+
 
