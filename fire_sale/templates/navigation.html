@@ -78,7 +78,11 @@
 {#                  <b>{{ user_instance.full_name|truncate_name }}</b><br>#}
                   <b>{{ user_instance.full_name }}</b><br>
                   <div class="center-form" id="average-stars"></div>
-                  Average rating: {{ average_rating }}
+                  {% if average_rating %}
+                    Average rating: {{ average_rating }}
+                  {% else %}
+                      Average rating: (No ratings)
+                  {% endif %}
               </a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url "user-profile" %}">Profile</a></li>
