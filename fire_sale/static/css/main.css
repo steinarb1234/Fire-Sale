@@ -10,6 +10,7 @@
     --fs-color-danger: #f33322;
     --fs-color-danger-darker: #c72010;
     --fs-color-warning: #fbd118;
+    --fs-color-warning-lighter: #fcdc51;
     --fs-color-info: #29b1eb;
 
     /* Size variables */
@@ -333,6 +334,10 @@ label [for="country-select"] {
     .condition-and-description {
         margin-left: 16.5%;
         margin-top: 25px;
+    }
+
+    .condition-and-description p {
+        white-space: pre-wrap;
     }
 
     #item-details-btn > * {
