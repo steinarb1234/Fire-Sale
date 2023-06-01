@@ -18,10 +18,11 @@ class CreateItemForm(ModelForm):
 class CreateItemImageForm(ModelForm):
     class Meta:
         model = ItemImage
-        widgets = {
-            'image': widgets.URLInput(attrs={'class': 'form-control'})
-        }
         fields = ['image']
+        widgets = {
+            'image': forms.URLInput(attrs={'class': 'form-control'})
+        }
+
 
 
 class CreateItemDetailsForm(ModelForm):
