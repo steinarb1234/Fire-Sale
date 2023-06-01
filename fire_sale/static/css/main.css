@@ -337,7 +337,9 @@ label [for="country-select"] {
     .card-info:hover, .category-name:hover, .see-more:hover {
         text-decoration: underline;
     }
+
     /* Item Details */
+
     .condition-and-description {
         margin-left: 16.5%;
         margin-top: 25px;
@@ -386,9 +388,19 @@ label [for="country-select"] {
         border-radius: 50%;
         padding: 4px 0 0 4px
     }
+
+    .item-details-icons {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        justify-content: space-between;
+      }
     
-
-
+    .item-details-info {
+        display: flex;
+        flex-direction: revert;
+      }
+    
 
 /* === Offer === */
 
@@ -571,3 +583,10 @@ label [for="country-select"] {
       margin: auto;
     }
   }
+
+
+
+
+
+
+
