@@ -33,7 +33,7 @@ def get_item_details_by_id(request, id):
 
     seller_id = item_details.item_stats.item.seller_id
     user_location = UserProfile.objects.get(user_info__user_id=seller_id).country
-    user_rating = UserInfo.objects.get(user__id=seller_id).avg_rating
+    # user_rating = UserInfo.objects.get(user__id=seller_id).avg_rating
     item = item_details.item_stats.item
     category_and_items = ItemService.get_category_and_items_by_itemid(item.category, id, request.user.id)
     item_images = ItemImage.objects.filter(item=item).select_related('item')
@@ -43,7 +43,7 @@ def get_item_details_by_id(request, id):
 
     return render(request, 'item/item_details.html', {
         'user_location': user_location,
-        'user_rating' : user_rating,
+        # 'user_rating' : user_rating,
         'item_details': item_details,
         'category_and_items': category_and_items,
         'item_images': item_images,
