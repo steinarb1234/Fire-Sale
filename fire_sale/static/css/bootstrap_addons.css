@@ -58,6 +58,20 @@
     font-weight: 600 !important;
 }
 
+.btn-success#go-to-checkout {
+    color: white;
+    background-color: var(--fs-color-success) !important;
+    border-color: var(--fs-color-success)  !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+    font-size: small;
+}
+
+.btn-success#go-to-checkout:hover {
+    background-color: var(--fs-color-success-darker) !important;
+    border-color: var(--fs-color-success-darker) !important;
+}
+
 .btn-success:hover {
     background-color: var(--fs-color-success-darker) !important;
     border-color: var(--fs-color-success-darker) !important;
@@ -82,6 +96,19 @@
     font-weight: 600 !important;
 }
 
+.btn-outline-danger {
+    color: var(--fs-color-danger) !important;
+    border-color: var(--fs-color-danger) !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+    font-size: small;
+}
+
+.btn-outline-danger:hover {
+    color: white !important;
+    background-color: var(--fs-color-danger) !important;
+}
+
 .btn-danger:hover {
     background-color: var(--fs-color-danger-darker) !important;
     border-color: var(--fs-color-danger-darker) !important;
@@ -92,10 +119,23 @@
     background-color: var(--fs-color-warning) !important;
     border-color: var(--fs-color-warning)  !important;
     border-width: medium !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
 }
 
 .btn-warning:hover {
     background-color: var(--fs-color-warning-lighter) !important;
     border-color: var(--fs-color-warning-lighter) !important;
+}
+
+.btn-outline-warning {
+    color: var(--fs-color-warning) !important;
+    border-color: var(--fs-color-warning) !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+    font-size: small;
+}
+
+.btn-outline-warning:hover {
+    color: white !important;
+    background-color: var(--fs-color-warning) !important;
 }
