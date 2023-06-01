@@ -129,6 +129,9 @@
 
 /* === Sort === */
 
+.container #sort-selector {
+    height: 35px;
+}
 
 
 /* === Category=== */

@@ -1,8 +1,10 @@
+# Import statements
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
-from item.models import Item, ItemStats
-from offer.models import Offer, OfferDetails
+from item.models import Item, ItemStats, ItemDetails
+from watchlist.models import WatchListItem
+from offer.models import Offer
 from rating.models import Rating
 from user.forms.user_form import CustomUserCreationForm, UserProfileForm, CustomUserUpdateForm, UserProfileUpdateForm, UserInfoUpdateForm
 from user.models import UserProfile, User, UserInfo, Notification
@@ -10,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 
+# View functions for 'user':
 def register(request):
     
     if request.method == 'POST':
@@ -126,17 +129,25 @@ def my_offers(request):
         "highest_price": highest_price,
     })
 
-
-
+from django.db.models import Count
 def my_listings(request):
-
+    
     user_items = Item.objects.filter(seller=request.user.id)
+    
+    # Calculate highest price for each item
     highest_prices = Offer.objects.filter(item__in=user_items).values('item_id').annotate(highest_price=Max('amount'))
     highest_prices_dict = {item['item_id']: item['highest_price'] for item in highest_prices}
-
+    
+    # Fetch item stats
+    item_stats = ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id)
+    for item_stat in item_stats:
+        item_stat.highest_price = highest_prices_dict.get(item_stat.item.id, 'No offer')
+        
+        # Calculate number of watchers for each item
+        item_stat.watchers = WatchListItem.objects.filter(item=item_stat).count()
+    
     return render(request, 'user/my_listings.html', context={
-        'item_stats': ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id),
-        "highest_prices_dict": highest_prices_dict,
+        'item_stats': item_stats,
     })
 
 

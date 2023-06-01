@@ -24,12 +24,12 @@
                 <td><a href="{% url 'item-details' item.item.id %}">{{ item.item.name }}</a></td>
                 <td>{{ item.status }}</td>
                 <td>${{ item.item.price }}</td>
-                 <td>
-                    {% for offer in highest_prices_dict.items %}
-                        {% if offer.0 == item.id %}
-                            ${{ offer.1 }}
-                        {% endif %}
-                    {% endfor %}
+                <td>
+                    {% if item.highest_price != "No offer" %}
+                        ${{ item.highest_price }}
+                    {% else %}
+                        {{ item.highest_price }}
+                    {% endif %}
                 </td>
                 <td>
                     {% with offer_count=item.item.offer_set.count %}
@@ -41,6 +41,7 @@
                     {% endwith %}
                 </td>
                 <td>{{ item.views }}</td>
+                <!-- item.watchers-->
                 <td>{{ item.watchers }}</td>
             </tr>
         {% endfor %}
@@ -48,4 +49,7 @@
     </table>
 
 {% endblock %}
+
+
+
 

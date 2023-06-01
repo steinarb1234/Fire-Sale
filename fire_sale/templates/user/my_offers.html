@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-
 <div class="container d-flex justify-content-between mb-5">
     <h1>My offers</h1>
     {% include 'sort.html' %}
@@ -19,7 +18,9 @@
                 <th scope="col">Offers</th>
 {#                <th scope="col">Item status</th>#}
                 <th scope="col">Details</th>
-                <th scope="col">Actions</th>
+                {% if offer.status != 'Accepted' %}
+                    <th scope="col">Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody data-sortable-table>
@@ -32,27 +33,34 @@
 
                 <td>${{ offer.item.price }}</td>
                 <td>${{ highest_price }}</td>
-                <td></td>
+                <td>
+                    {% if offer.item.offer_set.count > 0 %}
+                        <a href="{% url 'item-offers-buyers' offer.item.id %}">{{ offer.item.offer_set.count }} offers</a>
+                    {% else %}
+                        No offer
+                    {% endif %}
+                </td>
 {#                <td>{{ offer.item.itemstats.status }}</td>#}
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
-                <td>
-                    <div class="status-button">
-                        {% if offer.status == 'Accepted' %}
-                            <form method="POST" action="{% url 'checkout' offer.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Go to checkout</button>
-                            </form>
-                        {% endif %}
-{#                        <form method="POST" action="{% url 'change_offer_status' offer.id 'Rejected' %}">#}
-{#                            {% csrf_token %}#}
-{#                            <button type="submit" class="btn btn-danger">Reject</button>#}
-{#                        </form>#}
-                    </div>
-                </td>
-
+                {% if offer.status != 'Accepted' %}
+                    <td>
+                        <div class="status-button">
+                            <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-success">Edit offer</a>
+                            <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
+                        </div>
+                    </td>
+                {% else %}
+                    <td>
+                        <form method="POST" action="{% url 'checkout' offer.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Go to checkout</button>
+                        </form>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
 {% endblock %}
+

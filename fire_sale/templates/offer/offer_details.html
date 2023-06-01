@@ -18,8 +18,9 @@
     <div class="offer-details-main-right">
         <p>Offer amount: ${{ offer.amount }}</p>
         <p>Highest offer: ${{ highest_price }}</p>
+        <p>Item buyer: {{ offer.buyer }}</p>
         <p>Item seller: {{ offer.seller }}</p>
-        <p>Item seller: {{ offer.seller.email }}</p>
+        <p>Seller email: {{ offer.seller.email }}</p>
         <p>Seller rating: {{ offer.seller.userinfo.avg_rating }}</p>
         <p>Message: {{ offer.offerdetails.message }}</p>
         <p>Offer date: {{ offer.offerdetails.start_date }}</p>
