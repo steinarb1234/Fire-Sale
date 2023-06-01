@@ -35,8 +35,12 @@ def get_item_details_by_id(request, id):
 
     seller_id = item_details.item_stats.item.seller_id
     user_location = UserProfile.objects.get(user_info__user_id=seller_id).country
-    user_rating = round(Rating.objects.filter(offer_id__seller=seller_id).aggregate(Avg('rating'))['rating__avg'], 1)\
-                  or 'No ratings'
+
+    try:
+        user_rating = round(Rating.objects.filter(offer_id__seller=seller_id).aggregate(Avg('rating'))['rating__avg'], 1)
+    except TypeError:
+        user_rating = '(No ratings)'
+
     item = item_details.item_stats.item
     category_and_items = ItemService.get_category_and_items_by_itemid(item.category, id, request.user.id)
     item_images = ItemImage.objects.filter(item=item).select_related('item')

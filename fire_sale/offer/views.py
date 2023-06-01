@@ -104,7 +104,7 @@ def change_offer_status(request, id, itemid, button):
 
     return redirect('item-offers', item_id=itemid)
 
-@login_required
+
 def changed_offer_send_notification(offer):
     notification = Notification()
     notification.message = f'Your offer for "{offer.item}" has been {offer.status}!'
@@ -113,6 +113,7 @@ def changed_offer_send_notification(offer):
     notification.href_parameter = offer.id
     notification.receiver = offer.buyer
     notification.save()
+
 
 @login_required
 def edit_offer(request, id, itemid):

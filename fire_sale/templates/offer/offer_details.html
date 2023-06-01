@@ -20,7 +20,15 @@
         <p>Message:<br>{{ offer.offerdetails.message }}</p>
         <p>Highest offer on item: ${{ highest_price }}</p>
         <p>Listed price: ${{ offer.item.price }}</p>
-        <p>Offers: <a href="{% url 'item-offers-buyers' offer.item.id %}">[{{ offer.item.offer_set.count}} offers]</a></p>
+        <p>Offers:
+            {% if request.user.id == offer.buyer.id %}
+                <a href="{% url 'item-offers-buyers' offer.item.id %}">
+            {% else %}
+                <a href="{% url 'item-offers' offer.item.id %}">
+            {% endif %}
+                    [{{ offer.item.offer_set.count}} offers]
+                </a>
+        </p>
         <p>Bidder: {{ offer.buyer }}</p>
         <p>Seller: {{ offer.seller }}</p>
         <p>Seller email: {{ offer.seller.email }}</p>

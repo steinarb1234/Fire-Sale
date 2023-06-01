@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <div class="underline-solid">
+            <h1>404</h1>
+        </div>
+        <h2>Page not found</h2>
+        <p>The page you are looking for might have been removed, had its name changed or is temporarily unavailable</p>
+        <h4><a href="{% url 'item_list' 'All' %}">Go to homepage</a></h4>
+    </div>
+{% endblock %}
