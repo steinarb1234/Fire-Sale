@@ -39,7 +39,9 @@
                     <a href="{% url 'edit-item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
                 {% else %}
                     <div id="item-details-btn">
-                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#offerModal" data-itemid="{{ item_details.item_stats.item.id }}">Send an offer</button>
+                    {% if item_details.item_stats.status_id != "Sold" %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#offerModal" data-itemid="{{ item_details.item_stats.item.id }}">Send an offer</button>
+                    {% endif %}
                     {% if in_watchlist %}
                         <a href="{% url 'delete_from_watchlist' item_details.item_stats.item.id %}" class="btn btn-outline-primary">Remove from Watchlist</a>
                     {% else %}

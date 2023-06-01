@@ -75,6 +75,7 @@
 }
 
 .btn-danger {
+    color: white;
     background-color: var(--fs-color-danger) !important;
     border-color: var(--fs-color-danger)  !important;
     border-width: medium !important;
@@ -84,4 +85,17 @@
 .btn-danger:hover {
     background-color: var(--fs-color-danger-darker) !important;
     border-color: var(--fs-color-danger-darker) !important;
+}
+
+.btn-warning {
+    color: black;
+    background-color: var(--fs-color-warning) !important;
+    border-color: var(--fs-color-warning)  !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+}
+
+.btn-warning:hover {
+    background-color: var(--fs-color-warning-lighter) !important;
+    border-color: var(--fs-color-warning-lighter) !important;
 }
