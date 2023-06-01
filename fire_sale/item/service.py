@@ -28,6 +28,8 @@ class ItemService:
     def get_categories_and_items_by_userid(user_id):
         watchlist_items = WatchListItem.objects.filter(user_id=user_id).select_related('item')
 
+
+
         categories = Category.objects.prefetch_related(
             Prefetch('item_set',
                 queryset=Item.objects.prefetch_related('itemimage_set')
