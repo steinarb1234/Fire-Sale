@@ -12,10 +12,8 @@
                 <th scope="col">Item</th>
                 <th scope="col">Offer status</th>
                 <th scope="col">Offer amount</th>
-
-                <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
-                <th scope="col">Highest offer</th>         {# Bæta inn ! - Steinar #}
-                <th scope="col">Offers</th>
+                <th scope="col">List price</th>  
+                <th scope="col">Highest offer</th>         
                 <th scope="col">Details</th>
                 <th scope="col">Item status</th>
                 {% if offer.status != 'Accepted' %}
@@ -42,7 +40,7 @@
 
                 </td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
-                {% if offer.status != 'Accepted' %}
+                {% if offer.status != 'Item purchased' %}
                     <td>
                         <div class="status-button">
                             {% if offer.status == 'Accepted' %}
@@ -55,11 +53,8 @@
                             {% endif %}
                             <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
                         </div>
-
-
                     </td>
                 {% endif %}
-
             </tr>
         {% endfor %}
         </tbody>
