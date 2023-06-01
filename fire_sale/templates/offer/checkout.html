@@ -1,11 +1,44 @@
 {% extends 'base.html' %}
+
+{% block extra_head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+
 {% block content %}
-    <h4>Checkout</h4>
-    <form class="form form-row" action="{% url 'checkout' offer_id %}" method="post">
+    <h2>Checkout</h2>
+    <form class="form form-row" action="{% url 'checkout' offer_id %}" method="post" id="checkout-form">
         {% csrf_token %}
-        {{ contact_information_form }}
-        {{ payment_form }}
-        <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+        <div id="user-details">
+            <h4>User Details</h4>
+            {{ user_form }}
+            {{ user_profile_form }}
+            <br>
+            <button type="button" id="next" class="btn btn-primary pull-right">Next</button>
+        </div>
+        <div id="payment-details" style="display: none;">
+            <h4>Payment Details</h4>
+            {{ payment_form }}
+            <button type="button" id="prev" class="btn btn-secondary pull-left">Previous</button>
+            <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+        </div>
     </form>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function(){
+        console.log('yo');
+        $("#next").click(function(){
+            $("#user-details").hide();
+            $("#payment-details").show();
+        });
+        $("#prev").click(function(){
+            $("#payment-details").hide();
+            $("#user-details").show();
+        });
+    });
+</script>
+{% endblock %}
+
+
 <!--hafa auto filled in user upplysingar sem á að staðfesta-->

@@ -41,9 +41,13 @@ class UserProfileUpdateForm(ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['bio']
+        fields = ['bio', 'country', 'address', 'city', 'zip_code']
         widgets = {
             'bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'country': widgets.Select(attrs={'class': 'form-control'}),
+            'address': widgets.TextInput(attrs={'class': 'form-control'}),
+            'city': widgets.TextInput(attrs={'class': 'form-control'}),
+            'zip_code': widgets.TextInput(attrs={'class': 'form-control'})
         }
         
 class UserInfoUpdateForm(ModelForm):
@@ -55,3 +59,26 @@ class UserInfoUpdateForm(ModelForm):
             'image URL': forms.URLInput(attrs={'class': 'form-control'}),
         }
         
+# For Checkout Form       
+        
+class CheckOutUserUpdateForm(ModelForm):
+    
+    class Meta:
+        model = User
+        fields = ['full_name', 'email']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        
+class CheckOutProfileUpdateForm(ModelForm):
+    
+    class Meta:
+        model = UserProfile
+        fields = ['country', 'city' ,'address', 'zip_code']
+        widgets = {
+            'country': widgets.Select(attrs={'class': 'form-control'}),
+            'city': widgets.TextInput(attrs={'class': 'form-control'}),
+            'address': widgets.TextInput(attrs={'class': 'form-control'}),
+            'zip_code': widgets.TextInput(attrs={'class': 'form-control'})
+        }
