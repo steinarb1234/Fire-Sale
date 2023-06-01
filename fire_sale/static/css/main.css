@@ -2,12 +2,15 @@
     /* Color pallete */
     --fs-color-background-primary: #fff;
     --fs-color-background-secondary: #e9ecef;
-    --fs-color-primary: #da431a;
+    --fs-color-primary: #f7572c;
     --fs-color-primary-darker: #c4340d;
     --fs-color-secondary: #ffa200;
-    --fs-color-success: #65d63c;
-    --fs-color-danger: #ff4231;
+    --fs-color-success: #25c331;
+    --fs-color-success-darker: #3eaf14;
+    --fs-color-danger: #f33322;
+    --fs-color-danger-darker: #c72010;
     --fs-color-warning: #fbd118;
+    --fs-color-warning-lighter: #fcdc51;
     --fs-color-info: #29b1eb;
 
     /* Size variables */
@@ -249,7 +252,7 @@ label [for="country-select"] {
 
 .masthead:hover {
     /*background-image: url('https://plus.unsplash.com/premium_photo-1684783848349-fe1d51ab831b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');*/
-    filter: grayscale(0) drop-shadow(2px 2px 2px #4444dd);
+    filter: grayscale(0) drop-shadow(2px 2px 2px rgba(68, 68, 221, 0.49));
     transition: 0.2s;
 }
 
@@ -262,6 +265,7 @@ label [for="country-select"] {
 .masthead-text-div {
     text-decoration: none white;
     width: auto;
+    transition: 0.2s;
 }
 
 .masthead-text-div:hover {
@@ -276,7 +280,12 @@ label [for="country-select"] {
     .small-item-card {
         width: 200px !important;
         min-width: 200px;
+        filter: drop-shadow(1px 1px 1px rgba(68, 68, 221, 0.15));
     }
+    .small-item-card:hover {
+        filter: drop-shadow(3px 3px 3px rgba(68, 68, 221, 0.15));
+    }
+
     .card-img-top {
         height: 200px;
         object-fit: cover;
@@ -330,6 +339,10 @@ label [for="country-select"] {
     .condition-and-description {
         margin-left: 16.5%;
         margin-top: 25px;
+    }
+
+    .condition-and-description p {
+        white-space: pre-wrap;
     }
 
     #item-details-btn > * {

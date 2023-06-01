@@ -24,8 +24,12 @@ def get_item_details_by_id(request, id):
         'item_stats__item',
         'item_stats__item__category',
         'item_stats__item__seller',
-        'condition'
+        'condition',
     ), pk=id)
+
+    item_stats = get_object_or_404(ItemStats, pk=id)
+    item_stats.views += 1
+    item_stats.save()
 
     seller_id = item_details.item_stats.item.seller_id
     user_location = UserProfile.objects.get(user_info__user_id=seller_id).country
@@ -35,6 +39,7 @@ def get_item_details_by_id(request, id):
     item_images = ItemImage.objects.filter(item=item).select_related('item')
     watchlist_items = WatchListItem.objects.filter(item=item_details.item_stats)
     highest_price = Offer.objects.filter(item_id=id).aggregate(Max('amount'))['amount__max'] or 0
+
 
     return render(request, 'item/item_details.html', {
         'user_location': user_location,

@@ -10,7 +10,7 @@ class CreateOfferForm(forms.ModelForm):
         model = Offer
         fields = ['amount']
         widgets = {
-            'amount': widgets.NumberInput(attrs={'class': 'form-control'}),
+            'amount': widgets.NumberInput(attrs={'class': 'form-control', 'placeholder': '0'}),
         }
 
 class CreateOfferDetailsForm(forms.ModelForm):

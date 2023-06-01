@@ -17,7 +17,7 @@ class ItemService:
         else:
             try:
                 item_list = Item.objects.filter(category_id=category_name).values()
-                images = ItemImage.objects.all().filter(item__category_id=category_name).distinct('item_id').values()
+                images = ItemImage.objects.filter(item__category_id=category_name).distinct('item_id').values()
             except Item.DoesNotExist:
                 raise Http404("No items in category.")
 
