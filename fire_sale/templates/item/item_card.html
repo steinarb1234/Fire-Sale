@@ -8,7 +8,7 @@
   </a>
   <div class="card-body">
       <a class="card-info" href="{% url 'item-details' item.id %}">
-          <h5 class="card-title">{{ item.name|truncatechars:12 }}</h5>
+          <h5 class="card-title">{{ item.name|truncatechars:15 }}</h5>
           <p class="card-text">$ {{ item.price }}</p>
       </a>
    <div class="d-flex justify-content-between"> 

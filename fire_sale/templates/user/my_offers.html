@@ -13,8 +13,8 @@
                 <th scope="col">Offer status</th>
                 <th scope="col">Offer amount</th>
 
-                <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
-                <th scope="col">Highest offer</th>         {# Bæta inn ! - Steinar #}
+                <th scope="col">List price</th>
+                <th scope="col">Highest offer</th>
                 <th scope="col">Offers</th>
 {#                <th scope="col">Item status</th>#}
                 <th scope="col">Details</th>
@@ -39,24 +39,27 @@
                     {% else %}
                         No offer
                     {% endif %}
+
                 </td>
-{#                <td>{{ offer.item.itemstats.status }}</td>#}
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
-                {% if offer.status != 'Accepted' %}
+
+                {% if offer.status != 'Item status' %}
+
                     <td>
                         <div class="status-button">
                             <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-success">Edit offer</a>
                             <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
                         </div>
-                    </td>
-                {% else %}
-                    <td>
+
+                    {% if offer.status == 'Accepted' %}
                         <form method="POST" action="{% url 'checkout' offer.id %}">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary">Go to checkout</button>
                         </form>
+                    {% endif %}
                     </td>
                 {% endif %}
+
             </tr>
         {% endfor %}
         </tbody>
