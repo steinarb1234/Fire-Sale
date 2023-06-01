@@ -285,8 +285,9 @@ label [for="country-select"] {
         min-width: 200px;
         filter: drop-shadow(1px 1px 1px rgba(68, 68, 221, 0.15));
     }
+
     .small-item-card:hover {
-        filter: drop-shadow(3px 3px 3px rgba(68, 68, 221, 0.15));
+        filter: drop-shadow(3px 3px 3px rgba(68, 68, 221, 0.2));
     }
 
     .small-item-card a {
