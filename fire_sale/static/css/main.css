@@ -252,7 +252,7 @@ label [for="country-select"] {
 
 .masthead:hover {
     /*background-image: url('https://plus.unsplash.com/premium_photo-1684783848349-fe1d51ab831b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');*/
-    filter: grayscale(0) drop-shadow(2px 2px 2px #4444dd);
+    filter: grayscale(0) drop-shadow(2px 2px 2px rgba(68, 68, 221, 0.49));
     transition: 0.2s;
 }
 
@@ -280,7 +280,12 @@ label [for="country-select"] {
     .small-item-card {
         width: 200px !important;
         min-width: 200px;
+        filter: drop-shadow(1px 1px 1px rgba(68, 68, 221, 0.15));
     }
+    .small-item-card:hover {
+        filter: drop-shadow(3px 3px 3px rgba(68, 68, 221, 0.15));
+    }
+
     .card-img-top {
         height: 200px;
         object-fit: cover;
