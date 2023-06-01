@@ -2,11 +2,13 @@
     /* Color pallete */
     --fs-color-background-primary: #fff;
     --fs-color-background-secondary: #e9ecef;
-    --fs-color-primary: #da431a;
+    --fs-color-primary: #f7572c;
     --fs-color-primary-darker: #c4340d;
     --fs-color-secondary: #ffa200;
-    --fs-color-success: #65d63c;
-    --fs-color-danger: #ff4231;
+    --fs-color-success: #25c331;
+    --fs-color-success-darker: #3eaf14;
+    --fs-color-danger: #f33322;
+    --fs-color-danger-darker: #c72010;
     --fs-color-warning: #fbd118;
     --fs-color-info: #29b1eb;
 

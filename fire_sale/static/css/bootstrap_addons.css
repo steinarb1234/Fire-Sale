@@ -21,10 +21,12 @@
 
 .text-primary {
     color: var(--fs-color-primary) !important;
+    font-weight: 600;
 }
 
 
 .btn-primary {
+    color: white;
     background-color: var(--fs-color-primary) !important;
     border-color: var(--fs-color-primary)  !important;
     border-width: medium !important;
@@ -48,14 +50,38 @@
     background-color: var(--fs-color-primary) !important;
 }
 
+.btn-success {
+    color: white;
+    background-color: var(--fs-color-success) !important;
+    border-color: var(--fs-color-success)  !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+}
+
+.btn-success:hover {
+    background-color: var(--fs-color-success-darker) !important;
+    border-color: var(--fs-color-success-darker) !important;
+}
+
 .btn-outline-success {
     color: var(--fs-color-success) !important;
     border-color: var(--fs-color-success) !important;
-    border-width: medium !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
 }
 
 .btn-outline-success:hover {
     color: white !important;
     background-color: var(--fs-color-success) !important;
+}
+
+.btn-danger {
+    background-color: var(--fs-color-danger) !important;
+    border-color: var(--fs-color-danger)  !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+}
+
+.btn-danger:hover {
+    background-color: var(--fs-color-danger-darker) !important;
+    border-color: var(--fs-color-danger-darker) !important;
 }
