@@ -613,6 +613,23 @@ label [for="country-select"] {
     }
   }
 
+.most-viewed-categories {
+    margin-top: 50px; margin-bottom: -15px;
+}
+
+.review-form, checkout-form {
+    clear:both; margin: 10px 0
+}
+
+.notification-icon {
+    display: flex; align-items: center
+}
+
+.search-by-category {
+    width: 207.05px
+}
+
+
 
 
 
