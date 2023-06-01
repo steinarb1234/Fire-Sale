@@ -9,8 +9,8 @@
                 <div>
                     <h2>{{ user_instance.full_name }}</h2>
                 </div>
-                <a href="{% url 'update_profile' user.id %}" style="background-color: lightgray; color: black; border-color: lightgray; display: flex; align-items: center; gap: 5px; justify-content: center; font-weight: 500" class="btn btn-primary">
-                    <span style="color: dimgrey" class="material-symbols-outlined">
+                <a href="{% url 'update_profile' user.id %}" class="btn btn-outline-primary" style="display: flex; align-items: center; gap: 5px; justify-content: center">
+                    <span class="material-symbols-outlined">
                         edit
                     </span>
                     Edit profile
