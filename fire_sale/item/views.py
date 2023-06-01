@@ -1,6 +1,6 @@
 from django.db.models import Max
 from django.forms import formset_factory, modelformset_factory
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
 from user.models import UserProfile, UserInfo
 from category.models import Category
@@ -102,35 +102,77 @@ def delete_item(request, id):
 
 @login_required
 def edit_item(request, id):
+    ItemImageFormSet = formset_factory(EditItemImageForm, extra=1, max_num=10, absolute_max=50, can_delete=True)
+
     item_instance = get_object_or_404(Item, pk=id)
-    item_image_instance = get_object_or_404(ItemImage, item_id=id)
-    item_stats_instance = get_object_or_404(ItemStats, pk=id)
+    item_image_instances = ItemImage.objects.filter(item_id=id)
     item_details_instance = get_object_or_404(ItemDetails, pk=id)
+
     if request.method == 'POST':
         item_form = EditItemForm(data=request.POST, instance=item_instance)
-        item_image_form = EditItemImageForm(data=request.POST, instance=item_image_instance)
-        item_stats_form = EditItemStatsForm(data=request.POST, instance=item_stats_instance)
+        item_image_formset = ItemImageFormSet(data=request.POST)
+
         item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
-        if item_form.is_valid() and item_image_form.is_valid() and item_stats_form.is_valid() and \
-                item_details_form.is_valid():
-            item_form.save()
-            item_image_form.save()
-            item_stats_form.save()
+
+        if item_form.is_valid() and item_image_formset.is_valid() and item_details_form.is_valid():
+            item = item_form.save()
+
+            # Update or create image instances
+            for form, image_instance in zip(item_image_formset.forms, item_image_instances):
+                if form.cleaned_data.get('DELETE'):
+                    image_instance.delete()
+                elif form.cleaned_data.get('image'):
+                    image_instance.image_url = form.cleaned_data['image']  # Update the image URL field
+                    image_instance.save()
+
+            # Save any new images
+            for form in item_image_formset.extra_forms:
+                if form.cleaned_data.get('image'):
+                    image = form.save(commit=False)
+                    image.item = item
+                    image.save()
+
             item_details_form.save()
 
             return redirect('item-details', id)
     else:
         item_form = EditItemForm(instance=item_instance)
-        item_image_form = EditItemImageForm(instance=item_image_instance)
-        item_stats_form = EditItemStatsForm(instance=item_stats_instance)
+        item_image_formset = ItemImageFormSet(initial=[{'image': image.image} for image in item_image_instances])
         item_details_form = EditItemDetailsForm(instance=item_details_instance)
+
     return render(request, 'item/edit_item.html', {
         'item_form': item_form,
-        'item_image_form': item_image_form,
-        'item_stats_form': item_stats_form,
+        'item_image_formset': item_image_formset,
         'item_details_form': item_details_form,
         'id': id,
     })
+
+        # item_form = EditItemForm(data=request.POST, instance=item_instance)
+        # item_image_form = EditItemImageForm(data=request.POST, instance=item_image_instance)
+        # item_stats_form = EditItemStatsForm(data=request.POST, instance=item_stats_instance)
+        # item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
+        # if item_form.is_valid() and item_image_form.is_valid() and item_stats_form.is_valid() and \
+        #         item_details_form.is_valid():
+        #     item_form.save()
+        #     item_image_form.save()
+        #     item_stats_form.save()
+        #     item_details_form.save()
+
+        #     return redirect('item-details', id)
+    # else:
+    #     item_form = EditItemForm(instance=item_instance)
+    #     item_image_form = EditItemImageForm(instance=item_image_instance)
+    #     item_stats_form = EditItemStatsForm(instance=item_stats_instance)
+    #     item_details_form = EditItemDetailsForm(instance=item_details_instance)
+    # return render(request, 'item/edit_item.html', {
+    #     'item_form': item_form,
+    #     'item_image_form': item_image_form,
+    #     'item_stats_form': item_stats_form,
+    #     'item_details_form': item_details_form,
+    #     'id': id,
+    # })
+
+
 
 
 def item_offers(request, item_id):
