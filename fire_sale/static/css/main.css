@@ -309,14 +309,14 @@ label [for="country-select"] {
         'opsz' 48
     }
 
-    .card-img-missing {
+    .item-img-missing {
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: rgba(155, 155, 155, .25);
     }
     
-    .card-img-missing span {
+    .item-img-missing span {
         color: rgba(155, 155, 155, .5);
         font-size: 6em;
         text-decoration: dotted rgba(155, 155, 155, .5);
@@ -351,6 +351,11 @@ label [for="country-select"] {
 
     .condition-and-description p {
         white-space: pre-wrap;
+    }
+
+    #main-image-container .item-img-missing {
+        height: 400px;
+        width: 400px;
     }
 
     #item-details-btn > * {
