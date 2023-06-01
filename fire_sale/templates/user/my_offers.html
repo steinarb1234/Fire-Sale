@@ -42,6 +42,7 @@
 
                 </td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
+                <td>{{ offer.item.itemstats.status }}</td>
                 <td>
                 {% if offer.status != 'Item purchased' %}
                         <div class="status-button">
