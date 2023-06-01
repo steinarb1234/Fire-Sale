@@ -49,12 +49,12 @@
                             {% if offer.status == 'Accepted' %}
                                 <form method="POST" action="{% url 'checkout' offer.id %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-success">Go to checkout</button>
+                                    <button type="submit" class="btn btn-success" id="go-to-checkout">Go to checkout</button>
                                 </form>
                             {% else %}
-                                <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-warning">Edit offer</a>
+                                <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-outline-warning">Edit offer</a>
                             {% endif %}
-                            <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
+                            <a href="{% url 'delete_offer' offer.id %}" class="btn btn-outline-danger">Withdraw offer</a>
                         </div>
                     </td>
                 {% endif %}
@@ -65,4 +65,3 @@
     </table>
 
 {% endblock %}
-
