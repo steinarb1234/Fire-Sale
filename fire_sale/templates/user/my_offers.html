@@ -44,7 +44,6 @@
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
 
                 {% if offer.status != 'Item purchased' %}
-
                     <td>
                         <div class="status-button">
                             {% if offer.status == 'Accepted' %}
@@ -57,8 +56,6 @@
                             {% endif %}
                             <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
                         </div>
-
-
                     </td>
                 {% endif %}
 
