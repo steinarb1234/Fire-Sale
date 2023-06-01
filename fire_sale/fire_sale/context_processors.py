@@ -1,3 +1,6 @@
+import django.utils.timezone
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
 from django.shortcuts import resolve_url
 
@@ -19,7 +22,7 @@ def navigation_bar_processor(request):
 
     if user.is_authenticated and hasattr(user, 'username'):
         try:
-            user_instance = User.objects.get(id = user.id)# LAga með id
+            user_instance = User.objects.get(id=user.id)# Laga með id
         except:
             print(f"""\n\n
                     Could not find a user in User.objects.
@@ -30,7 +33,14 @@ def navigation_bar_processor(request):
 
 
 def notifications_processor(request):
+    # try:
+    #     last_login = get_user_model().objects.get(pk=request.user.id).last_login
+    # except ObjectDoesNotExist:
+    #     last_login = django.utils.timezone.now()
+    #
+    # notifications = Notification.objects.filter(receiver=request.user.id, datetime__gt=last_login)
     notifications = Notification.objects.filter(receiver=request.user.id)
+
     for notification in notifications:
         if notification.href_parameter:
             notification.href = resolve_url(notification.href, notification.href_parameter)

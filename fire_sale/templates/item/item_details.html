@@ -20,17 +20,28 @@
                 <a href="{% url 'item-offers-buyers' item_details.item_stats.item.id %}" class="bid_count">[{{ item_details.item_stats.item.offer_set.count }} bids]</a>
                 <div class="space-item"></div>
 
-                <p><span class="material-symbols-outlined">visibility</span>: {{ item_details.item_stats.views }}</p>
-                <p><span class="material-symbols-outlined">favorite</span>: {{ watchlist_items.count }}</p>
-                <p><span class="material-symbols-outlined">info</span>: {{ item_details.item_stats.status }}</p>
 
+                <div class="item-details-info">
+                    <div class="item-details-icons">
+                        <span class="material-symbols-outlined">visibility</span>
+                        <span class="material-symbols-outlined">favorite</span>
+                        <span class="material-symbols-outlined">info</span>
+                    </div>
+                    <div class="item-details-data">
+                        <p>: {{ item_details.item_stats.views }}</p>
+                        <p>: {{ watchlist_items.count }}</p>
+                        <p>: {{ item_details.item_stats.status }}</p>
+                    </div>
+                </div>
                 <div class="space-item"></div>
                 {% if request.user.id == item_details.item_stats.item.seller_id %}
                     <a href="{% url 'delete-item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
                     <a href="{% url 'edit-item' item_details.item_stats.item.id %}" class="block btn btn-primary">Edit item</a>
                 {% else %}
                     <div id="item-details-btn">
-                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#offerModal" data-itemid="{{ item_details.item_stats.item.id }}">Send an offer</button>
+                    {% if item_details.item_stats.status_id != "Sold" %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#offerModal" data-itemid="{{ item_details.item_stats.item.id }}">Send an offer</button>
+                    {% endif %}
                     {% if in_watchlist %}
                         <a href="{% url 'delete_from_watchlist' item_details.item_stats.item.id %}" class="btn btn-outline-primary">Remove from Watchlist</a>
                     {% else %}

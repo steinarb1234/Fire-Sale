@@ -12,7 +12,6 @@ class User(models.Model):
         return self.user_name
 
 class UserInfo(models.Model):
-    avg_rating = models.FloatField(default=0.0)
     image = models.CharField(max_length=9999, blank=True, default='')
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
@@ -39,3 +38,4 @@ class Notification(models.Model):
     href = models.URLField(max_length=255, blank=True, null=True)
     href_parameter = models.CharField(max_length=255, blank=True, null=True)
     datetime = models.DateTimeField()
+    seen = models.BooleanField(default=False)

@@ -13,11 +13,11 @@
                 <th scope="col">Offer status</th>
                 <th scope="col">Offer amount</th>
 
-                <th scope="col">List price</th>
-                <th scope="col">Highest offer</th>
+                <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
+                <th scope="col">Highest offer</th>         {# Bæta inn ! - Steinar #}
                 <th scope="col">Offers</th>
-{#                <th scope="col">Item status</th>#}
                 <th scope="col">Details</th>
+                <th scope="col">Item status</th>
                 {% if offer.status != 'Accepted' %}
                     <th scope="col">Actions</th>
                 {% endif %}
@@ -42,23 +42,22 @@
 
                 </td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
-
-                {% if offer.status != 'Item status' %}
-
-                    <td>
+                <td>{{ offer.item.itemstats.status }}</td>
+                <td>
+                {% if offer.status != 'Item purchased' %}
                         <div class="status-button">
-                            <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-success">Edit offer</a>
-                            <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
+                            {% if offer.status == 'Accepted' %}
+                                <form method="POST" action="{% url 'checkout' offer.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success" id="go-to-checkout">Go to checkout</button>
+                                </form>
+                            {% else %}
+                                <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-outline-warning">Edit offer</a>
+                            {% endif %}
+                            <a href="{% url 'delete_offer' offer.id %}" class="btn btn-outline-danger">Withdraw offer</a>
                         </div>
-
-                    {% if offer.status == 'Accepted' %}
-                        <form method="POST" action="{% url 'checkout' offer.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Go to checkout</button>
-                        </form>
-                    {% endif %}
-                    </td>
                 {% endif %}
+                </td>
 
             </tr>
         {% endfor %}
@@ -66,4 +65,3 @@
     </table>
 
 {% endblock %}
-

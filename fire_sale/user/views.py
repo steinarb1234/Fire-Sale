@@ -117,8 +117,9 @@ def user_profile(request):
 @login_required
 def my_offers(request):
     try:
-        user_offers = Offer.objects.filter(buyer_id=request.user.id).prefetch_related('item')
+        user_offers = Offer.objects.filter(buyer_id=request.user.id).prefetch_related('item', 'offerdetails', 'item__offer_set', 'item__itemstats', 'item__itemstats__status')
         item_ids = user_offers.values_list('item__id', flat=True)
+        # Highest price er rangt sótt? - Steinar
         highest_price = Offer.objects.filter(item__id__in=item_ids).aggregate(highest_price=Max('amount'))['highest_price']
 
     except ObjectDoesNotExist:
