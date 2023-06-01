@@ -20,11 +20,19 @@
                 <a href="{% url 'item-offers-buyers' item_details.item_stats.item.id %}" class="bid_count">[{{ item_details.item_stats.item.offer_set.count }} bids]</a>
                 <div class="space-item"></div>
 
-                <p><span class="material-symbols-outlined">visibility</span>: {{ item_details.item_stats.views }}</p>
-                <p><span class="material-symbols-outlined">favorite</span>: {{ watchlist_items.count }}</p>
-                <p><span class="material-symbols-outlined">info</span>: {{ item_details.item_stats.status }}</p>
 
-                <!-- TODO: Connect these buttons to their respective actions -->
+                <div class="item-details-info">
+                    <div class="item-details-icons">
+                        <span class="material-symbols-outlined">visibility</span>
+                        <span class="material-symbols-outlined">favorite</span>
+                        <span class="material-symbols-outlined">info</span>
+                    </div>
+                    <div class="item-details-data">
+                        <p>: {{ item_details.item_stats.views }}</p>
+                        <p>: {{ watchlist_items.count }}</p>
+                        <p>: {{ item_details.item_stats.status }}</p>
+                    </div>
+                </div>
                 <div class="space-item"></div>
                 {% if request.user.id == item_details.item_stats.item.seller_id %}
                     <a href="{% url 'delete-item' item_details.item_stats.item.id %}" class="block btn btn-primary">Delete item</a>
