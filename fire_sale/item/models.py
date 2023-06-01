@@ -30,7 +30,6 @@ class ItemStats(models.Model):
 
 
 
-
 class ItemConditions(models.Model):
     condition = models.CharField(max_length=255, blank=False, primary_key=True)
 
