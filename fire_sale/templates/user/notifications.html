@@ -4,11 +4,11 @@
     <h1>Notifications</h1>
     </div>
 
-    {% for notification in notifications reversed %}
-        <div class="notification-on-site">
-        <h4>{{ notification.datetime }}:</h4>
+    {% for notification in all_notifications reversed %}
+        <div class="notification-on-site" style="border-bottom: 1px solid rgba(0,0,0,0.2)">
+        <p><b>{{ notification.datetime }}:</b></p>
         <p>-  {{ notification.message }}</p>
-        <a href="{{ notification.href }}">See more</a>
+        <p><a href="{{ notification.href }}">See more</a></p>
         </div>
     {% endfor %}
 

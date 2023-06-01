@@ -14,5 +14,5 @@ urlpatterns = [
     path('update_profile/<int:id>', views.update_profile, name="update_profile"),
     path('my_listings', views.my_listings, name="my-listings"),
     path('notifications/', views.notifications, name="notifications"),
-
+    path('<str:notification_id>', views.mark_notification_as_seen, name='mark_notification_as_seen'),
 ]

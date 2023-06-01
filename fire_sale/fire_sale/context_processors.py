@@ -1,7 +1,7 @@
 import django.utils.timezone
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.shortcuts import resolve_url
 
 from category.models import Category
@@ -33,7 +33,9 @@ def navigation_bar_processor(request):
 
 
 def notifications_processor(request):
-    notifications = Notification.objects.filter(receiver=request.user.id, seen=False)
+    notifications = Notification.objects.filter(receiver=request.user.id).order_by('datetime')
+    count_new = notifications.filter(seen=False).count()
+    notifications = notifications[:10]
 
     for notification in notifications:
         if notification.href_parameter:
@@ -41,7 +43,10 @@ def notifications_processor(request):
         else:
             notification.href = resolve_url(notification.href)
 
-    return {'notifications': notifications}
+    return {
+        'notifications': notifications,
+        'count_new': count_new,
+    }
 
 
 
