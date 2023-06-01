@@ -259,6 +259,7 @@ label [for="country-select"] {
 .masthead-text-div {
     text-decoration: none white;
     width: auto;
+    transition: 0.2s;
 }
 
 .masthead-text-div:hover {

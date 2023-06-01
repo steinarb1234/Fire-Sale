@@ -19,9 +19,10 @@
                 <h4>Highest Offer: ${{ highest_price }}</h4>
                 <a href="{% url 'item-offers-buyers' item_details.item_stats.item.id %}" class="bid_count">[{{ item_details.item_stats.item.offer_set.count }} bids]</a>
                 <div class="space-item"></div>
-                <p><span class="material-symbols-outlined">visibility</span>: {{ item_details.item_stats.views }}</p>
-                <p><span class="material-symbols-outlined">favorite</span>: {{ watchlist_items|length }}</p>
-                <p><span class="material-symbols-outlined">info</span>: {{ item_details.item_stats.status }}</p>
+
+                <div><p><span class="material-symbols-outlined">visibility</span>{{ item_details.item_stats.views }}</p></div>
+                <div><p><span class="material-symbols-outlined">favorite</span>{{ watchlist_items|length }}</p></div>
+                <div><p><span class="material-symbols-outlined">info</span>{{ item_details.item_stats.status }}</p></div>
                 <!-- TODO: Connect these buttons to their respective actions -->
                 <div class="space-item"></div>
                 {% if request.user.id == item_details.item_stats.item.seller_id %}
