@@ -1,10 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
 
+<script>
+    function toggleFilter() {
+      var filterDiv = document.getElementById("filter-my-offers");
+      filterDiv.style.display = (filterDiv.style.display === "none") ? "block" : "none";
+    }
+</script>
+
+
 <div class="container d-flex justify-content-between mb-5">
     <h1>My offers</h1>
     {% include 'sort.html' %}
 </div>
+
+<a href="#" onclick="toggleFilter()">Filter</a>
+<div class="filter-my-offers" style="display: none;">
+        <div class="filter-title">
+          <h id="filter-title">Offer status</h>
+          <h id="filter-title">Item status</h>
+        </div>
+        <div class="filter-checkboxes">
+          <div class="status-filter">
+            <div><input type="checkbox" value="Accepted" id="accepted"><label for="accepted">Accepted</label></div>
+            <div><input type="checkbox" value="Pending answer" id="pending-answer"><label for="pending-answer">Pending answer</label></div>
+            <div><input type="checkbox" value="Item purchased" id="item-purchased"><label for="item-purchased">Item purchased</label></div>
+            <div><input type="checkbox" value="Rejected" id="rejected"><label for="rejected">Rejected</label></div>
+          </div>
+          <div class="status-filter">
+            <div><input type="checkbox" value="Sold" id="sold"><label for="sold">Sold</label></div>
+            <div><input type="checkbox" value="Not sold" id="not-sold"><label for="not-sold">Not sold</label></div>
+          </div>
+        </div>
+</div>
+
     <table class="table">
         <thead>
             <tr>
@@ -13,8 +42,8 @@
                 <th scope="col">Offer status</th>
                 <th scope="col">Offer amount</th>
 
-                <th scope="col">List price</th>  {# Bæta inn ! - Steinar #}
-                <th scope="col">Highest offer</th>         {# Bæta inn ! - Steinar #}
+                <th scope="col">List price</th>
+                <th scope="col">Highest offer</th>
                 <th scope="col">Offers</th>
                 <th scope="col">Details</th>
                 <th scope="col">Item status</th>

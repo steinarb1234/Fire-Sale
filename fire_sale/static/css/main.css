@@ -448,6 +448,26 @@ label [for="country-select"] {
     margin-bottom: 40px;
   }
 
+.filter-checkboxes {
+    display:flex
+}
+
+.status-filter {
+    display: flex;
+    margin-right: 40px;
+}
+
+.status-filter > * {
+    margin-right: 30px;
+}
+
+.filter-my-offers {
+    margin-left: 10px;
+}
+
+#item-status.filter-title {
+    margin-left: 600px;
+}
 
 /* === Sign in === */
 
