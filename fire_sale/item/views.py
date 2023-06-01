@@ -56,20 +56,23 @@ def get_item_details_by_id(request, id):
 
 @login_required
 def create_item(request):
+    CreateItemImageFormSet = formset_factory(CreateItemImageForm, extra=1, max_num=10, absolute_max=50, can_delete=True)
+
     if request.method == 'POST':
         item_form = CreateItemForm(data=request.POST)
-        item_image_form = CreateItemImageForm(data=request.POST)
+        item_image_formset = CreateItemImageFormSet(data=request.POST)
         item_details_form = CreateItemDetailsForm(data=request.POST)
 
-        # TODO: Logic layer síun á gögnum
-        if item_form.is_valid() and item_image_form.is_valid() and item_details_form.is_valid():
+        if item_form.is_valid() and item_image_formset.is_valid() and item_details_form.is_valid():
             item = item_form.save(commit=False)
             item.seller_id = int(request.user.id)
             item.save()
 
-            item_image = item_image_form.save(commit=False)
-            item_image.item_id = item.id
-            item_image.save()
+            for form in item_image_formset:
+                if form.cleaned_data.get('image'):
+                    image = form.save(commit=False)
+                    image.item = item
+                    image.save()
 
             item_stats = ItemStats(item=item)
             item_stats.save()
@@ -81,14 +84,15 @@ def create_item(request):
             return redirect('item-details', item.id)
     else:
         item_form = CreateItemForm()
-        item_image_form = CreateItemImageForm()
+        item_image_formset = CreateItemImageFormSet()
         item_details_form = CreateItemDetailsForm()
 
     return render(request, 'item/create_item.html', {
         'item_form': item_form,
-        'item_image_form': item_image_form,
-        'item_details_form': item_details_form
+        'item_image_formset': item_image_formset,
+        'item_details_form': item_details_form,
     })
+
 
 @login_required
 def delete_item(request, id):
