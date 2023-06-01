@@ -33,13 +33,7 @@ def navigation_bar_processor(request):
 
 
 def notifications_processor(request):
-    # try:
-    #     last_login = get_user_model().objects.get(pk=request.user.id).last_login
-    # except ObjectDoesNotExist:
-    #     last_login = django.utils.timezone.now()
-    #
-    # notifications = Notification.objects.filter(receiver=request.user.id, datetime__gt=last_login)
-    notifications = Notification.objects.filter(receiver=request.user.id)
+    notifications = Notification.objects.filter(receiver=request.user.id, seen=False)
 
     for notification in notifications:
         if notification.href_parameter:

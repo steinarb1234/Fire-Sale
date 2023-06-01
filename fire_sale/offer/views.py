@@ -7,6 +7,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from item.models import Item, ItemStats, ItemStatuses
 from offer.forms.offer_form import ContactInformationForm, CreateOfferForm, CreateOfferDetailsForm, PaymentForm, \
     RatingForm
+from django.contrib.auth import get_user_model
+
+from user.forms.user_form import CheckOutUserUpdateForm, CheckOutProfileUpdateForm
+
 from offer.models import Offer, OfferDetails
 from django.contrib.auth.decorators import login_required
 from item.models import Item, ItemImage, ItemDetails, ItemStats
@@ -25,7 +29,7 @@ def offer_details(request, offer_id):
         'highest_price': highest_price
     })
 
-
+@login_required
 def open_offer_window(request, item_id):
     print(item_id)
     print("ajax")
@@ -151,18 +155,40 @@ def delete_offer(request, id):
 
 @login_required
 def checkout(request, offer_id):
+    
     # Reyndi að fá vistuðu uplýsingarnar, veit ekki afh það virkar ekki - Steinar
+    auth_user = get_user_model()
     offer = get_object_or_404(Offer, pk=offer_id)
+    print(offer.buyer_id)
+    
+    user_instance = get_object_or_404(User, pk=offer.buyer_id)
+    user_info_instance = user_instance.userinfo
+    user_profile_instance = user_info_instance.userprofile
+    auth_user_instance = auth_user.objects.get(pk=offer.buyer.id)
+    
     other_offers_on_item = Offer.objects.filter(item_id=offer.item_id)
     item_stats = get_object_or_404(ItemStats, pk=offer.item_id)
-    user_profile = get_object_or_404(UserProfile, pk=offer.buyer_id)
 
     if request.method == 'POST':
-        contact_information_form = ContactInformationForm(data=request.POST, instance=user_profile)
+        user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
+        user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
         payment_form = PaymentForm(data=request.POST)
-        if contact_information_form.is_valid() and payment_form.is_valid():
-            contact_information = contact_information_form
-            payment = payment_form
+        if user_form.is_valid() and user_profile_form.is_valid() and payment_form.is_valid():
+            if 1 == 1:
+                return 'Going to save'
+            
+            user_form.save()
+            payment_form.save()
+            
+            # Update the related auth_user instance directly
+            auth_user_instance.email = user_form.cleaned_data['email']
+            auth_user_instance.first_name = user_form.cleaned_data['full_name']
+            auth_user_instance.username = user_form.cleaned_data['user_name']
+            auth_user_instance.save()  # Save the updated auth_user instance
+            
+            user_profile = user_profile_form.save(commit=False)
+            user_profile.user_info = user_info_instance
+            user_profile.save()
 
             item_stats.status = ItemStatuses(status="Sold")
             item_stats.save()
@@ -184,11 +210,13 @@ def checkout(request, offer_id):
 
             return redirect('review', offer_id)
     else:
-        contact_information_form = ContactInformationForm(instance=user_profile)
+        user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
+        user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
         payment_form = PaymentForm()
         rating_form = RatingForm()
     return render(request, 'offer/checkout.html', {
-        'contact_information_form': contact_information_form,
+        'user_form': user_form,
+        'user_profile_form': user_profile_form,
         'payment_form': payment_form,
         'offer_id': offer_id,
     })

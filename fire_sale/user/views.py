@@ -130,7 +130,7 @@ def my_offers(request):
         "highest_price": highest_price,
     })
 
-from django.db.models import Count
+@login_required
 def my_listings(request):
     
     user_items = Item.objects.filter(seller=request.user.id)
@@ -151,7 +151,7 @@ def my_listings(request):
         'item_stats': item_stats,
     })
 
-
+@login_required
 def notifications(request):
     notifications = Notification.objects.filter(receiver=request.user.id)
     for notification in notifications:
