@@ -87,18 +87,29 @@ def change_offer_status(request, id, itemid, button):
         offer = Offer.objects.get(pk=id)
         offer.status = button
         offer.save()
+        changed_offer_send_notification(offer)
 
-        notification_to_buyer = Notification()
-        notification_to_buyer.message = f'Your offer for "{offer.item}" has been {offer.status}!'
-        notification_to_buyer.datetime = django.utils.datetime_safe.datetime.now()
-        notification_to_buyer.href = 'offer-details'
-        notification_to_buyer.href_parameter = offer.id
-        notification_to_buyer.receiver = offer.buyer
-        notification_to_buyer.save()
+        if offer.status == 'Accepted':
+            other_offers = Offer.objects.filter(item_id=offer.item_id).exclude(id=offer.id)
+            for other_offer in other_offers:
+                other_offer.status = "Rejected"
+                changed_offer_send_notification(other_offer)
+                other_offer.save()
 
         return redirect('item-offers', item_id=itemid)
 
     return redirect('item-offers', item_id=itemid)
+
+
+def changed_offer_send_notification(offer):
+    notification = Notification()
+    notification.message = f'Your offer for "{offer.item}" has been {offer.status}!'
+    notification.datetime = django.utils.datetime_safe.datetime.now()
+    notification.href = 'offer-details'
+    notification.href_parameter = offer.id
+    notification.receiver = offer.buyer
+    notification.save()
+
 
 def edit_offer(request, id, itemid):
     offer_to_change = get_object_or_404(Offer, pk=id)
