@@ -99,9 +99,6 @@ def change_offer_status(request, id, itemid, button):
                 other_offer.status = "Rejected"
                 changed_offer_send_notification(other_offer)
                 other_offer.save()
-
-        return redirect('item-offers', item_id=itemid)
-
     return redirect('item-offers', item_id=itemid)
 
 
