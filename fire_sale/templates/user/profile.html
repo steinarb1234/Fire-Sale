@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+    <div class="user-profile-main-container">
     <h1>Profile</h1>
-        <div style="width: 70%">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 40px; justify-content: center; text-align: center">
+        <div>
+            <div class="user-profile-name-and-image">
                 <h2>{{ user_instance.full_name }}</h2>
-                <img style="object-fit: contain; width: 130px" class="nav-link dropdown-toggle rounded-circle img-fluid w-30" id="profile_image_small" href="#" data-bs-toggle="dropdown" aria-expanded="false" src="{{ user_info.image }}" alt="User profile image">
+                {% if userinfo.image %}
+                    <img class="nav-link user-profile-image" id="profile_image_small" href="#" src="{{ user_info.image }}" alt="User profile image">
+                {% else %}
+                    <div class="nav-link icon-container user-profile-image" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                {% endif %}
             </div>
             <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 50px">
                     <a href="{% url 'my-offers' %}" class="btn btn-primary" style="width: 140px">My offers</a>
@@ -51,22 +57,5 @@
             </div>
         </div>
     </div>
-
-
-{#    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">#}
-{#    <h2 style="margin-top: 50px">Ratings</h2>#}
-{#        {% if not user_ratings %}#}
-{#            <p>No ratings found</p>#}
-{#        {% endif %}#}
-{#        {% for rating in user_ratings %}#}
-{#            <div style="width: 50%; padding: 10px; border-bottom: 1px solid lightgray">#}
-{#                    <p>{{ rating.offer_id.user_id.user_name }}</p>#}
-{#                    <p>{{ rating.offer_id.item_id }}</p>#}
-{#                    <div id="stars-{{ rating.id }}">{# Javacript fills stars here </div>#}
-{#                    <p>{{ rating.date }}</p>#}
-{#                    <p>{{ rating.message }}</p>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </div>#}
 
 {% endblock %}

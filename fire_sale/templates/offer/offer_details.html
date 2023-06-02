@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="offer-details-main-container">
-    <div class="offer-details-main-left">
+    <div class="page-header">
         {% if offer.buyer.id == request.user.id %}
             <h1>Your offer for "<a href="{% url 'item-details' offer.item.id %}">{{ offer.item }}</a>"</h1>
         {% elif offer.seller.id == request.user.id %}
@@ -10,12 +9,14 @@
         {% else %}
             <h1>What are you doing here?</h1>
         {% endif %}
+    </div>
+
+    <div class="offer-details-main-container">
         <div class="item_img-container d-flex flex-row">
             {% include 'item/item_image_carousel.html' %}
         </div>
-    </div>
 
-    <div class="offer-details-main-right">
+    <div>
         <p>Offer amount: ${{ offer.amount }}</p>
         <p>Message:<br>{{ offer.offerdetails.message }}</p>
         <p>Highest offer on item: ${{ highest_price }}</p>
@@ -36,58 +37,60 @@
         <p>Offer date: {{ offer.offerdetails.start_date }}</p>
         <p>Item status: {{ offer.item.itemstats.status }}</p>
         <p>Offer status: {{ offer.status }}</p>
-    </div>
 
-    <div class="offer-details-buttons">
-        {% if offer.seller.id == request.user.id %}
-            <div class="status-button">
-                {% if offer.status == "Accepted" %}
-                    <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Pending answer' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-warning">Undo</button>
-                    </form>
-                    <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Rejected' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    </form>
-                {% elif offer.status == "Rejected" %}
-                    <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Accepted' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">Accept</button>
-                    </form>
-                    <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Pending answer' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-warning">Undo</button> <!-- Changed "Reject" to "Pend" -->
-                    </form>
-                {% else %}
-                    <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Accepted' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">Accept</button>
-                    </form>
-                    <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Rejected' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    </form>
-                {% endif %}
-            </div>
-        {% elif offer.buyer.id == request.user.id %}
-            {% if offer.status != 'Item purchased' and offer.status != 'Rejected' %}
-            <td>
+        <div class="offer-details-buttons">
+            {% if offer.seller.id == request.user.id %}
                 <div class="status-button">
-                    {% if offer.status == 'Accepted' %}
-                        <form method="POST" action="{% url 'checkout' offer.id %}">
+                    {% if offer.status == "Accepted" %}
+                        <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Pending answer' %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-success">Go to checkout</button>
+                            <button type="submit" class="btn btn-warning">Undo</button>
+                        </form>
+                        <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Rejected' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    {% elif offer.status == "Rejected" %}
+                        <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Accepted' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+                        <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Pending answer' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning">Undo</button> <!-- Changed "Reject" to "Pend" -->
                         </form>
                     {% else %}
-                        <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-warning">Edit offer</a>
+                        <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Accepted' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+                        <form method="POST" action="{% url 'change_offer_status' offer.id offer.item.id 'Rejected' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
                     {% endif %}
-                        <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
                 </div>
-        </td>
-            {% endif %}
+            {% elif offer.buyer.id == request.user.id %}
+                {% if offer.status != 'Item purchased' and offer.status != 'Rejected' %}
+                <td>
+                    <div class="status-button">
+                        {% if offer.status == 'Accepted' %}
+                            <form method="POST" action="{% url 'checkout' offer.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Go to checkout</button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'edit_offer' offer.id offer.item.id %}" class="btn btn-warning">Edit offer</a>
+                        {% endif %}
+                            <a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Withdraw offer</a>
+                    </div>
+            </td>
+                {% endif %}
         </div>
+    </div>
 </div>
+
+        
 {% endif %}
 {% endblock %}
 
