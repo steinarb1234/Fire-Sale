@@ -17,42 +17,32 @@ from django.contrib.auth.decorators import login_required
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from user.models import User, UserProfile, Notification
 from django.http import HttpRequest
-from django.http import HttpResponseForbidden
+from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
 
 
-# Create your views here.
-#@login_required
-#def offer_details(request, offer_id):
-#    offer = Offer.objects.get(pk=offer_id)
-#    item_images = ItemImage.objects.filter(item=offer.item)
-#    highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
-#    seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1) \
-#                  or 'No ratings'
-#    return render(request, 'offer/offer_details.html', {
-#        "offer": offer,
-#        'item_images': item_images,
-#        'highest_price': highest_price,
-#        'seller_rating': seller_rating,
-#    })
+def permission_denied_view(request, exception):
+    return render(request, 'templates/error_pages/not_authorized.html', status=403)
+
 
 @login_required
 def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
-    if offer.buyer.id != request.user.id:
-        if offer.seller.id != request.user.id:
-            return HttpResponseForbidden("You are not authorized")
-        else:
-            item_images = ItemImage.objects.filter(item=offer.item)
-            highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
-            try:
-                seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
-            except TypeError:
-                seller_rating = 'No rating'
-            return render(request, 'offer/offer_details.html', {
-                "offer": offer,
-                'item_images': item_images,
-                'highest_price': highest_price,
-                'seller_rating': seller_rating,
+
+    if offer.buyer.id != request.user.id and offer.seller.id != request.user.id:
+            raise PermissionDenied()
+    else:
+        item_images = ItemImage.objects.filter(item=offer.item)
+        highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
+        try:
+            seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
+        except TypeError:
+            seller_rating = 'No rating'
+        return render(request, 'offer/offer_details.html', {
+            "offer": offer,
+            'item_images': item_images,
+            'highest_price': highest_price,
+            'seller_rating': seller_rating,
     })
 
 
@@ -91,7 +81,6 @@ def create_offer(request, item_id):
 
             notification_to_seller = Notification()
             notification_to_seller.message = f'Your item "{offer.item}" has received an offer of ${offer.amount}!'
-            notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
             notification_to_seller.href = 'offer-details'
             notification_to_seller.href_parameter = offer.id
             notification_to_seller.receiver = offer.seller
@@ -139,38 +128,42 @@ def changed_offer_send_notification(offer):
 def edit_offer(request, id, itemid):
     offer_to_change = get_object_or_404(Offer, pk=id)
 
-    if request.method == "POST":
-        offer_form = CreateOfferForm(data=request.POST, instance=offer_to_change)
-        offer_details_form = CreateOfferDetailsForm(data=request.POST, instance=offer_to_change.offerdetails)
-        
-        if offer_form.is_valid() and offer_details_form.is_valid():
-            offer = offer_form.save(commit=False)
-            offer_details = offer_details_form.save(commit=False)
-            offer_details.offer = offer
-            offer.save()
-            offer_details.save()
-
-            notification_to_seller = Notification()
-            notification_to_seller.message = f'An offer for your listing: "{offer.item}" has been edited'
-            notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
-            notification_to_seller.href = 'offer-details'
-            notification_to_seller.href_parameter = offer.id
-            notification_to_seller.receiver = offer.seller
-            notification_to_seller.save()
-
-
-            return redirect('offer-details', offer_id=id)
+    offer = Offer.objects.get(pk=id)
+    if offer.buyer.id != request.user.id:
+            raise PermissionDenied()
     else:
-        offer_form = CreateOfferForm(instance=offer_to_change)
-        offer_details_form = CreateOfferDetailsForm(instance=offer_to_change.offerdetails)
+        if request.method == "POST":
+            offer_form = CreateOfferForm(data=request.POST, instance=offer_to_change)
+            offer_details_form = CreateOfferDetailsForm(data=request.POST, instance=offer_to_change.offerdetails)
+            
+            if offer_form.is_valid() and offer_details_form.is_valid():
+                offer = offer_form.save(commit=False)
+                offer_details = offer_details_form.save(commit=False)
+                offer_details.offer = offer
+                offer.save()
+                offer_details.save()
 
-    return render(request, 'offer/edit_offer.html', {
-        'offer_form': offer_form,
-        'offer_details_form': offer_details_form,
-        'offer_to_change': offer_to_change,
-        'id': id,
-        'item_id': itemid
-    })
+                notification_to_seller = Notification()
+                notification_to_seller.message = f'An offer for your listing: "{offer.item}" has been edited'
+                notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
+                notification_to_seller.href = 'offer-details'
+                notification_to_seller.href_parameter = offer.id
+                notification_to_seller.receiver = offer.seller
+                notification_to_seller.save()
+
+
+                return redirect('offer-details', offer_id=id)
+        else:
+            offer_form = CreateOfferForm(instance=offer_to_change)
+            offer_details_form = CreateOfferDetailsForm(instance=offer_to_change.offerdetails)
+
+        return render(request, 'offer/edit_offer.html', {
+            'offer_form': offer_form,
+            'offer_details_form': offer_details_form,
+            'offer_to_change': offer_to_change,
+            'id': id,
+            'item_id': itemid
+        })
 
 @login_required
 def delete_offer(request, id):

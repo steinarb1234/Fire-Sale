@@ -1,6 +1,7 @@
 #from django.contrib.auth.models import User
 from django.db import models
-
+from django.template.backends import django
+import django.utils.timezone
 
 # Create your models here for user.
 class User(models.Model):
@@ -37,5 +38,5 @@ class Notification(models.Model):
     message = models.CharField(max_length=255, blank=True, null=True)
     href = models.URLField(max_length=255, blank=True, null=True)
     href_parameter = models.CharField(max_length=255, blank=True, null=True)
-    datetime = models.DateTimeField()
+    datetime = models.DateTimeField(null=True, blank=True, default=django.utils.timezone.now)
     seen = models.BooleanField(default=False)
