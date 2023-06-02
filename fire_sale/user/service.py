@@ -1,4 +1,5 @@
-# Import statements
+# Import staements
+from category.models import Category, CategoryViews
 from user.models import User, UserInfo
 
 class UserService:
@@ -43,6 +44,15 @@ class UserService:
         # Attach user_info instance to UserProfile instance before saving
         user_profile_form.instance.user_info = user_info
         user_profile_form.save()
+
+        categories_dicts = list(Category.objects.values('name'))
+        categories = [category['name'] for category in categories_dicts]
+        for name in categories:
+            category_views = CategoryViews()
+            category_views.category_views = 0
+            category_views.category_id = name
+            category_views.user_id = user_info.user_id
+            category_views.save()
 
         return user_form
     

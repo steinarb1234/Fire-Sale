@@ -28,16 +28,25 @@ class ItemService:
     def get_categories_and_items_by_userid(user_id):
         watchlist_items = WatchListItem.objects.filter(user_id=user_id).select_related('item')
 
-        categories = Category.objects.prefetch_related(
-            Prefetch('item_set',
-                queryset=Item.objects.prefetch_related('itemimage_set')
-                               .annotate(is_in_watchlist=Exists(watchlist_items.filter(item=OuterRef('pk'))))
+        if user_id is not None:
+            categories = CategoryViews.objects.filter(user_id=user_id).prefetch_related(
+                Prefetch('category__item_set',
+                    queryset=Item.objects.prefetch_related('itemimage_set')
+                                   .annotate(is_in_watchlist=Exists(watchlist_items.filter(item=OuterRef('pk'))))
+                )
             )
-        )
+        else:
+            categories = CategoryViews.objects.filter(user_id=1).prefetch_related(
+                Prefetch('category__item_set',
+                    queryset=Item.objects.prefetch_related('itemimage_set')
+                                   .annotate(is_in_watchlist=Exists(watchlist_items.filter(item=OuterRef('pk'))))
+                )
+            )
+        categories = categories.order_by('-category_views')
 
         categories_and_items = []
         for category in categories:
-            categories_and_items.append({"name": category.name, "items": category.item_set.all()})
+            categories_and_items.append({"name": category.category.name, "items": category.category.item_set.all()})
 
         return categories_and_items
         

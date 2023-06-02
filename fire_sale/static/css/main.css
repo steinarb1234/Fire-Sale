@@ -166,6 +166,10 @@
     color: rgba(155, 155, 155, .5);
 }
 
+.rounded-left {
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
 /* === Sort === */
 
 .container #sort-selector {
@@ -312,6 +316,12 @@
         text-decoration: underline;
     }
 
+    .card-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     /* Item Details */
     .item-description {
         margin-top: 1em;
@@ -406,10 +416,10 @@
         justify-content: right;
     }
 
-    .form-row#form-template {
+    #form-template {
         display: none;
     }
-   
+
 
 /* === Offer === */
 
@@ -556,6 +566,13 @@
         border-bottom: 1px solid lightgray;
     }
 
+    .update-profile-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+    }
+
     /* Update User */
 
     .edit-heading {
@@ -647,7 +664,8 @@ input:not([type="checkbox"]):not([type="submit"]), textarea, select {
     background-clip: padding-box;
     border: var(--bs-border-width) solid var(--bs-border-color) !important;
     -webkit-appearance: none;
-    -moz-appearance: none;    color: var(--bs-body-color);
+    -moz-appearance: none;
+    color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
     border-radius: var(--bs-border-radius);
 }
@@ -691,4 +709,18 @@ input:focus-visible {
 
 .star.filled {
     color: gold;
+}
+
+.see-more-homepage {
+    color: #4f4f4f;
+}
+
+.see-more-homepage:hover {
+    color: black;
+}
+
+/* === Notifications === */
+
+.notification-on-site {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
 }
