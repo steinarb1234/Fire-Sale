@@ -83,9 +83,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   
     const populateReviewSection = () => {
-        const formValues = Array.from(
-          document.querySelector("#checkout-form").elements
-        ).slice(1);
+        const formElements = document.querySelector("#checkout-form").elements;
+        const formValues = Array.from(formElements).filter((element) => {
+            return !element.classList.contains("btn");
+        }).slice(1);
+    
+
+        console.log(formValues)
       
         const nameDict = [
           "Full name",
@@ -114,11 +118,13 @@ document.addEventListener("DOMContentLoaded", () => {
         formValues.forEach((field, index) => {
             const fieldName = nameDict[index];
             const fieldValue = field.value;
+            
+            console.log(`Index: ${index}, Field Name: ${fieldName}, Field Value: ${fieldValue}`)
 
             if (index === 6) {
-            targetSection = paymentSection; // Switch to the payment section after "Name of cardholder"
+                targetSection = paymentSection; // Switch to the payment section after "Name of cardholder"
             } else if (index === 10) {
-            targetSection = ratingSection; // Switch to the rating section after "Rating"
+                targetSection = ratingSection; // Switch to the rating section after "Rating"
             }
 
             if (fieldValue.trim() !== "") {
