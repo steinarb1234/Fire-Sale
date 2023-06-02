@@ -1,4 +1,3 @@
-# Import statements
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect, resolve_url
@@ -11,7 +10,7 @@ from user.forms.user_form import CustomUserCreationForm, UserProfileForm, Custom
 from user.models import UserProfile, User, UserInfo, Notification
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max, Count
+from django.db.models import Max, Count, OuterRef, Subquery
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 
@@ -120,21 +119,28 @@ def user_profile(request):
     })
 
 
-@login_required
 def my_offers(request):
     try:
-        user_offers = Offer.objects.filter(buyer_id=request.user.id).prefetch_related('item', 'offerdetails', 'item__offer_set', 'item__itemstats', 'item__itemstats__status')
+        user_offers = Offer.objects.filter(buyer_id=request.user.id).prefetch_related(
+            'item', 'offerdetails', 'item__offer_set', 'item__itemstats', 'item__itemstats__status'
+        )
         item_ids = user_offers.values_list('item__id', flat=True)
-        # Highest price er rangt sótt? - Steinar
-        highest_price = Offer.objects.filter(item__id__in=item_ids).aggregate(highest_price=Max('amount'))['highest_price']
-
+        
+        # Get the highest offer amount for each item
+        highest_offers = Offer.objects.filter(item_id=OuterRef('item__id')).values('item__id').annotate(
+            highest_offer=Max('amount')
+        ).values('highest_offer')
+        
+        # Attach the highest offer amount to each offer
+        user_offers = user_offers.annotate(highest_offer=Subquery(highest_offers))
+        
     except ObjectDoesNotExist:
         user_offers = None
     
     return render(request, 'user/my_offers.html', {
         "user_offers": user_offers,
-        "highest_price": highest_price,
     })
+
 
 @login_required
 def my_listings(request):

@@ -19,9 +19,7 @@
                 <th scope="col">Offers on item</th>
                 <th scope="col">Details</th>
                 <th scope="col">Item status</th>
-                {% if offer.status != 'Accepted' %}
-                    <th scope="col">Actions</th>
-                {% endif %}
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody data-sortable-table>
@@ -33,7 +31,7 @@
                 <td data-sort-amount>${{ offer.amount }}</td>
 
                 <td>${{ offer.item.price }}</td>
-                <td>${{ highest_price }}</td>
+                <td>${{ offer.highest_offer }}</td>
                 <td>
                     {% if offer.item.offer_set.count > 0 %}
                         <a href="{% url 'item-offers-buyers' offer.item.id %}">{{ offer.item.offer_set.count }} offers</a>
