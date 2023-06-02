@@ -1,5 +1,6 @@
 import django.utils.timezone
 from django.db import models
+from django.db.models import Q
 
 from user.models import User
 from category.models import Category
@@ -9,7 +10,7 @@ from category.models import Category
 class Item(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    price = models.FloatField(default=0)
+    price = models.FloatField()
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

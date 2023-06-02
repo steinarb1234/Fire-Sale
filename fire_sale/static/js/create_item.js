@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    const addButton = document.querySelector('#add-image');
+    const addButton = document.querySelector('#add-image-button');
     const formsetContainer = document.getElementById('formset-container');
     const formTemplate = document.querySelector('#form-template');
     const totalFormsInput = document.querySelector('#id_form-TOTAL_FORMS');
