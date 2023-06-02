@@ -146,11 +146,18 @@
     margin-left: 1rem;
 }
 
-.img-container img {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
+.img-container,
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--nav-item-size);
+    width: var(--nav-item-size);
     border-radius: 50%;
+    background-color: rgba(155, 155, 155, .25);
+}
+
+.img-container {
     object-fit: cover;
 }
   
@@ -294,17 +301,6 @@
         color: rgba(155, 155, 155, .5);
         font-size: 6em;
         text-decoration: dotted rgba(155, 155, 155, .5);
-    }
-
-    .img-container,
-    .icon-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: var(--nav-item-size);
-        width: var(--nav-item-size);
-        border-radius: 50%;
-        background-color: rgba(155, 155, 155, .25);
     }
 
     .card-info, .category-name, .see-more {
@@ -622,6 +618,10 @@
     clear:both; margin: 10px 0
 }
 
+#prev-to-payment {
+    height: fit-content
+}
+
 .notification-icon {
     display: flex; align-items: center
 }
@@ -635,7 +635,7 @@ label {
     display: block;
 }
 
-input, textarea, select {
+input:not([type="checkbox"]):not([type="submit"]), textarea, select {
     display: block;
     /*width: 100%;*/
     padding: .375rem .75rem;
@@ -650,6 +650,10 @@ input, textarea, select {
     -moz-appearance: none;    color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
     border-radius: var(--bs-border-radius);
+}
+
+input[type="checkbox"] {
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
 }
 
 

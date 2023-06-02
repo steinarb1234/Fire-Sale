@@ -1,4 +1,3 @@
-# Import statements
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect, resolve_url
@@ -11,7 +10,7 @@ from user.forms.user_form import CustomUserCreationForm, UserProfileForm, Custom
 from user.models import UserProfile, User, UserInfo, Notification
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max, Count
+from django.db.models import Max, Count, OuterRef, Subquery
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 from .service import UserService
@@ -117,7 +116,6 @@ def user_profile(request):
     })
 
 
-@login_required
 def my_offers(request):
     """
     Displays the offers made by the authenticated user for items.
@@ -144,6 +142,7 @@ def my_offers(request):
         "user_offers": user_offers,
         "highest_price": highest_price,
     })
+
 
 @login_required
 def my_listings(request):
