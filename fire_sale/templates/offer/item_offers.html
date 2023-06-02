@@ -30,29 +30,29 @@
                         {% if offer.status == "Accepted" %}
                             <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Pending answer' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-warning">Undo</button>
+                                <button type="submit" class="btn btn-outline-warning">Undo</button>
                             </form>
                             <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Rejected' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Reject</button>
+                                <button type="submit" class="btn btn-outline-danger">Reject</button>
                             </form>
                         {% elif offer.status == "Rejected" %}
                             <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Accepted' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success">Accept</button>
+                                <button type="submit" class="btn btn-outline-success">Accept</button>
                             </form>
                             <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Pending answer' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-warning">Undo</button> <!-- Changed "Reject" to "Pend" -->
+                                <button type="submit" class="btn btn-outline-warning">Undo</button> <!-- Changed "Reject" to "Pend" -->
                             </form>
                         {% else %}
                             <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Accepted' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success">Accept</button>
+                                <button type="submit" class="btn btn-outline-success">Accept</button>
                             </form>
                             <form method="POST" action="{% url 'change_offer_status' offer.id item.id 'Rejected' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Reject</button>
+                                <button type="submit" class="btn btn-outline-danger">Reject</button>
                             </form>
                         {% endif %}
                     </div>
