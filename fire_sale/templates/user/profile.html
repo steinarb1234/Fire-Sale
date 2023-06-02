@@ -3,7 +3,6 @@
 {% block content %}
     <div class="user-profile-main-container">
     <h1>Profile</h1>
-        <div>
             <div class="user-profile-name-and-image">
                 <h2>{{ user_instance.full_name }}</h2>
                 {% if userinfo.image %}
@@ -24,9 +23,16 @@
                         Edit profile
                     </a>
             </div>
+<<<<<<< HEAD
             <div class="user-info-and-ratings">
                 <div class="user-info">
                     <h2>User information</h2>
+=======
+            <div style="display: flex; justify-content: space-between; width: 70%">
+{#            User info #}
+                <div style="width: 50%; display: flex; flex-direction: column; gap: 5px;">
+                    <h2 style="text-align: center">User information</h2>
+>>>>>>> bc572d9cfa26a02de282703e641b391f70254a94
                     <div>
                         <p id="top-p"><b>Username:</b> {{ user_instance.user_name }}</p>
                         <p><b>Email:</b> {{ user_instance.email }}</p>
@@ -39,7 +45,12 @@
                         <p><b>Biography: </b><br>{{ user_profile.bio }}</p>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div class="user-ratings-container">
+=======
+{#            Ratings #}
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; width: 50%">
+>>>>>>> bc572d9cfa26a02de282703e641b391f70254a94
                     <h2>Ratings</h2>
                         {% if not user_ratings %}
                             <p id="top-p">No ratings found</p>
@@ -56,6 +67,6 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 {% endblock %}
