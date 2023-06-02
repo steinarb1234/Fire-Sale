@@ -56,6 +56,24 @@
 }
 
 
+.footer-contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    padding: 0.25rem;
+}
+
+.footer-contact-line {
+    display: flex;
+}
+
+.footer-contact-line p {
+    display: inline-block;
+    margin-right: 0.25rem;
+}
+
+
 /* === Navigation === */
 
 .searchButton {

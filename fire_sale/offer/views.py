@@ -17,23 +17,44 @@ from django.contrib.auth.decorators import login_required
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from user.models import User, UserProfile, Notification
 from django.http import HttpRequest
+from django.http import HttpResponseForbidden
+
 
 # Create your views here.
+#@login_required
+#def offer_details(request, offer_id):
+#    offer = Offer.objects.get(pk=offer_id)
+#    item_images = ItemImage.objects.filter(item=offer.item)
+#    highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
+#    seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1) \
+#                  or 'No ratings'
+#    return render(request, 'offer/offer_details.html', {
+#        "offer": offer,
+#        'item_images': item_images,
+#        'highest_price': highest_price,
+#        'seller_rating': seller_rating,
+#    })
+
 @login_required
 def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
-    item_images = ItemImage.objects.filter(item=offer.item)
-    highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
-    try:
-        seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
-    except TypeError:
-        seller_rating = 'No rating'
-    return render(request, 'offer/offer_details.html', {
-        "offer": offer,
-        'item_images': item_images,
-        'highest_price': highest_price,
-        'seller_rating': seller_rating,
+    if offer.buyer.id != request.user.id:
+        if offer.seller.id != request.user.id:
+            return HttpResponseForbidden("You are not authorized")
+        else:
+            item_images = ItemImage.objects.filter(item=offer.item)
+            highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
+            try:
+                seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
+            except TypeError:
+                seller_rating = 'No rating'
+            return render(request, 'offer/offer_details.html', {
+                "offer": offer,
+                'item_images': item_images,
+                'highest_price': highest_price,
+                'seller_rating': seller_rating,
     })
+
 
 @login_required
 def open_offer_window(request, item_id):
