@@ -35,7 +35,8 @@ def navigation_bar_processor(request):
 def notifications_processor(request):
     notifications = Notification.objects.filter(receiver=request.user.id).order_by('datetime')
     count_new = notifications.filter(seen=False).count()
-    notifications = notifications[:10]
+    if len(notifications) > 10:
+        notifications = notifications[len(notifications)-10:]
 
     for notification in notifications:
         if notification.href_parameter:

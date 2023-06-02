@@ -12,6 +12,8 @@ from user.models import UserProfile, User, UserInfo, Notification
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
+from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
 
 # View functions for 'user':
 def register(request):
@@ -67,36 +69,39 @@ def update_profile(request, id):
     user_profile_instance = user_info_instance.userprofile
     auth_user_instance = auth_user.objects.get(pk=id)
 
-    if request.method == 'POST':
-        user_form = CustomUserUpdateForm(request.POST, instance=user_instance)
-        user_profile_form = UserProfileUpdateForm(request.POST, instance=user_profile_instance)
-        user_info_form = UserInfoUpdateForm(request.POST, instance=user_info_instance)
-
-        if user_form.is_valid() and user_profile_form.is_valid() and user_info_form.is_valid():
-            user_form.save()
-            user_info_form.save()
-
-            # Update the related auth_user instance directly
-            auth_user_instance.email = user_form.cleaned_data['email']
-            auth_user_instance.first_name = user_form.cleaned_data['full_name']
-            auth_user_instance.username = user_form.cleaned_data['user_name']
-            auth_user_instance.save()  # Save the updated auth_user instance
-
-            user_profile = user_profile_form.save(commit=False)
-            user_profile.user_info = user_info_instance
-            user_profile.save()
-
-            return redirect('user-profile')
+    if user_instance.id != request.user.id:
+        raise PermissionDenied()
     else:
-        user_form = CustomUserUpdateForm(instance=user_instance)
-        user_profile_form = UserProfileUpdateForm(instance=user_profile_instance)
-        user_info_form = UserInfoUpdateForm(instance=user_info_instance)
+        if request.method == 'POST':
+            user_form = CustomUserUpdateForm(request.POST, instance=user_instance)
+            user_profile_form = UserProfileUpdateForm(request.POST, instance=user_profile_instance)
+            user_info_form = UserInfoUpdateForm(request.POST, instance=user_info_instance)
 
-    return render(request, 'user/update_user.html', {
-        'user_form': user_form,
-        'user_profile_form': user_profile_form,
-        'user_info_form': user_info_form,
-        'id': id
+            if user_form.is_valid() and user_profile_form.is_valid() and user_info_form.is_valid():
+                user_form.save()
+                user_info_form.save()
+
+                # Update the related auth_user instance directly
+                auth_user_instance.email = user_form.cleaned_data['email']
+                auth_user_instance.first_name = user_form.cleaned_data['full_name']
+                auth_user_instance.username = user_form.cleaned_data['user_name']
+                auth_user_instance.save()  # Save the updated auth_user instance
+
+                user_profile = user_profile_form.save(commit=False)
+                user_profile.user_info = user_info_instance
+                user_profile.save()
+
+                return redirect('user-profile')
+        else:
+            user_form = CustomUserUpdateForm(instance=user_instance)
+            user_profile_form = UserProfileUpdateForm(instance=user_profile_instance)
+            user_info_form = UserInfoUpdateForm(instance=user_info_instance)
+
+        return render(request, 'user/update_user.html', {
+            'user_form': user_form,
+            'user_profile_form': user_profile_form,
+            'user_info_form': user_info_form,
+            'id': id
     })
 
 @login_required
@@ -154,7 +159,7 @@ def my_listings(request):
 
 @login_required
 def notifications(request):
-    notifications = Notification.objects.filter(receiver=request.user.id)
+    notifications = Notification.objects.filter(receiver=request.user.id).order_by('datetime')
     for notification in notifications:
         if notification.href_parameter:
             notification.href = resolve_url(notification.href, notification.href_parameter)

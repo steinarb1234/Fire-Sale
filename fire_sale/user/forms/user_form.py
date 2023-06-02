@@ -2,8 +2,8 @@ from django.forms import ModelForm, widgets
 from django import forms
 from user.models import User, UserProfile, UserInfo
 
-class CustomUserCreationForm(ModelForm):
 
+class CustomUserCreationForm(ModelForm):
     class Meta:
         model = User
         fields = ['full_name', 'email']
@@ -12,8 +12,8 @@ class CustomUserCreationForm(ModelForm):
             'email': widgets.EmailInput(attrs={'class': 'form-control'}),
         }
 
+
 class UserProfileForm(ModelForm):
-    
     class Meta:
         model = UserProfile
         exclude = ['id', 'user_info']
@@ -25,6 +25,7 @@ class UserProfileForm(ModelForm):
             'zip_code': widgets.TextInput(attrs={'class': 'form-control'}),
             'bio': widgets.Textarea(attrs={'class': 'form-control'}),
         }
+
 
 class CustomUserUpdateForm(ModelForm):
     class Meta:
@@ -38,7 +39,6 @@ class CustomUserUpdateForm(ModelForm):
         
 
 class UserProfileUpdateForm(ModelForm):
-
     class Meta:
         model = UserProfile
         fields = ['bio', 'country', 'address', 'city', 'zip_code']
@@ -49,20 +49,21 @@ class UserProfileUpdateForm(ModelForm):
             'city': widgets.TextInput(attrs={'class': 'form-control'}),
             'zip_code': widgets.TextInput(attrs={'class': 'form-control'})
         }
-        
+
+
 class UserInfoUpdateForm(ModelForm):
-    
     class Meta:
         model = UserInfo
         fields = ['image']
         widgets = {
             'image URL': forms.URLInput(attrs={'class': 'form-control'}),
         }
-        
-# For Checkout Form       
-        
+
+
+# For Checkout Form
+
+
 class CheckOutUserUpdateForm(ModelForm):
-    
     class Meta:
         model = User
         fields = ['full_name', 'email']
@@ -70,9 +71,9 @@ class CheckOutUserUpdateForm(ModelForm):
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
         }
-        
+
+
 class CheckOutProfileUpdateForm(ModelForm):
-    
     class Meta:
         model = UserProfile
         fields = ['country', 'city' ,'address', 'zip_code']

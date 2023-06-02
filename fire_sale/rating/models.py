@@ -6,7 +6,7 @@ from offer.models import Offer
 
 
 class Rating(models.Model):
-    offer = models.OneToOneField(Offer, on_delete=models.CASCADE)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
     message = models.CharField(max_length=255)
     date = models.DateField(null=True, blank=True, default=timezone.now)
     rating = models.FloatField()

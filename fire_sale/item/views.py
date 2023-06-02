@@ -14,6 +14,9 @@ from watchlist.models import WatchListItem
 from item.service import ItemService
 from django.contrib.auth.decorators import login_required
 from offer.models import Offer
+from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
+
 
 
 def index(request):
@@ -116,69 +119,47 @@ def edit_item(request, id):
     item_image_instances = ItemImage.objects.filter(item_id=id)
     item_details_instance = get_object_or_404(ItemDetails, pk=id)
 
-    if request.method == 'POST':
-        item_form = EditItemForm(data=request.POST, instance=item_instance)
-        item_image_formset = ItemImageFormSet(data=request.POST)
-
-        item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
-
-        if item_form.is_valid() and item_image_formset.is_valid() and item_details_form.is_valid():
-            item = item_form.save()
-
-            # Update or create image instances
-            for form, image_instance in zip(item_image_formset.forms, item_image_instances):
-                if form.cleaned_data.get('DELETE'):
-                    image_instance.delete()
-                elif form.cleaned_data.get('image'):
-                    image_instance.image_url = form.cleaned_data['image']  # Update the image URL field
-                    image_instance.save()
-
-            # Save any new images
-            for form in item_image_formset.extra_forms:
-                if form.cleaned_data.get('image'):
-                    image = form.save(commit=False)
-                    image.item = item
-                    image.save()
-
-            item_details_form.save()
-
-            return redirect('item-details', id)
+    if item_instance.buyer.id != request.user.id:
+            raise PermissionDenied()
     else:
-        item_form = EditItemForm(instance=item_instance)
-        item_image_formset = ItemImageFormSet(initial=[{'image': image.image} for image in item_image_instances])
-        item_details_form = EditItemDetailsForm(instance=item_details_instance)
+        if request.method == 'POST':
+            item_form = EditItemForm(data=request.POST, instance=item_instance)
+            item_image_formset = ItemImageFormSet(data=request.POST)
 
-    return render(request, 'item/edit_item.html', {
-        'item_form': item_form,
-        'item_image_formset': item_image_formset,
-        'item_details_form': item_details_form,
-        'id': id,
+            item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
+
+            if item_form.is_valid() and item_image_formset.is_valid() and item_details_form.is_valid():
+                item = item_form.save()
+
+                # Update or create image instances
+                for form, image_instance in zip(item_image_formset.forms, item_image_instances):
+                    if form.cleaned_data.get('DELETE'):
+                        image_instance.delete()
+                    elif form.cleaned_data.get('image'):
+                        image_instance.image_url = form.cleaned_data['image']  # Update the image URL field
+                        image_instance.save()
+
+                # Save any new images
+                for form in item_image_formset.extra_forms:
+                    if form.cleaned_data.get('image'):
+                        image = form.save(commit=False)
+                        image.item = item
+                        image.save()
+
+                item_details_form.save()
+
+                return redirect('item-details', id)
+        else:
+            item_form = EditItemForm(instance=item_instance)
+            item_image_formset = ItemImageFormSet(initial=[{'image': image.image} for image in item_image_instances])
+            item_details_form = EditItemDetailsForm(instance=item_details_instance)
+
+        return render(request, 'item/edit_item.html', {
+            'item_form': item_form,
+            'item_image_formset': item_image_formset,
+            'item_details_form': item_details_form,
+            'id': id,
     })
-
-        # item_form = EditItemForm(data=request.POST, instance=item_instance)
-        # item_image_form = EditItemImageForm(data=request.POST, instance=item_image_instance)
-        # item_stats_form = EditItemStatsForm(data=request.POST, instance=item_stats_instance)
-        # item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
-        # if item_form.is_valid() and item_image_form.is_valid() and item_stats_form.is_valid() and \
-        #         item_details_form.is_valid():
-        #     item_form.save()
-        #     item_image_form.save()
-        #     item_stats_form.save()
-        #     item_details_form.save()
-
-        #     return redirect('item-details', id)
-    # else:
-    #     item_form = EditItemForm(instance=item_instance)
-    #     item_image_form = EditItemImageForm(instance=item_image_instance)
-    #     item_stats_form = EditItemStatsForm(instance=item_stats_instance)
-    #     item_details_form = EditItemDetailsForm(instance=item_details_instance)
-    # return render(request, 'item/edit_item.html', {
-    #     'item_form': item_form,
-    #     'item_image_form': item_image_form,
-    #     'item_stats_form': item_stats_form,
-    #     'item_details_form': item_details_form,
-    #     'id': id,
-    # })
 
 
 
@@ -186,15 +167,19 @@ def edit_item(request, id):
 def item_offers(request, item_id):
     offers = Offer.objects.filter(item_id=item_id)
     item = Item.objects.get(pk=item_id)
-    return render(request, 'offer/item_offers.html', {
-        "offers": offers,
-        "item": item,
+    if item.seller.id != request.user.id:
+            raise PermissionDenied()
+    else:
+        return render(request, 'offer/item_offers.html', {
+            "offers": offers,
+            "item": item,
     })
 
 @login_required
 def item_offers_buyers(request, item_id):
     offers = Offer.objects.filter(item_id=item_id)
     item = Item.objects.get(pk=item_id)
+
     return render(request, 'offer/item_offers_buyer_view.html', {
         "offers": offers,
         "item": item,
