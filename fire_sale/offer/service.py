@@ -1,5 +1,5 @@
+# Import statements
 from datetime import date
-
 import django
 from user.models import Notification
 from item.models import Item
@@ -50,6 +50,18 @@ class OfferService:
     
     @staticmethod
     def edit_offer(offer_form, offer_details_form, seller):
+        """
+        Edits an existing offer.
+
+        Args:
+            offer_form (OfferForm): The form instance containing the offer data to be edited.
+            offer_details_form (OfferDetailsForm): The form instance containing the offer details data to be edited.
+            seller (User): The seller associated with the offer.
+
+        Returns:
+            int: The ID of the edited offer.
+
+        """
         # Save the offer.
         offer = offer_form.save(commit=False)
         offer_details = offer_details_form.save(commit=False)
@@ -69,6 +81,24 @@ class OfferService:
         return offer.id
     
     def handle_checkout(user_form, user_profile_form, rating_form, request, auth_user_instance, user_info_instance, item_stats, other_offers_on_item, offer):
+        """
+        Handles the checkout process for an offer.
+
+        Args:
+            user_form (UserForm): The form instance containing the user data.
+            user_profile_form (UserProfileForm): The form instance containing the user profile data.
+            rating_form (RatingForm): The form instance containing the rating data.
+            request (HttpRequest): The HTTP request object.
+            auth_user_instance (User): The authenticated user instance.
+            user_info_instance (UserInfo): The user info instance.
+            item_stats (ItemStats): The item stats instance.
+            other_offers_on_item (QuerySet): The queryset of other offers on the item.
+            offer (Offer): The offer being checked out.
+
+        Returns:
+            str: The name of the view or URL to redirect to after the checkout process.
+
+        """
         user_form.save()
         user_profile_form.save()
         
