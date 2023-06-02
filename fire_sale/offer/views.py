@@ -201,8 +201,19 @@ def checkout(request, offer_id):
                 # Save user profile information and rating
                 user_form.save()
                 user_profile_form.save()
-                rating_form.save()
                 
+                if rating_form.is_valid():
+                    # If the form is valid, save the instance
+                    rating_instance = rating_form.save(commit=False)
+                    rating_instance.offer = offer
+                    try:
+                        existing_rating = Rating.objects.get(offer=offer)
+                    except Rating.DoesNotExist:
+                        pass
+                    else:
+                        rating_form = RatingForm(request.POST, instance=existing_rating)
+                        rating_instance.save()
+                                
                 # Update the related auth_user instance directly
                 auth_user_instance.email = user_form.cleaned_data['email']
                 auth_user_instance.first_name = user_form.cleaned_data['full_name']
@@ -230,7 +241,7 @@ def checkout(request, offer_id):
                 notification_to_seller.receiver = offer.seller
                 notification_to_seller.save()
 
-                return redirect('review', offer_id)
+                return redirect('item-index')
     else:
         user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
         user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
