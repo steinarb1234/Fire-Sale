@@ -60,6 +60,7 @@ def offer_details(request, offer_id):
         })
 
 
+
 @login_required
 def open_offer_window(request, item_id):
     print(item_id)
@@ -203,6 +204,43 @@ def checkout(request, offer_id):
     
     other_offers_on_item = Offer.objects.filter(item_id=offer.item_id)
     item_stats = get_object_or_404(ItemStats, pk=offer.item_id)
+    
+    if request.method == 'POST':
+        user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
+        user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
+        payment_form = PaymentForm(data=request.POST)
+        rating_form = RatingForm(data=request.POST)
+        
+        if user_form.is_valid() and user_profile_form.is_valid() and payment_form.is_valid():
+            
+        
+            # Save user profile information and rating
+            user_form.save()
+            user_profile_form.save()
+            
+            if rating_form.is_valid():
+                # If the form is valid, save the instance
+                rating_instance = rating_form.save(commit=False)
+                rating_instance.offer = offer
+                try:
+                    existing_rating = Rating.objects.get(offer=offer)
+                except Rating.DoesNotExist:
+                    rating_instance.save()
+                else:
+                    rating_form = RatingForm(request.POST, instance=existing_rating)
+                    rating_instance.save()
+                                
+                # Update the related auth_user instance directly
+                auth_user_instance.email = user_form.cleaned_data['email']
+                auth_user_instance.first_name = user_form.cleaned_data['full_name']
+                auth_user_instance.save()  
+                
+                user_profile = user_profile_form.save(commit=False)
+                user_profile.user_info = user_info_instance
+                user_profile.save()
+
+                item_stats.status = ItemStatuses(status="Sold")
+                item_stats.save()
 
     if offer.buyer.id != request.user.id:
             raise PermissionDenied()
@@ -228,7 +266,7 @@ def checkout(request, offer_id):
                         try:
                             existing_rating = Rating.objects.get(offer=offer)
                         except Rating.DoesNotExist:
-                            pass
+                            rating_instance.save()
                         else:
                             rating_form = RatingForm(request.POST, instance=existing_rating)
                             rating_instance.save()

@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block content %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
-    <div id="main-header">
+    <div class="page-header">
         <h2>Checkout</h2>
     </div>
+
     <form class="form form-row" action="{% url 'checkout' offer_id %}" method="post" id="checkout-form">
         {% csrf_token %}
         <div id="user-details">
@@ -13,21 +13,27 @@
             {{ user_form }}
             {{ user_profile_form }}
             <br>
-            <button type="button" id="next" class="btn btn-primary pull-right">Next</button>
+            <div class="d-flex justify-content-end">
+                <button type="button" id="next" class="btn btn-primary">Next</button>
+            </div>
         </div>
         <div id="payment-details" style="display: none;">
             <h4>Payment Details</h4>
             {{ payment_form }}
             <br>
-            <button type="button" id="prev" class="btn btn-secondary pull-left">Previous</button>
-            <button type="button" id="next-to-rating" class="btn btn-primary pull-right">Next</button>
+            <div class="d-flex justify-content-between">
+                <button type="button" id="prev" class="btn btn-secondary">Previous</button>
+                <button type="button" id="next-to-rating" class="btn btn-primary">Next</button>
+            </div>
         </div>
         <div id="rating-section" style="display: none;">
             <h4>Rating Seller</h4>
             {{ rating_form }}
             <br>
-            <button type="button" id="prev-to-payment" class="btn btn-secondary pull-left">Previous</button>
-            <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+            <div class="d-flex justify-content-between">
+                <button type="button" id="prev-to-payment" class="btn btn-secondary">Previous</button>
+                <input type="submit" value="Buy now" class="btn btn-primary"/>
+            </div>
         </div>
         <div id="review" style="display: none;">
             <h2>Review checkout</h2>
@@ -41,8 +47,10 @@
             <h3> Rating details: </h3>
             <div id="review-rating-section"></div>
             <br>
-            <button type="button" id="back" class="btn btn-secondary">Back</button>
-            <input type="submit" value="Confirm checkout" class="btn btn-primary pull-right" style="margin-top: 10px;" />
+            <div class="d-flex justify-content-between">
+                <button type="button" id="back" class="btn btn-secondary">Back</button>
+                <input type="submit" value="Confirm checkout" class="btn btn-primary"/>
+            </div>
         </div>
     </form>
 

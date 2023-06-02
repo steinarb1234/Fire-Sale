@@ -1,142 +1,173 @@
-$(document).ready(function(){
+document.addEventListener("DOMContentLoaded", () => {
+    const userFormPrefix = "user-details";
+    const userProfileFormPrefix = "user-profile-details";
+    const paymentFormPrefix = "payment-details";
+    let hasAlerted = false;
+  
+    const removeRequiredAttribute = (selector) => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach((element) => {
+        element.removeAttribute("required");
+      });
+    };
+  
+    removeRequiredAttribute("#rating-section input");
+    removeRequiredAttribute("#rating-section textarea");
+  
+    const showSection = (sectionToShow) => {
+      const sections = [
+        "#user-details",
+        "#payment-details",
+        "#rating-section",
+        "#review",
+      ];
+      sections.forEach((section) => {
+        if (section === sectionToShow) {
+          document.querySelector(section).style.display = "block";
+        } else {
+          document.querySelector(section).style.display = "none";
+        }
+      });
+      checkFormCompletion();
+    };
+  
+    const checkFormCompletion = () => {
+      const userFormFilled = isFormFilled(userFormPrefix);
+      const userProfileFormFilled = isFormFilled(userProfileFormPrefix);
+      const paymentFormFilled = isFormFilled(paymentFormPrefix);
+      const submitButton = document.querySelector(
+        "#checkout-form input[type='submit']"
+      );
+  
+      if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
+        submitButton.value = "Review checkout";
+      } else {
+        submitButton.value = "Buy now";
+      }
+    };
+  
+    const isFormFilled = (formPrefix) => {
+        const formFields = document.querySelectorAll(`#${formPrefix} input[type='text']`);
+      
+        for (let i = 0; i < formFields.length; i++) {
+          if (formFields[i].value.trim() === "") {
+            return false; // Exit the loop if any field is empty
+          }
+        }
+      
+        return true;
+    };
+  
+    const invalidInputHandler = (event) => {
+      if (!hasAlerted) {
+        alert("Please fill in all information for User details and Payment details.");
+        hasAlerted = true;
+  
+        setTimeout(() => {
+          hasAlerted = false;
+        }, 500);
+      }
+    };
+  
+    const submitFormHandler = (event) => {
+      event.preventDefault();
+      const userFormFilled = isFormFilled(userFormPrefix);
+      const userProfileFormFilled = isFormFilled(userProfileFormPrefix);
+      const paymentFormFilled = isFormFilled(paymentFormPrefix);
+  
+      if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
+        populateReviewSection();
+        showSection("#review");
+        document.querySelector("#checkout-form input[type='submit']").value = "Buy now";
+      }
+    };
+  
+    const populateReviewSection = () => {
+        const formValues = Array.from(
+          document.querySelector("#checkout-form").elements
+        ).slice(1);
+      
+        const nameDict = [
+          "Full name",
+          "Email",
+          "Country",
+          "City",
+          "Address",
+          "Zip code",
+          "Name of cardholder",
+          "Card number",
+          "Expiration date",
+          "Cvs",
+          "Rating",
+          "Message",
+        ];
+      
+        const userSection = document.querySelector("#review-user-details");
+        const paymentSection = document.querySelector("#review-payment-details");
+        const ratingSection = document.querySelector("#review-rating-section");
+      
+        userSection.innerHTML = "";
+        paymentSection.innerHTML = "";
+        ratingSection.innerHTML = ""; // Clear previous review details
+        let targetSection = userSection; // Start with the user section
 
-            $("#rating-section input").removeAttr("required");
-            $("#rating-section textarea").removeAttr("required");
-            
-            $("#next").click(function(){
-                $("#user-details").hide();
-                $("#payment-details").show();
-                checkFormCompletion();
-            });
+        formValues.forEach((field, index) => {
+            const fieldName = nameDict[index];
+            const fieldValue = field.value;
 
-            $("#prev").click(function(){
-                $("#payment-details").hide();
-                $("#user-details").show();
-                checkFormCompletion();
-            });
-
-            $("#next-to-rating").click(function(){
-                $("#payment-details").hide();
-                $("#rating-section").show();
-                checkFormCompletion();
-            });
-
-            $("#prev-to-payment").click(function(){
-                $("#rating-section").hide();
-                $("#payment-details").show();
-                checkFormCompletion();
-            });
-
-            // Function to check form completion and update button text
-            function checkFormCompletion() {
-                var userFormFilled = isFormFilled(userFormPrefix);
-                var userProfileFormFilled = isFormFilled(userProfileFormPrefix);
-                var paymentFormFilled = isFormFilled(paymentFormPrefix);
-
-                if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
-                    $("#checkout-form input[type='submit']").val("Review checkout");
-                    //$("#checkout-form input[type='submit']").attr("formaction", "javascript:void(0)");
-                } else {
-                    $("#checkout-form input[type='submit']").val("Buy now");
-                    //$("#checkout-form input[type='submit']").removeAttr("formaction");
-                }
-           }
-
-            // Function to check if a specific form is filled
-            function isFormFilled(formPrefix) {
-                console.log(formPrefix)
-                var formFields = $("#" + formPrefix + " input[type='text']");
-                var isFilled = true;
-
-                formFields.each(function() {
-                    if ($(this).val().trim() === "") {
-                        isFilled = false;
-                        console.log("0")
-                        return false; // Exit the loop if any field is empty
-                    }
-                });
-                console.log(isFilled)
-                return isFilled;
+            if (index === 6) {
+            targetSection = paymentSection; // Switch to the payment section after "Name of cardholder"
+            } else if (index === 10) {
+            targetSection = ratingSection; // Switch to the rating section after "Rating"
             }
 
-            let hasAlerted = false;
-
-            $("#checkout-form :input[required]").on('invalid', function() {
-                if (!hasAlerted) {
-                    alert('Please fill in all information for User details and Payment details.');
-                    hasAlerted = true;
-
-                    // Reset the flag after a delay to allow for subsequent alerts if needed
-                    setTimeout(() => {
-                        hasAlerted = false;
-                    }, 500);
-                }
-            });
-
-            // Display the review section when all forms are filled
-            $("#checkout-form").submit(function() {
-                
-                event.preventDefault(); 
-
-                var userFormFilled = isFormFilled(userFormPrefix);
-                var userProfileFormFilled = isFormFilled(userProfileFormPrefix);
-                var paymentFormFilled = isFormFilled(paymentFormPrefix);
-
-                if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
-                    populateReviewSection();
-                    $("#review").show();
-                    $("#user-details").hide();
-                    $("#payment-details").hide();
-                    $("#rating-section").hide();
-                    $("#checkout-form input[type='submit']").val("Buy now");
-                }
-            });
-
-            // Populate the review section with form values
-            function populateReviewSection() {
-                console.log("yi")
-                var formValues = $("#checkout-form").serializeArray().slice(1);
-                console.log("Form values: ", formValues);
-
-                // Clear previous review details
-                $("#main-header").empty();
-                $("#review-user-details").empty();
-                $("#review-payment-details").empty();
-
-                // Display user details and payment details
-                var name_dict = ['Full name', 'Email', 'Country', 'City', 'Address', 'Zip code', 'Name of cardholder', 'Card number', 'Expiration date', 'Cvs', 'Rating', 'Message'];
-                var userSection = $("#review-user-details");
-                var paymentSection = $("#review-payment-details");
-
-                for (var i = 0; i < formValues.length; i++) {
-                    var fieldName = name_dict[i];
-                    var fieldValue = formValues[i].value;
-
-                    // Determine the target section based on index
-                    var targetSection = (i < 6) ? userSection : paymentSection;
-
-                    // Add an indent to the field value
-                    fieldValue = "   " + fieldValue;
-
-                    // Append the field to the target section
-                    targetSection.append("<p><strong>" + fieldName + ":</strong> " + fieldValue + "</p>");
-                }
+            if (fieldValue.trim() !== "") {
+            const fieldElement = document.createElement("p");
+            fieldElement.innerHTML = `<strong>${fieldName}:</strong> ${"   " + fieldValue}`;
+            targetSection.appendChild(fieldElement);
             }
-            
-            // Back button functionality
-            $("#back").click(function() {
-                $("#review").hide();
-                $("#user-details").show();
-                $("#payment-details").hide();
-                $("#rating-section").hide();
-                checkFormCompletion();
-            });
-
-
-              // Add your Buy Now button click event listener here
-            $("#review input[type='submit']").click(function(event){
-                event.preventDefault();
-                $("#checkout-form").submit();
-            });
-
         });
+      };
+      
+      
+  
+    const backButtonHandler = () => {
+      showSection("#user-details");
+    };
+  
+    const buyNowButtonHandler = (event) => {
+      event.preventDefault();
+      document.querySelector("#checkout-form").submit();
+    };
+  
+    removeRequiredAttribute("#checkout-form input[required]");
+  
+    document.querySelectorAll("#checkout-form input[required]").forEach((input) => {
+      input.addEventListener("invalid", invalidInputHandler);
+    });
+  
+    document.querySelector("#checkout-form").addEventListener("submit", submitFormHandler);
+  
+    document.querySelector("#back").addEventListener("click", backButtonHandler);
+  
+    document
+      .querySelector("#review input[type='submit']")
+      .addEventListener("click", buyNowButtonHandler);
+  
+    document.querySelector("#next").addEventListener("click", () => {
+      showSection("#payment-details");
+    });
+  
+    document.querySelector("#prev").addEventListener("click", () => {
+      showSection("#user-details");
+    });
+  
+    document.querySelector("#next-to-rating").addEventListener("click", () => {
+      showSection("#rating-section");
+    });
+  
+    document.querySelector("#prev-to-payment").addEventListener("click", () => {
+      showSection("#payment-details");
+    });
+  });
+  
