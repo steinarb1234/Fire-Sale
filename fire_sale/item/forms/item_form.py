@@ -3,14 +3,13 @@ from django import forms
 from item.models import Item, ItemDetails, ItemStats, ItemImage
 
 
-
 class CreateItemForm(ModelForm):
     class Meta:
         model = Item
         exclude = ['id', 'seller']
         widgets = {
             'name': widgets.TextInput(attrs={'class': 'form-control'}),
-            'price': widgets.NumberInput(attrs={'class': 'form-control'}),
+            'price': widgets.NumberInput(attrs={'class': 'form-control', 'placeholder': '0'}),
             'category': widgets.Select(attrs={'class': 'form-control'})
         }
 

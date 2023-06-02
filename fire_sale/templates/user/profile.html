@@ -39,7 +39,7 @@
                             <p>No ratings found</p>
                         {% endif %}
                         {% for rating in user_ratings %}
-                            <div style="width: 90%; padding: 10px; border-bottom: 1px solid lightgray">
+                            <div style="width: 100%; padding: 10px; border-bottom: 1px solid lightgray">
                                     <p>{{ rating.offer_id.user_id.user_name }}</p>
                                     <p>{{ rating.offer_id.item_id }}</p>
                                     <div id="stars-{{ rating.id }}">{# Javacript fills stars here #}</div>
