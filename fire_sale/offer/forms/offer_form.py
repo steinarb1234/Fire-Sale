@@ -39,7 +39,7 @@ class PaymentForm(Form):
     name_of_cardholder = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     card_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     expiration_date = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    cvs = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    cvc = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
 class RatingForm(ModelForm):

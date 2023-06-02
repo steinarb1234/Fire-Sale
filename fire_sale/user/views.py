@@ -1,10 +1,9 @@
+# Import statements
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
-
-from category.models import CategoryViews, Category
-from item.models import Item, ItemStats, ItemDetails
+from item.models import Item, ItemStats
 from watchlist.models import WatchListItem
 from offer.models import Offer
 from rating.models import Rating
