@@ -129,9 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       document.querySelector("#checkout-form").submit();
     };
-  
-    //removeRequiredAttribute("#checkout-form input[required]");
-  
+    
     document.querySelectorAll("#checkout-form input[required]").forEach((input) => {
       input.addEventListener("invalid", invalidInputHandler);
     });
