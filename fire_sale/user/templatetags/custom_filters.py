@@ -4,7 +4,7 @@ register = template.Library()
 
 @register.filter
 def truncate_name(value):
-    max_length = 15
+    max_length = 30
     if len(value) <= max_length:
         return value
     else:

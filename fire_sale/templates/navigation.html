@@ -64,9 +64,7 @@
           <!-- Profile image -->
         <div class="nav-item dropdown">
           {% if user_instance.userinfo.image %}
-            <div class="nav-link rounded-circle img-container" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{{ user_instance.userinfo.image }}" alt="User profile image">
-            </div>
+            <img src="{{ user_instance.userinfo.image }}" alt="User profile image" class="nav-link rounded-circle img-container" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           {% else %}
             <div class="nav-link rounded-circle icon-container" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="material-symbols-outlined">person</span>
@@ -75,8 +73,7 @@
 
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="{% url "user-profile" %}">
-{#                  <b>{{ user_instance.full_name|truncate_name }}</b><br>#}
-                  <b>{{ user_instance.full_name }}</b><br>
+                  <b>{{ user_instance.full_name|truncate_name }}</b><br>
                   <div class="center-form" id="average-stars"></div>
                   {% if average_rating %}
                     Average rating: {{ average_rating }}
