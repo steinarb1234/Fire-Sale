@@ -23,26 +23,28 @@
           <!-- Grid column -->
 
           <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Useful links
-            </h6>
-            <p>
-              <a href="{% url 'user-profile' %}" class="text-reset">Profile</a>
-            </p>
-            <p>
-              <a href="{% url 'watchlist-index' %}" class="text-reset">Watchlist</a>
-            </p>
-            <p>
-              <a href="{% url 'my-listings' %}" class="text-reset">My listings</a>
-            </p>
-            <p>
-              <a href="{% url 'my-offers' %}" class="text-reset">Bids/Offers</a>
-            </p>
-          </div>
+
+            {% if user_instance %}
+                  <!-- Grid column -->
+                  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                      Useful links
+                    </h6>
+                    <p>
+                      <a href="{% url 'user-profile' %}" class="text-reset">Profile</a>
+                    </p>
+                    <p>
+                      <a href="{% url 'watchlist-index' %}" class="text-reset">Watchlist</a>
+                    </p>
+                    <p>
+                      <a href="{% url 'my-listings' %}" class="text-reset">My listings</a>
+                    </p>
+                    <p>
+                      <a href="{% url 'my-offers' %}" class="text-reset">Bids/Offers</a>
+                    </p>
+                  </div>
+            {% endif %}
           <!-- Grid column -->
   
           <!-- Grid column -->
