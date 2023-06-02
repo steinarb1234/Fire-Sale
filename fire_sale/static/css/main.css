@@ -458,10 +458,10 @@ label [for="country-select"] {
     /* Create Item */
 
     #formset-container .form-control {
-        width: 70%;
+        width: 90%;
         margin-right: 1rem;
     }
-    #formset-container .form-control, #formset-container label, #formset-container input {
+    #formset-container .form-control, #formset-container .form-control + label, #formset-container input {
         display: inline-block;
     }
 
@@ -469,6 +469,7 @@ label [for="country-select"] {
         display: flex;
         justify-content: right;
     }
+   
 
 /* === Offer === */
 
@@ -636,17 +637,25 @@ label [for="country-select"] {
 }
 
 
+label {
+    display: block;
+}
 
 .form {
     display: flex;
     flex-direction: column;
 }
 
-.form input, .form textarea {
+.form input, .form textarea, .form select {
     margin-bottom: 1em;
 }
 
-.form btn-primary {
-    width: fit-content;
+.form-submit-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-submit-button-container input{
+    width: 20%
 }
 

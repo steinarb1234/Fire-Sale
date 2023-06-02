@@ -1,5 +1,4 @@
 from django.forms import ModelForm, widgets
-from django import forms
 from user.models import User, UserProfile, UserInfo
 
 
@@ -32,9 +31,9 @@ class CustomUserUpdateForm(ModelForm):
         model = User
         fields = ['full_name', 'user_name', 'email']
         widgets = {
-            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'user_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'full_name': widgets.TextInput(attrs={'class': 'form-control'}),
+            'user_name': widgets.TextInput(attrs={'class': 'form-control'}),
+            'email': widgets.EmailInput(attrs={'class': 'form-control'}),
         }
         
 
@@ -43,7 +42,7 @@ class UserProfileUpdateForm(ModelForm):
         model = UserProfile
         fields = ['bio', 'country', 'address', 'city', 'zip_code']
         widgets = {
-            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'bio': widgets.Textarea(attrs={'class': 'form-control'}),
             'country': widgets.Select(attrs={'class': 'form-control'}),
             'address': widgets.TextInput(attrs={'class': 'form-control'}),
             'city': widgets.TextInput(attrs={'class': 'form-control'}),
@@ -56,7 +55,7 @@ class UserInfoUpdateForm(ModelForm):
         model = UserInfo
         fields = ['image']
         widgets = {
-            'image URL': forms.URLInput(attrs={'class': 'form-control'}),
+            'image URL': widgets.URLInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -66,8 +65,8 @@ class CheckOutUserUpdateForm(ModelForm):
         model = User
         fields = ['full_name', 'email']
         widgets = {
-            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'full_name': widgets.TextInput(attrs={'class': 'form-control'}),
+            'email': widgets.TextInput(attrs={'class': 'form-control'}),
         }
 
 
