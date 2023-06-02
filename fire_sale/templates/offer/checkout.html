@@ -46,7 +46,7 @@
     </form>
 
     <script>
-
+        
         $(document).ready(function(){
 
             $("#rating-section input").removeAttr("required");
@@ -108,6 +108,20 @@
                 return isFilled;
             }
 
+            let hasAlerted = false;
+
+            $("#checkout-form :input[required]").on('invalid', function() {
+                if (!hasAlerted) {
+                    alert('Please fill in all information for User details and Payment details.');
+                    hasAlerted = true;
+
+                    // Reset the flag after a delay to allow for subsequent alerts if needed
+                    setTimeout(() => {
+                        hasAlerted = false;
+                    }, 500);
+                }
+            });
+
             // Display the review section when all forms are filled
             $("#checkout-form").submit(function() {
                 
@@ -157,7 +171,7 @@
                     targetSection.append("<p><strong>" + fieldName + ":</strong> " + fieldValue + "</p>");
                 }
             }
-
+            
             // Back button functionality
             $("#back").click(function() {
                 $("#review").hide();
