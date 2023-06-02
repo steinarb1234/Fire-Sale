@@ -6,7 +6,8 @@
     --fs-color-background-secondary: #e9ecef;
     --fs-color-primary: #f7572c;
     --fs-color-primary-darker: #c4340d;
-    --fs-color-secondary: #ffa200;
+    --fs-color-secondary: #717171;
+    --fs-color-secondary-darker: #484848;
     --fs-color-success: #25c331;
     --fs-color-success-darker: #3eaf14;
     --fs-color-danger: #f33322;
@@ -177,84 +178,23 @@
 
 /* === Create Account === */
 
-#signup-form input, #signup-form .form-control {
-    border: 1px solid black;
-    border-radius: 2pt;
-    width: 400px;
-    height: 28px;
-}
-
-#signup-form input:focus {
-    border-color: black;
-    border-width: 2px;
-    box-shadow: none;
-}
-
-.signup-container h1 {
-    padding-bottom: 20px;
+#signup-header {
+    text-align: center;
 }
 
 .signup-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
-input[name="image"] {
-    margin-top: 10pt;
-    margin-bottom: 10pt;
 
-}
-  
-#signup-form label[for="id_username"], #signup-form label[for="id_password1"], #signup-form label[for="id_password2"] {
-    display: block;
-    padding-top: 15px; 
-}
-  
-#signup-form label[for="id_full_name"] {
-    display: block;
-    padding-top: 18px; 
+#signup-form {
+    width: 60vh;
 }
 
-#signup-form .signup_button {
+.form-control {
     border: none;
-    border-radius: 3pt;
-    width: 400px;
-    height: 35px;
-    margin-bottom: 30px;
-    margin-top: 30px;
 }
-
-.status-button form {
-    display: inline-block;
-    font-weight: 500;
-}
-
-.helptext, .helptext ul li {
-    font-size: 15px; 
-}
-
-.form-container h4 {
-    text-align: center;
-}
-
-.signup_button {
-    margin-top: 15pt;
-}
-
-.login_button {
-    width: 100%; 
-}
-
-.id_email {
-    font-size: 10pt;
-}
-  
-label [for="country-select"] {
-    display: block;
-    padding-top: 15px;
-}
-
 
 /* === Home === */
 
@@ -482,7 +422,10 @@ label [for="country-select"] {
   
 .offer-details-buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: start;
+    gap: 1em;
+
   }
 
 .filter-checkboxes {
@@ -640,6 +583,33 @@ label [for="country-select"] {
 label {
     display: block;
 }
+
+input, textarea, select {
+    display: block;
+    /*width: 100%;*/
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-radius: var(--bs-border-radius);
+}
+
+
+input:focus-visible {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+
 
 .form {
     display: flex;

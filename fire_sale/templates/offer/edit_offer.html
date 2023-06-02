@@ -6,7 +6,10 @@
         {% csrf_token %}
         {{ offer_form.as_p }}
         {{ offer_details_form.as_p }}
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        
+        <div class="form-submit-button-container">
+            <input type="submit" value="Save" class="btn btn-primary"/>
+        </div>
     </form>
 {% endblock %}
 
