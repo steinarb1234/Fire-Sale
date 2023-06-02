@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await axios.get('/offers/open_offer_window/' + item_id);
         document.querySelector('.modal-body').innerHTML = response.data.html_form;
         document.querySelector('#offerModal').classList.add('show');
-        attachFormSubmitHandler(); // Call this function after the form HTML is loaded
       } catch (error) {
         console.log(error);
       }
