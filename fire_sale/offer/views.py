@@ -250,7 +250,7 @@ def checkout(request, offer_id):
                         try:
                             existing_rating = Rating.objects.get(offer=offer)
                         except Rating.DoesNotExist:
-                            pass
+                            rating_instance.save()
                         else:
                             rating_form = RatingForm(request.POST, instance=existing_rating)
                             rating_instance.save()
