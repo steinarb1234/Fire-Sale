@@ -149,6 +149,8 @@
     color: var(--fs-color-warning) !important;
     border-color: var(--fs-color-warning) !important;
     font-weight: 500 !important;
+    border-width: medium;
+    font-size: small;
 }
 
 .btn-outline-warning:hover {
