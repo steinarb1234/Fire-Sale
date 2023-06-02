@@ -186,10 +186,16 @@
     padding-bottom: 20px;
 }
 
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
 input[name="image"] {
     margin-top: 10pt;
     margin-bottom: 10pt;
+
 }
   
 #signup-form label[for="id_username"], #signup-form label[for="id_password1"], #signup-form label[for="id_password2"] {
