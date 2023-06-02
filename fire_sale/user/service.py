@@ -1,13 +1,25 @@
+# Import statements
 from user.models import User, UserInfo
-from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
-
 
 class UserService:
     
     @staticmethod
     def create_user(user_creation_form, user_info_creation_form, user_profile_form):
-        print('Service')
+        """
+        Creates a new user with the provided registration forms.
+
+        Args:
+            user_creation_form (Form): The form containing user creation data.
+            user_info_creation_form (Form): The form containing user information data.
+            user_profile_form (Form): The form containing user profile data.
+
+        Returns:
+            User: The created user object.
+
+        Raises:
+            User.DoesNotExist: If the user with the given username is not found.
+
+        """
         # Get user form but don't save yet
         user_form = user_creation_form.save(commit=False)
 
@@ -36,6 +48,21 @@ class UserService:
     
     @staticmethod
     def save_user_info(user_form, user_info_form, user_profile_form, auth_user_instance, user_info_instance):
+        """
+        Saves the user information and profile data for an existing user.
+
+        Args:
+            user_form (Form): The form containing user data.
+            user_info_form (Form): The form containing user information data.
+            user_profile_form (Form): The form containing user profile data.
+            auth_user_instance (User): The existing user instance from the authentication system.
+            user_info_instance (UserInfo): The existing user information instance.
+
+        Raises:
+            User.DoesNotExist: If the user with the given username is not found.
+
+        """
+        # Save user information
         user_form.save()
         user_info_form.save()
 

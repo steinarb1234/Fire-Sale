@@ -1,31 +1,41 @@
+# Import statements
 from datetime import date
 from django.template.loader import render_to_string
-from django.db.models import Sum, Max, Avg
+from django.db.models import Max, Avg
 from django.http import JsonResponse
 import django.utils.datetime_safe
 from django.shortcuts import render, redirect, get_object_or_404
-from item.models import Item, ItemStats, ItemStatuses
-from offer.forms.offer_form import ContactInformationForm, CreateOfferForm, CreateOfferDetailsForm, PaymentForm, \
-    RatingForm
+from item.models import ItemStats
+from offer.forms.offer_form import CreateOfferForm, CreateOfferDetailsForm, PaymentForm, RatingForm
 from django.contrib.auth import get_user_model
-
 from rating.models import Rating
 from user.forms.user_form import CheckOutUserUpdateForm, CheckOutProfileUpdateForm
-
-from offer.models import Offer, OfferDetails
+from offer.models import Offer
 from django.contrib.auth.decorators import login_required
-from item.models import Item, ItemImage, ItemDetails, ItemStats
-from user.models import User, UserProfile, Notification
-from django.http import HttpRequest
+from item.models import ItemImage,ItemStats
+from user.models import User, Notification
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
-
-
+from .service import OfferService
 
 
 @login_required
 def offer_details(request, offer_id):
-    
+    """
+    Displays the details of a specific offer.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        offer_id (int): The ID of the offer to display.
+
+    Returns:
+        HttpResponse: If the user has permission to view the offer, renders the 'offer/offer_details.html' template
+        with the offer details, including item images, highest price, and seller rating.
+        
+    Raises:
+        PermissionDenied: If the current user does not have permission to view the offer.
+
+    """
     offer = Offer.objects.get(pk=offer_id)
     if offer.buyer.id != request.user.id and offer.seller.id != request.user.id:
         raise PermissionDenied()
@@ -48,7 +58,17 @@ def offer_details(request, offer_id):
 
 @login_required
 def open_offer_window(request, item_id):
+    """
+    Opens a pop-up window to create a new offer for the specified item.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
+        item_id (int): The ID of the item for which the offer is being created.
+
+    Returns:
+        JsonResponse: A JSON response containing the rendered HTML form for creating a new offer.
+
+    """
     offer_form = CreateOfferForm()
     offer_details_form = CreateOfferDetailsForm()
     html_form = render_to_string('offer/create_offer.html', {
@@ -61,31 +81,26 @@ def open_offer_window(request, item_id):
 
 @login_required
 def create_offer(request, item_id):
-        
+    """
+    Creates a new offer for the specified item.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        item_id (int): The ID of the item for which the offer is being created.
+
+    Returns:
+        HttpResponse: If the request method is POST and the form data is valid, redirects to the 'offer-details' page
+        for the created offer.
+        Otherwise, renders the 'offer/create_offer.html' template with the offer creation forms.
+
+    """
     if request.method == 'POST':
         print('posting')
         offer_form = CreateOfferForm(data=request.POST)
         offer_details_form = CreateOfferDetailsForm(data=request.POST)
         if offer_form.is_valid() and offer_details_form.is_valid():
-            offer = offer_form.save(commit=False)
-            offer.buyer_id = request.user.id
-            offer.item_id = item_id
-            offer.seller_id = Item.objects.get(pk=item_id).seller_id
-            offer.save()
-
-            offer_details = offer_details_form.save(commit=False)
-            offer_details.offer_id = offer.id
-            offer_details.start_date = date.today()
-            offer_details.save()
-
-            notification_to_seller = Notification()
-            notification_to_seller.message = f'Your item "{offer.item}" has received an offer of ${offer.amount}!'
-            notification_to_seller.href = 'offer-details'
-            notification_to_seller.href_parameter = offer.id
-            notification_to_seller.receiver = offer.seller
-            notification_to_seller.save()
-
-            return redirect('offer-details', offer.id)
+            offer_id = OfferService.create_offer(offer_form, offer_details_form, request.user.id, item_id)
+            return redirect('offer-details', offer_id)
     else:
         offer_form = CreateOfferForm()
         offer_details_form = CreateOfferDetailsForm()
@@ -98,6 +113,19 @@ def create_offer(request, item_id):
     
 @login_required
 def change_offer_status(request, id, itemid, button):
+    """
+    Changes the status of an offer and sends notifications accordingly.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        id (int): The ID of the offer to change the status.
+        itemid (int): The ID of the item associated with the offer.
+        button (str): The new status for the offer.
+
+    Returns:
+        HttpResponse: Redirects to the 'item-offers' page for the specified item.
+
+    """
     if request.method == 'POST':
         offer = Offer.objects.get(pk=id)
         offer.status = button
@@ -114,6 +142,13 @@ def change_offer_status(request, id, itemid, button):
 
 
 def changed_offer_send_notification(offer):
+    """
+    Sends a notification for a changed offer status.
+
+    Args:
+        offer (Offer): The offer for which the status has changed.
+
+    """
     notification = Notification()
     notification.message = f'Your offer for "{offer.item}" has been {offer.status}!'
     notification.datetime = django.utils.datetime_safe.datetime.now()
@@ -125,9 +160,26 @@ def changed_offer_send_notification(offer):
 
 @login_required
 def edit_offer(request, id, itemid):
-    offer_to_change = get_object_or_404(Offer, pk=id)
+    """
+    Edits an existing offer.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
+        id (int): The ID of the offer to edit.
+        itemid (int): The ID of the item associated with the offer.
+
+    Returns:
+        HttpResponse: If the user has permission and the request method is POST with valid form data,
+        redirects to the 'offer-details' page for the edited offer.
+        Otherwise, renders the 'offer/edit_offer.html' template with the offer edit forms.
+
+    Raises:
+        PermissionDenied: If the current user does not have permission to edit the offer.
+
+    """
+    offer_to_change = get_object_or_404(Offer, pk=id)
     offer = Offer.objects.get(pk=id)
+    
     if offer.buyer.id != request.user.id:
             raise PermissionDenied()
     else:
@@ -136,21 +188,7 @@ def edit_offer(request, id, itemid):
             offer_details_form = CreateOfferDetailsForm(data=request.POST, instance=offer_to_change.offerdetails)
             
             if offer_form.is_valid() and offer_details_form.is_valid():
-                offer = offer_form.save(commit=False)
-                offer_details = offer_details_form.save(commit=False)
-                offer_details.offer = offer
-                offer.save()
-                offer_details.save()
-
-                notification_to_seller = Notification()
-                notification_to_seller.message = f'An offer for your listing: "{offer.item}" has been edited'
-                notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
-                notification_to_seller.href = 'offer-details'
-                notification_to_seller.href_parameter = offer.id
-                notification_to_seller.receiver = offer.seller
-                notification_to_seller.save()
-
-
+                offer_id = OfferService.edit_offer(offer_form, offer_details_form, offer.seller)
                 return redirect('offer-details', offer_id=id)
         else:
             offer_form = CreateOfferForm(instance=offer_to_change)
@@ -166,22 +204,46 @@ def edit_offer(request, id, itemid):
 
 @login_required
 def delete_offer(request, id):
+    """
+    Deletes an existing offer.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        id (int): The ID of the offer to delete.
+
+    Returns:
+        HttpResponse: Redirects to the 'my-offers' page after deleting the offer.
+        
+    """
     offer_to_delete = get_object_or_404(Offer, pk=id)
+    if offer_to_delete.buyer.id != request.user.id:
+            raise PermissionDenied()
     offer_to_delete.delete()
 
     return redirect('my-offers')
 
 @login_required
 def checkout(request, offer_id):
-    
-    # Reyndi að fá vistuðu uplýsingarnar, veit ekki afh það virkar ekki - Steinar
+    """
+    Handles the checkout process for an offer.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        offer_id (int): The ID of the offer to checkout.
+
+    Returns:
+        HttpResponse: If the user has permission and the request method is POST with valid form data,
+        redirects to the appropriate page based on the checkout process.
+        Otherwise, renders the 'offer/checkout.html' template with the checkout forms.
+
+    Raises:
+        PermissionDenied: If the current user does not have permission to checkout the offer.
+
+    """
     auth_user = get_user_model()
     offer = get_object_or_404(Offer, pk=offer_id)
-    print(offer.buyer_id)
     
     user_instance = get_object_or_404(User, pk=offer.buyer_id)
-    print(user_instance)
-    
     user_info_instance = user_instance.userinfo
     user_profile_instance = user_info_instance.userprofile
     auth_user_instance = auth_user.objects.get(pk=offer.buyer.id)
@@ -201,52 +263,10 @@ def checkout(request, offer_id):
             
             if user_form.is_valid() and user_profile_form.is_valid() and payment_form.is_valid():
                 
-                if request.method == 'POST':
-                
-                    # Save user profile information and rating
-                    user_form.save()
-                    user_profile_form.save()
-                    
-                    if rating_form.is_valid():
-                        # If the form is valid, save the instance
-                        rating_instance = rating_form.save(commit=False)
-                        rating_instance.offer = offer
-                        try:
-                            existing_rating = Rating.objects.get(offer=offer)
-                        except Rating.DoesNotExist:
-                            rating_instance.save()
-                        else:
-                            rating_form = RatingForm(request.POST, instance=existing_rating)
-                            rating_instance.save()
-                                    
-                    # Update the related auth_user instance directly
-                    auth_user_instance.email = user_form.cleaned_data['email']
-                    auth_user_instance.first_name = user_form.cleaned_data['full_name']
-                    auth_user_instance.save()  
-                    
-                    user_profile = user_profile_form.save(commit=False)
-                    user_profile.user_info = user_info_instance
-                    user_profile.save()
+                redirect_url = OfferService.handle_checkout(user_form, user_profile_form, rating_form, request, auth_user_instance, user_info_instance, item_stats, other_offers_on_item, offer)
 
-                    item_stats.status = ItemStatuses(status="Sold")
-                    item_stats.save()
+                return redirect(redirect_url)
 
-                    other_offers_on_item.status = "Rejected"
-                    for other_offer in other_offers_on_item:
-                        other_offer.save()
-
-                    offer.status = "Item purchased"
-                    offer.save()
-
-                    notification_to_seller = Notification()
-                    notification_to_seller.message = f'Your listing: "{offer.item}" has been purchased!'
-                    notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
-                    notification_to_seller.href = 'offer-details'
-                    notification_to_seller.href_parameter = offer.id
-                    notification_to_seller.receiver = offer.seller
-                    notification_to_seller.save()
-
-                    return redirect('item-index')
         else:
             user_form = CheckOutUserUpdateForm(instance=user_instance)
             user_profile_form = CheckOutProfileUpdateForm(instance=user_profile_instance)
@@ -259,46 +279,5 @@ def checkout(request, offer_id):
             'payment_form': payment_form,
             'rating_form': rating_form,
             'offer_id': offer_id,
-    })
+        })
 
-
-@login_required
-def payment(request):
-    if request.method == 'POST':
-        payment_form = PaymentForm(data=request.POST)
-        if payment_form.is_valid():
-            payment = payment_form
-
-            return redirect('user-profile')
-    else:
-        payment_form = PaymentForm()
-    return render(request, 'offer/payment.html', {
-        'payment_form': payment_form,
-    })
-
-
-@login_required
-def review(request, offer_id):
-    if request.method == 'POST':
-        rating_form = RatingForm(data=request.POST)
-        if rating_form.is_valid():
-            rating = rating_form.save(commit=False)
-            rating.offer_id = offer_id
-            rating.save()
-
-            offer = get_object_or_404(Offer, pk=offer_id)
-            notification_to_seller = Notification()
-            notification_to_seller.message = f'You have received a rating for "{offer}"!'
-            notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
-            notification_to_seller.href = 'offer-details'   # Breyta í rating síðuna! - Steinar
-            notification_to_seller.href_parameter = offer.id
-            notification_to_seller.receiver = offer.seller
-            notification_to_seller.save()
-
-            return redirect('user-profile')
-    else:
-        rating_form = RatingForm()
-    return render(request, 'offer/review.html', {
-        'rating_form': rating_form,
-        'offer_id': offer_id,
-    })
