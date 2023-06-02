@@ -167,10 +167,9 @@ def notifications(request):
 
 @login_required
 def mark_notification_as_seen(request, notification_id):
-    print(notification_id)
     notification = Notification.objects.get(pk=notification_id)
     notification.seen = True
     notification.save()
-    return JsonResponse({'notification': notification})
+    return JsonResponse({'notification': str(notification)})
 
 
