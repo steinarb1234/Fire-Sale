@@ -159,7 +159,7 @@ def my_listings(request):
 
 @login_required
 def notifications(request):
-    notifications = Notification.objects.filter(receiver=request.user.id)
+    notifications = Notification.objects.filter(receiver=request.user.id).order_by('datetime')
     for notification in notifications:
         if notification.href_parameter:
             notification.href = resolve_url(notification.href, notification.href_parameter)

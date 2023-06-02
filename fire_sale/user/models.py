@@ -38,5 +38,5 @@ class Notification(models.Model):
     message = models.CharField(max_length=255, blank=True, null=True)
     href = models.URLField(max_length=255, blank=True, null=True)
     href_parameter = models.CharField(max_length=255, blank=True, null=True)
-    datetime = models.DateTimeField(null=True, blank=True, default=django.utils.timezone.now())
+    datetime = models.DateTimeField(null=True, blank=True, default=django.utils.timezone.now)
     seen = models.BooleanField(default=False)
