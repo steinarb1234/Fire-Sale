@@ -28,22 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector(section).style.display = "none";
         }
       });
-      checkFormCompletion();
-    };
-  
-    const checkFormCompletion = () => {
-      const userFormFilled = isFormFilled(userFormPrefix);
-      const userProfileFormFilled = isFormFilled(userProfileFormPrefix);
-      const paymentFormFilled = isFormFilled(paymentFormPrefix);
-      const submitButton = document.querySelector(
-        "#checkout-form input[type='submit']"
-      );
-  
-      if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
-        submitButton.value = "Review checkout";
-      } else {
-        submitButton.value = "Buy now";
-      }
     };
   
     const isFormFilled = (formPrefix) => {
@@ -70,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   
     const submitFormHandler = (event) => {
-      event.preventDefault();
       const userFormFilled = isFormFilled(userFormPrefix);
       const userProfileFormFilled = isFormFilled(userProfileFormPrefix);
       const paymentFormFilled = isFormFilled(paymentFormPrefix);
@@ -78,7 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
         populateReviewSection();
         showSection("#review");
-        document.querySelector("#checkout-form input[type='submit']").value = "Buy now";
+      } else {
+        invalidInputHandler();
       }
     };
   
@@ -146,18 +130,18 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#checkout-form").submit();
     };
   
-    removeRequiredAttribute("#checkout-form input[required]");
+    //removeRequiredAttribute("#checkout-form input[required]");
   
     document.querySelectorAll("#checkout-form input[required]").forEach((input) => {
       input.addEventListener("invalid", invalidInputHandler);
     });
   
-    document.querySelector("#checkout-form").addEventListener("submit", submitFormHandler);
+    document.querySelector("[data-checkout-review]").addEventListener("submit", submitFormHandler);
   
     document.querySelector("#back").addEventListener("click", backButtonHandler);
   
     document
-      .querySelector("#review input[type='submit']")
+      .querySelector("[data-checkout-confirm]")
       .addEventListener("click", buyNowButtonHandler);
   
     document.querySelector("#next").addEventListener("click", () => {
