@@ -165,7 +165,7 @@ def edit_item(request, id):
 
 @login_required()
 def item_offers(request, item_id):
-    offers = Offer.objects.filter(item_id=item_id)
+    offers = Offer.objects.filter(item_id=item_id).order_by('-amount')
     item = Item.objects.get(pk=item_id)
     if item.seller.id != request.user.id:
             raise PermissionDenied()
@@ -177,7 +177,7 @@ def item_offers(request, item_id):
 
 @login_required
 def item_offers_buyers(request, item_id):
-    offers = Offer.objects.filter(item_id=item_id)
+    offers = Offer.objects.filter(item_id=item_id).order_by('-amount')
     item = Item.objects.get(pk=item_id)
 
     return render(request, 'offer/item_offers_buyer_view.html', {

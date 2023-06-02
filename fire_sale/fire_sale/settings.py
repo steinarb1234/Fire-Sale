@@ -108,7 +108,7 @@ DATABASES = {
         'PASSWORD': 'Abc.12345',
         'HOST': '35.242.163.106',
         'PORT': '5432',
-        'CONN_MAX_AGE': 600,   # Muna að hækka í 600! - Steinar
+        'CONN_MAX_AGE': 600,
     }
 }
 
