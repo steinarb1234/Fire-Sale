@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="userListing">
+    <div class="page-header">
         <h2>My listings</h2>
         {% include 'sort.html' %}
     </div>
@@ -18,7 +18,7 @@
                 <th scope="col">Watchers</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody data-sortable-table>
         {% for item in item_stats %}
             <tr>
                 <th scope="row" data-sort-date>{{item.listing_date|date:"d/m/y"}}</th>
