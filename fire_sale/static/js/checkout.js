@@ -28,22 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector(section).style.display = "none";
         }
       });
-      checkFormCompletion();
-    };
-  
-    const checkFormCompletion = () => {
-      const userFormFilled = isFormFilled(userFormPrefix);
-      const userProfileFormFilled = isFormFilled(userProfileFormPrefix);
-      const paymentFormFilled = isFormFilled(paymentFormPrefix);
-      const submitButton = document.querySelector(
-        "#checkout-form input[type='submit']"
-      );
-  
-      if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
-        submitButton.value = "Review checkout";
-      } else {
-        submitButton.value = "Buy now";
-      }
     };
   
     const isFormFilled = (formPrefix) => {
@@ -70,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   
     const submitFormHandler = (event) => {
-      event.preventDefault();
       const userFormFilled = isFormFilled(userFormPrefix);
       const userProfileFormFilled = isFormFilled(userProfileFormPrefix);
       const paymentFormFilled = isFormFilled(paymentFormPrefix);
@@ -78,14 +61,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
         populateReviewSection();
         showSection("#review");
-        document.querySelector("#checkout-form input[type='submit']").value = "Buy now";
+      } else {
+        invalidInputHandler();
       }
     };
   
     const populateReviewSection = () => {
-        const formValues = Array.from(
-          document.querySelector("#checkout-form").elements
-        ).slice(1);
+        const formElements = document.querySelector("#checkout-form").elements;
+        const formValues = Array.from(formElements).filter((element) => {
+            return !element.classList.contains("btn");
+        }).slice(1);
+    
+
+        console.log(formValues)
       
         const nameDict = [
           "Full name",
@@ -114,11 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
         formValues.forEach((field, index) => {
             const fieldName = nameDict[index];
             const fieldValue = field.value;
+            
+            console.log(`Index: ${index}, Field Name: ${fieldName}, Field Value: ${fieldValue}`)
 
             if (index === 6) {
-            targetSection = paymentSection; // Switch to the payment section after "Name of cardholder"
+                targetSection = paymentSection; // Switch to the payment section after "Name of cardholder"
             } else if (index === 10) {
-            targetSection = ratingSection; // Switch to the rating section after "Rating"
+                targetSection = ratingSection; // Switch to the rating section after "Rating"
             }
 
             if (fieldValue.trim() !== "") {
@@ -139,19 +129,21 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       document.querySelector("#checkout-form").submit();
     };
-  
-    removeRequiredAttribute("#checkout-form input[required]");
-  
+    
+    document.querySelectorAll(".errorlist").forEach(item =>{
+      item.remove();
+    });
+
     document.querySelectorAll("#checkout-form input[required]").forEach((input) => {
       input.addEventListener("invalid", invalidInputHandler);
     });
   
-    document.querySelector("#checkout-form").addEventListener("submit", submitFormHandler);
+    document.querySelector("[data-checkout-review]").addEventListener("submit", submitFormHandler);
   
     document.querySelector("#back").addEventListener("click", backButtonHandler);
   
     document
-      .querySelector("#review input[type='submit']")
+      .querySelector("[data-checkout-confirm]")
       .addEventListener("click", buyNowButtonHandler);
   
     document.querySelector("#next").addEventListener("click", () => {
