@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
-{% block extra_head %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{% endblock %}
-
 {% block content %}
-    <h2>Checkout</h2>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <div id="main-header">
+        <h2>Checkout</h2>
+    </div>
     <form class="form form-row" action="{% url 'checkout' offer_id %}" method="post" id="checkout-form">
         {% csrf_token %}
         <div id="user-details">
@@ -18,27 +17,170 @@
         <div id="payment-details" style="display: none;">
             <h4>Payment Details</h4>
             {{ payment_form }}
+            <br>
             <button type="button" id="prev" class="btn btn-secondary pull-left">Previous</button>
+            <button type="button" id="next-to-rating" class="btn btn-primary pull-right">Next</button>
+        </div>
+        <div id="rating-section" style="display: none;">
+            <h4>Rating Seller</h4>
+            {{ rating_form }}
+            <br>
+            <button type="button" id="prev-to-payment" class="btn btn-secondary pull-left">Previous</button>
             <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
         </div>
+        <div id="review" style="display: none;">
+            <h2>Review checkout</h2>
+            <br>
+            <h3> User Details: </h3>
+            <div id="review-user-details"></div>
+            <br> 
+            <h3> Payment details: </h3>
+            <div id="review-payment-details"></div>
+            <br>
+            <h3> Rating details: </h3>
+            <div id="review-rating-section"></div>
+            <br>
+            <button type="button" id="back" class="btn btn-secondary">Back</button>
+            <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="margin-top: 10px;" />
+        </div>
     </form>
+
+    <script>
+
+        $(document).ready(function(){
+
+            $("#rating-section input").removeAttr("required");
+            $("#rating-section textarea").removeAttr("required");
+            
+            $("#next").click(function(){
+                $("#user-details").hide();
+                $("#payment-details").show();
+                checkFormCompletion();
+            });
+
+            $("#prev").click(function(){
+                $("#payment-details").hide();
+                $("#user-details").show();
+                checkFormCompletion();
+            });
+
+            $("#next-to-rating").click(function(){
+                $("#payment-details").hide();
+                $("#rating-section").show();
+                checkFormCompletion();
+            });
+
+            $("#prev-to-payment").click(function(){
+                $("#rating-section").hide();
+                $("#payment-details").show();
+                checkFormCompletion();
+            });
+
+            // Function to check form completion and update button text
+            function checkFormCompletion() {
+                var userFormFilled = isFormFilled('{{ user_form.prefix }}');
+                var userProfileFormFilled = isFormFilled('{{ user_profile_form.prefix }}');
+                var paymentFormFilled = isFormFilled('{{ payment_form.prefix }}');
+
+                if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
+                    $("#checkout-form input[type='submit']").val("Review checkout");
+                    //$("#checkout-form input[type='submit']").attr("formaction", "javascript:void(0)");
+                } else {
+                    $("#checkout-form input[type='submit']").val("Buy now");
+                    //$("#checkout-form input[type='submit']").removeAttr("formaction");
+                }
+           }
+
+            // Function to check if a specific form is filled
+            function isFormFilled(formPrefix) {
+                console.log(formPrefix)
+                var formFields = $("#" + formPrefix + " input[type='text']");
+                var isFilled = true;
+
+                formFields.each(function() {
+                    if ($(this).val().trim() === "") {
+                        isFilled = false;
+                        console.log("0")
+                        return false; // Exit the loop if any field is empty
+                    }
+                });
+                console.log(isFilled)
+                return isFilled;
+            }
+
+            // Display the review section when all forms are filled
+            $("#checkout-form").submit(function() {
+                
+                event.preventDefault(); 
+
+                var userFormFilled = isFormFilled('{{ user_form.prefix }}');
+                var userProfileFormFilled = isFormFilled('{{ user_profile_form.prefix }}');
+                var paymentFormFilled = isFormFilled('{{ payment_form.prefix }}');
+
+                if (userFormFilled && userProfileFormFilled && paymentFormFilled) {
+                    populateReviewSection();
+                    $("#review").show();
+                    $("#user-details").hide();
+                    $("#payment-details").hide();
+                    $("#rating-section").hide();
+                    $("#checkout-form input[type='submit']").val("Buy now");
+                }
+            });
+
+            // Populate the review section with form values
+            function populateReviewSection() {
+                console.log("yi")
+                var formValues = $("#checkout-form").serializeArray().slice(1);
+                console.log("Form values: ", formValues);
+
+                // Clear previous review details
+                $("#main-header").empty();
+                $("#review-user-details").empty();
+                $("#review-payment-details").empty();
+
+                // Display user details and payment details
+                var name_dict = ['Full name', 'Email', 'Country', 'City', 'Address', 'Zip code', 'Name of cardholder', 'Card number', 'Expiration date', 'Cvs', 'Rating', 'Message'];
+                var userSection = $("#review-user-details");
+                var paymentSection = $("#review-payment-details");
+
+                for (var i = 0; i < formValues.length; i++) {
+                    var fieldName = name_dict[i];
+                    var fieldValue = formValues[i].value;
+
+                    // Determine the target section based on index
+                    var targetSection = (i < 6) ? userSection : paymentSection;
+
+                    // Add an indent to the field value
+                    fieldValue = "   " + fieldValue;
+
+                    // Append the field to the target section
+                    targetSection.append("<p><strong>" + fieldName + ":</strong> " + fieldValue + "</p>");
+                }
+            }
+
+            // Back button functionality
+            $("#back").click(function() {
+                $("#review").hide();
+                $("#user-details").show();
+                $("#payment-details").hide();
+                $("#rating-section").hide();
+                checkFormCompletion();
+            });
+
+
+              // Add your Buy Now button click event listener here
+            $("#review input[type='submit']").click(function(event){
+                event.preventDefault();
+                $("#checkout-form").submit();
+            });
+
+        });
+    </script>
+
 {% endblock %}
 
-{% block extra_js %}
-<script>
-    $(document).ready(function(){
-        console.log('yo');
-        $("#next").click(function(){
-            $("#user-details").hide();
-            $("#payment-details").show();
-        });
-        $("#prev").click(function(){
-            $("#payment-details").hide();
-            $("#user-details").show();
-        });
-    });
-</script>
-{% endblock %}
+
+
 
 
 <!--hafa auto filled in user upplysingar sem á að staðfesta-->
