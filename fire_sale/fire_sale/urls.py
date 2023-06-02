@@ -24,7 +24,6 @@ from fire_sale.views import page_not_found_view
 # from django.conf.urls import handler404
 from django.views.defaults import page_not_found
 
-
 urlpatterns = [
     path('', include('item.urls')),
     path('user/', include('user.urls')),
