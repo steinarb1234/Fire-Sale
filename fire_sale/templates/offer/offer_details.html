@@ -17,12 +17,22 @@
 
     <div class="offer-details-main-right">
         <p>Offer amount: ${{ offer.amount }}</p>
-        <p>Highest offer: ${{ highest_price }}</p>
-        <p>Item buyer: {{ offer.buyer }}</p>
-        <p>Item seller: {{ offer.seller }}</p>
+        <p>Message:<br>{{ offer.offerdetails.message }}</p>
+        <p>Highest offer on item: ${{ highest_price }}</p>
+        <p>Listed price: ${{ offer.item.price }}</p>
+        <p>Offers:
+            {% if request.user.id == offer.buyer.id %}
+                <a href="{% url 'item-offers-buyers' offer.item.id %}">
+            {% else %}
+                <a href="{% url 'item-offers' offer.item.id %}">
+            {% endif %}
+                    [{{ offer.item.offer_set.count}} offers]
+                </a>
+        </p>
+        <p>Bidder: {{ offer.buyer }}</p>
+        <p>Seller: {{ offer.seller }}</p>
         <p>Seller email: {{ offer.seller.email }}</p>
-        <p>Seller rating: {{ offer.seller.userinfo.avg_rating }}</p>
-        <p>Message: {{ offer.offerdetails.message }}</p>
+        <p>Seller rating: {{ seller_rating }}</p>
         <p>Offer date: {{ offer.offerdetails.start_date }}</p>
         <p>Item status: {{ offer.item.itemstats.status }}</p>
         <p>Offer status: {{ offer.status }}</p>
@@ -61,7 +71,7 @@
                 {% endif %}
             </div>
         {% elif offer.buyer.id == request.user.id %}
-            {% if offer.status != 'Item purchased' %}
+            {% if offer.status != 'Item purchased' and offer.status != 'Rejected' %}
             <td>
                 <div class="status-button">
                     {% if offer.status == 'Accepted' %}

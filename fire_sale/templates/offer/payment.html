@@ -4,7 +4,7 @@
     <form class="form form-row" action="{% url 'checkout' %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Buy now" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+        <input type="submit" value="Buy now" class="btn btn-primary pull-right checkout-form" />
     </form>
 {% endblock %}
 <!---hafa bara peyment input hér-->

@@ -5,6 +5,28 @@
     <h1>My offers</h1>
     {% include 'sort.html' %}
 </div>
+
+<a href="#" id="filter-link">Filter</a>
+<div class="filter-my-offers">
+        <div class="filter-title">
+          <h id="filter-title">Offer status</h>
+          <h id="filter-title">Item status</h>
+        </div>
+        <div class="filter-checkboxes">
+          <div class="status-filter">
+            <div><input type="checkbox" value="Accepted" id="accepted"><label for="accepted">Accepted</label></div>
+            <div><input type="checkbox" value="Pending answer" id="pending-answer"><label for="pending-answer">Pending answer</label></div>
+            <div><input type="checkbox" value="Item purchased" id="item-purchased"><label for="item-purchased">Item purchased</label></div>
+            <div><input type="checkbox" value="Rejected" id="rejected"><label for="rejected">Rejected</label></div>
+          </div>
+          <div class="status-filter">
+            <div><input type="checkbox" value="Sold" id="sold"><label for="sold">Sold</label></div>
+            <div><input type="checkbox" value="Not sold" id="not-sold"><label for="not-sold">Not sold</label></div>
+          </div>
+        </div>
+</div>
+
+<div id="offer-table-container">
     <table class="table">
         <thead>
             <tr>
@@ -13,7 +35,8 @@
                 <th scope="col">Offer status</th>
                 <th scope="col">Offer amount</th>
                 <th scope="col">List price</th>  
-                <th scope="col">Highest offer</th>         
+                <th scope="col">Highest offer</th>
+                <th scope="col">Offers</th>
                 <th scope="col">Details</th>
                 <th scope="col">Item status</th>
                 {% if offer.status != 'Accepted' %}
@@ -42,7 +65,7 @@
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
                 <td>{{ offer.item.itemstats.status }}</td>
                 <td>
-                {% if offer.status != 'Item purchased' %}
+                {% if offer.status != 'Item purchased' and offer.status != 'Rejected' %}
                         <div class="status-button">
                             {% if offer.status == 'Accepted' %}
                                 <form method="POST" action="{% url 'checkout' offer.id %}">
@@ -61,5 +84,6 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
 
 {% endblock %}

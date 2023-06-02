@@ -1,7 +1,10 @@
-from django.db.models import Max
+import django
+from django.db.models import Max, Avg
 from django.forms import formset_factory, modelformset_factory
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
+
+from rating.models import Rating
 from user.models import UserProfile, UserInfo
 from category.models import Category
 from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
@@ -33,7 +36,12 @@ def get_item_details_by_id(request, id):
 
     seller_id = item_details.item_stats.item.seller_id
     user_location = UserProfile.objects.get(user_info__user_id=seller_id).country
-    # user_rating = UserInfo.objects.get(user__id=seller_id).avg_rating
+
+    try:
+        user_rating = round(Rating.objects.filter(offer_id__seller=seller_id).aggregate(Avg('rating'))['rating__avg'], 1)
+    except TypeError:
+        user_rating = '(No ratings)'
+
     item = item_details.item_stats.item
     category_and_items = ItemService.get_category_and_items_by_itemid(item.category, id, request.user.id)
     item_images = ItemImage.objects.filter(item=item).select_related('item')
@@ -43,7 +51,7 @@ def get_item_details_by_id(request, id):
 
     return render(request, 'item/item_details.html', {
         'user_location': user_location,
-        # 'user_rating' : user_rating,
+        'user_rating' : user_rating,
         'item_details': item_details,
         'category_and_items': category_and_items,
         'item_images': item_images,
@@ -56,20 +64,23 @@ def get_item_details_by_id(request, id):
 
 @login_required
 def create_item(request):
+    CreateItemImageFormSet = formset_factory(CreateItemImageForm, extra=1, max_num=10, absolute_max=50, can_delete=True)
+
     if request.method == 'POST':
         item_form = CreateItemForm(data=request.POST)
-        item_image_form = CreateItemImageForm(data=request.POST)
+        item_image_formset = CreateItemImageFormSet(data=request.POST)
         item_details_form = CreateItemDetailsForm(data=request.POST)
 
-        # TODO: Logic layer síun á gögnum
-        if item_form.is_valid() and item_image_form.is_valid() and item_details_form.is_valid():
+        if item_form.is_valid() and item_image_formset.is_valid() and item_details_form.is_valid():
             item = item_form.save(commit=False)
             item.seller_id = int(request.user.id)
             item.save()
 
-            item_image = item_image_form.save(commit=False)
-            item_image.item_id = item.id
-            item_image.save()
+            for form in item_image_formset:
+                if form.cleaned_data.get('image'):
+                    image = form.save(commit=False)
+                    image.item = item
+                    image.save()
 
             item_stats = ItemStats(item=item)
             item_stats.save()
@@ -81,14 +92,15 @@ def create_item(request):
             return redirect('item-details', item.id)
     else:
         item_form = CreateItemForm()
-        item_image_form = CreateItemImageForm()
+        item_image_formset = CreateItemImageFormSet()
         item_details_form = CreateItemDetailsForm()
 
     return render(request, 'item/create_item.html', {
         'item_form': item_form,
-        'item_image_form': item_image_form,
-        'item_details_form': item_details_form
+        'item_image_formset': item_image_formset,
+        'item_details_form': item_details_form,
     })
+
 
 @login_required
 def delete_item(request, id):
@@ -98,37 +110,79 @@ def delete_item(request, id):
 
 @login_required
 def edit_item(request, id):
+    ItemImageFormSet = formset_factory(EditItemImageForm, extra=1, max_num=10, absolute_max=50, can_delete=True)
+
     item_instance = get_object_or_404(Item, pk=id)
-    item_image_instance = get_object_or_404(ItemImage, item_id=id)
-    item_stats_instance = get_object_or_404(ItemStats, pk=id)
+    item_image_instances = ItemImage.objects.filter(item_id=id)
     item_details_instance = get_object_or_404(ItemDetails, pk=id)
+
     if request.method == 'POST':
         item_form = EditItemForm(data=request.POST, instance=item_instance)
-        item_image_form = EditItemImageForm(data=request.POST, instance=item_image_instance)
-        item_stats_form = EditItemStatsForm(data=request.POST, instance=item_stats_instance)
+        item_image_formset = ItemImageFormSet(data=request.POST)
+
         item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
-        if item_form.is_valid() and item_image_form.is_valid() and item_stats_form.is_valid() and \
-                item_details_form.is_valid():
-            item_form.save()
-            item_image_form.save()
-            item_stats_form.save()
+
+        if item_form.is_valid() and item_image_formset.is_valid() and item_details_form.is_valid():
+            item = item_form.save()
+
+            # Update or create image instances
+            for form, image_instance in zip(item_image_formset.forms, item_image_instances):
+                if form.cleaned_data.get('DELETE'):
+                    image_instance.delete()
+                elif form.cleaned_data.get('image'):
+                    image_instance.image_url = form.cleaned_data['image']  # Update the image URL field
+                    image_instance.save()
+
+            # Save any new images
+            for form in item_image_formset.extra_forms:
+                if form.cleaned_data.get('image'):
+                    image = form.save(commit=False)
+                    image.item = item
+                    image.save()
+
             item_details_form.save()
 
             return redirect('item-details', id)
     else:
         item_form = EditItemForm(instance=item_instance)
-        item_image_form = EditItemImageForm(instance=item_image_instance)
-        item_stats_form = EditItemStatsForm(instance=item_stats_instance)
+        item_image_formset = ItemImageFormSet(initial=[{'image': image.image} for image in item_image_instances])
         item_details_form = EditItemDetailsForm(instance=item_details_instance)
+
     return render(request, 'item/edit_item.html', {
         'item_form': item_form,
-        'item_image_form': item_image_form,
-        'item_stats_form': item_stats_form,
+        'item_image_formset': item_image_formset,
         'item_details_form': item_details_form,
         'id': id,
     })
 
+        # item_form = EditItemForm(data=request.POST, instance=item_instance)
+        # item_image_form = EditItemImageForm(data=request.POST, instance=item_image_instance)
+        # item_stats_form = EditItemStatsForm(data=request.POST, instance=item_stats_instance)
+        # item_details_form = EditItemDetailsForm(data=request.POST, instance=item_details_instance)
+        # if item_form.is_valid() and item_image_form.is_valid() and item_stats_form.is_valid() and \
+        #         item_details_form.is_valid():
+        #     item_form.save()
+        #     item_image_form.save()
+        #     item_stats_form.save()
+        #     item_details_form.save()
 
+        #     return redirect('item-details', id)
+    # else:
+    #     item_form = EditItemForm(instance=item_instance)
+    #     item_image_form = EditItemImageForm(instance=item_image_instance)
+    #     item_stats_form = EditItemStatsForm(instance=item_stats_instance)
+    #     item_details_form = EditItemDetailsForm(instance=item_details_instance)
+    # return render(request, 'item/edit_item.html', {
+    #     'item_form': item_form,
+    #     'item_image_form': item_image_form,
+    #     'item_stats_form': item_stats_form,
+    #     'item_details_form': item_details_form,
+    #     'id': id,
+    # })
+
+
+
+@login_required()
 def item_offers(request, item_id):
     offers = Offer.objects.filter(item_id=item_id)
     item = Item.objects.get(pk=item_id)
@@ -137,6 +191,7 @@ def item_offers(request, item_id):
         "item": item,
     })
 
+@login_required
 def item_offers_buyers(request, item_id):
     offers = Offer.objects.filter(item_id=item_id)
     item = Item.objects.get(pk=item_id)
@@ -144,16 +199,3 @@ def item_offers_buyers(request, item_id):
         "offers": offers,
         "item": item,
     })
-
-# def input_url_view(request):
-#     UrlFormSet = modelformset_factory(ItemImage, form=CreateItemImageForm, extra=1)
-#     if request.method == 'POST':
-#         formset = UrlFormSet(request.POST)
-#         if formset.is_valid():
-#             formset.save()
-#             # You can add a message or redirect here
-#     else:
-#         formset = UrlFormSet(queryset=ItemImage.objects.none())
-#
-#     return render(request, 'item/create_item.html', {'formset': formset})
-

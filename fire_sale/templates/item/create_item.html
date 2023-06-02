@@ -3,10 +3,25 @@
     <h4>Create item</h4>
     <form class="form form-row" action="{% url 'create-item' %}" method="post">
         {% csrf_token %}
-        {{ item_form }}
-        {{ item_image_form }}
-        <div id="addition"></div>
-        {{ item_details_form }}
-        <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0" />
+        {{ item_form.as_p }}
+
+        {{ item_details_form.as_p }}
+
+        <!-- Render formset -->
+        <div id="formset-container">
+            {{ item_image_formset.management_form }} <!-- Include formset management fields here -->
+            {% for form in item_image_formset %}
+                {{ form.as_table }}
+            {% endfor %}
+        </div>
+
+        <div id="form-template" style="display: none;">
+            {{ item_image_formset.empty_form }}
+        </div>
+
+        <button type="button" id="add-image" class="btn btn-secondary">Add Image</button>
+
+        <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0;" />
     </form>
+
 {% endblock %}

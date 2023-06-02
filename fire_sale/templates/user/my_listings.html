@@ -2,12 +2,13 @@
 {% block content %}
     <div class="userListing">
         <h2>My listings</h2>
+        {% include 'sort.html' %}
     </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Date</th>
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>
                 <th scope="col">Price</th>
@@ -20,10 +21,10 @@
         <tbody>
         {% for item in item_stats %}
             <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td><a href="{% url 'item-details' item.item.id %}">{{ item.item.name }}</a></td>
+                <th scope="row" data-sort-date>{{item.listing_date|date:"d/m/y"}}</th>
+                <td data-sort-name><a href="{% url 'item-details' item.item.id %}">{{ item.item.name }}</a></td>
                 <td>{{ item.status }}</td>
-                <td>${{ item.item.price }}</td>
+                <td data-sort-amount>${{ item.item.price }}</td>
                 <td>
                     {% if item.highest_price != "No offer" %}
                         ${{ item.highest_price }}

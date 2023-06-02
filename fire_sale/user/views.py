@@ -1,5 +1,6 @@
 # Import statements
 from django.contrib.auth.forms import UserCreationForm
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
 from item.models import Item, ItemStats, ItemDetails
@@ -161,5 +162,15 @@ def notifications(request):
             notification.href = resolve_url(notification.href)
 
     return render(request, 'user/notifications.html', context={
-        'notifications': notifications
+        'all_notifications': notifications
     })
+
+@login_required
+def mark_notification_as_seen(request, notification_id):
+    print(notification_id)
+    notification = Notification.objects.get(pk=notification_id)
+    notification.seen = True
+    notification.save()
+    return JsonResponse({'notification': notification})
+
+
