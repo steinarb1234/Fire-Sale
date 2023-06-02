@@ -635,7 +635,7 @@ label {
     display: block;
 }
 
-input:not([type="checkbox"]):not([type="submit"]), textarea, select {
+input:not([type="checkbox"]):not([type="submit"]):not([type="button"]), textarea{
     display: block;
     /*width: 100%;*/
     padding: .375rem .75rem;
@@ -647,15 +647,15 @@ input:not([type="checkbox"]):not([type="submit"]), textarea, select {
     background-clip: padding-box;
     border: var(--bs-border-width) solid var(--bs-border-color) !important;
     -webkit-appearance: none;
-    -moz-appearance: none;    color: var(--bs-body-color);
+    -moz-appearance: none;
+    color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
     border-radius: var(--bs-border-radius);
 }
 
-input[type="checkbox"] {
+input[type="checkbox"], select {
     border: var(--bs-border-width) solid var(--bs-border-color) !important;
 }
-
 
 input:focus-visible {
     color: var(--bs-body-color);
