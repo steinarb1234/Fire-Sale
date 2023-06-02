@@ -20,7 +20,6 @@ from fire_sale.error_views import permission_denied_view
 from fire_sale.error_views import page_not_found_view
 from django.conf.urls import handler404
 
-
 urlpatterns = [
     path('', include('item.urls')),
     path('user/', include('user.urls')),
