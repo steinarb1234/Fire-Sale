@@ -50,6 +50,20 @@
     background-color: var(--fs-color-primary) !important;
 }
 
+
+.btn-secondary {
+    color: white;
+    background-color: var(--fs-color-secondary) !important;
+    border-color: var(--fs-color-secondary)  !important;
+    border-width: medium !important;
+    font-weight: 600 !important;
+}
+
+.btn-secondary:hover {
+    background-color: var(--fs-color-secondary-darker) !important;
+    border-color: var(--fs-color-secondary-darker) !important;
+}
+
 .btn-success {
     color: white;
     background-color: var(--fs-color-success) !important;
