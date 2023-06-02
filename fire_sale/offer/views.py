@@ -24,8 +24,10 @@ def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
     item_images = ItemImage.objects.filter(item=offer.item)
     highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
-    seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1) \
-                  or 'No ratings'
+    try:
+        seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
+    except TypeError:
+        seller_rating = 'No rating'
     return render(request, 'offer/offer_details.html', {
         "offer": offer,
         'item_images': item_images,

@@ -1,3 +1,4 @@
+import django
 from django.db.models import Max, Avg
 from django.forms import formset_factory, modelformset_factory
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
