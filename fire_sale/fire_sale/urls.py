@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from permission_denied_view import permission_denied_view
+from fire_sale.error_views import permission_denied_view
+from fire_sale.error_views import page_not_found_view
+from django.conf.urls import handler404
 
 
 urlpatterns = [
@@ -31,3 +33,4 @@ urlpatterns = [
 ]
 
 handler403 = permission_denied_view
+handler404 = page_not_found_view
