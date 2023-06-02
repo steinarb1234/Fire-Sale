@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Bidder</th>
                 <th scope="col">Amount</th>
                 <th scope="col">List price</th>
                 <th scope="col">Details</th>
@@ -19,6 +20,7 @@
         {% for offer in offers %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ offer.buyer.full_name }}</td>
                 <td>${{ offer.amount }}</td>
                 <td>${{ offer.item.price }}</td>
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
