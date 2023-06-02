@@ -1,14 +1,12 @@
-
+# Import statements
 from django.db.models import Max, Avg
-from django.forms import formset_factory, modelformset_factory
-from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from django.contrib.auth.models import User
-
+from django.forms import formset_factory
+from django.shortcuts import render, get_object_or_404, redirect
 from rating.models import Rating
-from user.models import UserProfile, UserInfo
-from category.models import Category, CategoryViews
+from user.models import UserProfile
+from category.models import CategoryViews
 from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
-EditItemImageForm, EditItemStatsForm, EditItemDetailsForm
+EditItemImageForm, EditItemDetailsForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
 from watchlist.models import WatchListItem
 from item.service import ItemService
@@ -24,8 +22,21 @@ def index(request):
         'categories_and_items': ItemService.get_categories_and_items_by_userid(request.user.id),
     })
 
-
 def get_item_details_by_id(request, id):
+    """
+    Retrieves and renders the details of an item by its ID.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        id (int): The ID of the item.
+
+    Returns:
+        HttpResponse: Renders the 'item/item_details.html' template with the item details and related information.
+
+    Raises:
+        Http404: If the item details or item stats do not exist.
+
+    """
     item_details = get_object_or_404(ItemDetails.objects.select_related(
         'item_stats__item',
         'item_stats__item__category',
@@ -67,10 +78,19 @@ def get_item_details_by_id(request, id):
         'highest_price': highest_price,
     })
 
-
-
 @login_required
 def create_item(request):
+    """
+    Creates a new item.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: If the request method is POST and the form data is valid, redirects to the item details page of the created item.
+        Otherwise, renders the 'item/create_item.html' template with the item creation forms.
+
+    """
     CreateItemImageFormSet = formset_factory(CreateItemImageForm, extra=1, max_num=10, absolute_max=50, can_delete=True)
 
     if request.method == 'POST':
@@ -108,15 +128,44 @@ def create_item(request):
         'item_details_form': item_details_form,
     })
 
-
 @login_required
 def delete_item(request, id):
+    """
+    Deletes an existing item.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        id (int): The ID of the item to delete.
+
+    Returns:
+        HttpResponse: Redirects to the 'my-listings' page after deleting the item.
+
+    Raises:
+        Http404: If the item does not exist or does not belong to the current user.
+
+    """
     item = get_object_or_404(Item, pk=id)
     item.delete()
     return redirect('my-listings')
 
 @login_required
 def edit_item(request, id):
+    """
+    Edits an existing item.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        id (int): The ID of the item to edit.
+
+    Returns:
+        HttpResponse: If the request method is POST and the form data is valid, redirects to the item details page of the edited item.
+        Otherwise, renders the 'item/edit_item.html' template with the item edit forms.
+
+    Raises:
+        PermissionDenied: If the item does not belong to the current user.
+        Http404: If the item or item details do not exist.
+
+    """
     ItemImageFormSet = formset_factory(EditItemImageForm, extra=1, max_num=10, absolute_max=50, can_delete=True)
 
     item_instance = get_object_or_404(Item, pk=id)
@@ -165,10 +214,23 @@ def edit_item(request, id):
             'id': id,
     })
 
-
-
 @login_required()
 def item_offers(request, item_id):
+    """
+    Renders the offers for a specific item.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        item_id (int): The ID of the item.
+
+    Returns:
+        HttpResponse: Renders the 'offer/item_offers.html' template with the offers and the associated item.
+
+    Raises:
+        PermissionDenied: If the item does not belong to the current user.
+        Http404: If the item does not exist.
+
+    """
     offers = Offer.objects.filter(item_id=item_id).order_by('-amount')
     item = Item.objects.get(pk=item_id)
     if item.seller.id != request.user.id:
@@ -181,6 +243,20 @@ def item_offers(request, item_id):
 
 @login_required
 def item_offers_buyers(request, item_id):
+    """
+    Renders the offers for a specific item from the buyer's perspective.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        item_id (int): The ID of the item.
+
+    Returns:
+        HttpResponse: Renders the 'offer/item_offers_buyer_view.html' template with the offers and the associated item.
+
+    Raises:
+        Http404: If the item does not exist.
+
+    """
     offers = Offer.objects.filter(item_id=item_id).order_by('-amount')
     item = Item.objects.get(pk=item_id)
 
