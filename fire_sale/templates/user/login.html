@@ -3,7 +3,7 @@
 <div class="center-form">
     <div class="form-container">
         <h4>Log in</h4>
-        <form method="post" class="form form-row">
+        <form method="post" class="form form-row form-control">
             {% csrf_token %}
             {{ form }}
             <input type="submit" class="btn btn-primary btn-block login_button" value="Log in"/>

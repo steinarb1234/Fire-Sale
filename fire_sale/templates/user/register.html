@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="signup-container"> 
-        <h1> Sign up now </h1>
-        <form id="signup-form" class="form form-row" method="post">
-            {% csrf_token %}
-            {{user_creation_form}}
-            <br>
-            {{user_info_creation_form}}
-{#            <label for="country-select">Country</label><span style="color: red !important; display: inline; float: none;">*</span>      #}
-{#            {% include 'user/country_select.html' %}#}
-            {{user_profile_form}}
-            <input type="submit" class="btn btn-primary signup_button" value="Sign up" />
-        </form> 
+    <div class="signup-container">
+        <div>
+            <h1> Sign up now </h1>
+            <form id="signup-form" class="form form-row form-control signup-width" method="post">
+                {% csrf_token %}
+                {{user_creation_form}}
+                <br>
+                {{user_info_creation_form}}
+    {#            <label for="country-select">Country</label><span style="color: red !important; display: inline; float: none;">*</span>      #}
+    {#            {% include 'user/country_select.html' %}#}
+                {{user_profile_form}}
+                <input type="submit" class="btn btn-primary signup_button" value="Sign up" />
+            </form>
+        </div>
     </div>
 {% endblock %}

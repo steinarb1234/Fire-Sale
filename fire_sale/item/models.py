@@ -26,7 +26,7 @@ class ItemStatuses(models.Model):
 class ItemStats(models.Model):
     views = models.IntegerField(default=0)
     status = models.ForeignKey(ItemStatuses, on_delete=models.PROTECT, default="Not sold")
-    listing_date = models.DateField(null=True, blank=True, default=django.utils.timezone.now())
+    listing_date = models.DateField(null=True, blank=True, default=django.utils.timezone.now)
     sold_date = models.DateField(null=True, blank=True)
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True)
 

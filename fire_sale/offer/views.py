@@ -21,9 +21,6 @@ from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 
 
-def permission_denied_view(request, exception):
-    return render(request, 'templates/error_pages/not_authorized.html', status=403)
-
 
 @login_required
 def offer_details(request, offer_id):
