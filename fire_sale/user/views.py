@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect, resolve_url
 from django.core.exceptions import ObjectDoesNotExist
+
+from category.models import CategoryViews, Category
 from item.models import Item, ItemStats, ItemDetails
 from watchlist.models import WatchListItem
 from offer.models import Offer
@@ -47,6 +49,16 @@ def register(request):
             # Attach user_info instance to UserProfile instance before saving
             user_profile_form.instance.user_info = user_info
             user_profile_form.save()
+
+            categories_dicts = list(Category.objects.values('name'))
+            categories = [category['name'] for category in categories_dicts]
+            print(categories)
+            for name in categories:
+                category_views = CategoryViews()
+                category_views.category_views = 0
+                category_views.category_id = name
+                category_views.user_id = user_info.user_id
+                category_views.save()
 
             return redirect('login')
     else:

@@ -637,3 +637,12 @@ input:focus-visible {
 .star.filled {
     color: gold;
 }
+
+.see-more-homepage {
+    color: #4f4f4f;
+}
+
+.see-more-homepage:hover {
+    color: black;
+}
+
