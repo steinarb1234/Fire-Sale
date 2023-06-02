@@ -131,16 +131,24 @@ def my_offers(request):
 
     """
     try:
-        user_offers = Offer.objects.filter(buyer_id=request.user.id).prefetch_related('item', 'offerdetails', 'item__offer_set', 'item__itemstats', 'item__itemstats__status')
+        user_offers = Offer.objects.filter(buyer_id=request.user.id).prefetch_related(
+            'item', 'offerdetails', 'item__offer_set', 'item__itemstats', 'item__itemstats__status'
+        )
         item_ids = user_offers.values_list('item__id', flat=True)
-        highest_price = Offer.objects.filter(item__id__in=item_ids).aggregate(highest_price=Max('amount'))['highest_price']
-
+        
+        # Get the highest offer amount for each item
+        highest_offers = Offer.objects.filter(item_id=OuterRef('item__id')).values('item__id').annotate(
+            highest_offer=Max('amount')
+        ).values('highest_offer')
+        
+        # Attach the highest offer amount to each offer
+        user_offers = user_offers.annotate(highest_offer=Subquery(highest_offers))
+        
     except ObjectDoesNotExist:
         user_offers = None
     
     return render(request, 'user/my_offers.html', {
         "user_offers": user_offers,
-        "highest_price": highest_price,
     })
 
 
