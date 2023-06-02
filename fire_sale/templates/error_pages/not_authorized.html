@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <div class="underline-solid">
+            <h1>403</h1>
+        </div>
+        <h2>Forbidde </h2>
+        <p>You don't have authorization to view this page</p>
+        <h4><a href="{% url 'item_list' 'All' %}">Go to homepage</a></h4>
+    </div>
+{% endblock %}
+
