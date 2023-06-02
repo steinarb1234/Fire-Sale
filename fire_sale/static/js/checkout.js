@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   
     const submitFormHandler = (event) => {
+      event.preventDefault()
       const userFormFilled = isFormFilled(userFormPrefix);
       const userProfileFormFilled = isFormFilled(userProfileFormPrefix);
       const paymentFormFilled = isFormFilled(paymentFormPrefix);
@@ -85,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "Name of cardholder",
           "Card number",
           "Expiration date",
-          "Cvs",
+          "Cvc",
           "Rating",
           "Message",
         ];
@@ -138,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
       input.addEventListener("invalid", invalidInputHandler);
     });
   
-    document.querySelector("[data-checkout-review]").addEventListener("submit", submitFormHandler);
+    document.querySelector("#go-to-review").addEventListener("click", submitFormHandler);
   
     document.querySelector("#back").addEventListener("click", backButtonHandler);
   

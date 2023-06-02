@@ -212,12 +212,13 @@ def checkout(request, offer_id):
                         rating_instance = rating_form.save(commit=False)
                         rating_instance.offer = offer
                         try:
+                            print("Trying")
                             existing_rating = Rating.objects.get(offer=offer)
                         except Rating.DoesNotExist:
+                            print("Excepted")
                             rating_instance.save()
                         else:
-                            rating_form = RatingForm(request.POST, instance=existing_rating)
-                            rating_instance.save()
+                            print("Found a rating. Keeping it.")
                                     
                     # Update the related auth_user instance directly
                     auth_user_instance.email = user_form.cleaned_data['email']
