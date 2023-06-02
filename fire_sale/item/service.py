@@ -1,3 +1,4 @@
+# Import statements
 from django.http import Http404
 from item.models import Item, ItemImage, ItemStats
 from category.models import CategoryViews, Category
@@ -10,6 +11,19 @@ class ItemService:
 
     @staticmethod
     def get_items_by_category_name(category_name):
+        """
+        Retrieves items and their associated images by category name.
+
+        Args:
+            category_name (str): The name of the category.
+
+        Returns:
+            list: A list of tuples containing item and image data.
+
+        Raises:
+            Http404: If no items are found in the specified category.
+
+        """
         item_list = []
         if category_name == "All":
             item_list = Item.objects.all().values()
@@ -26,6 +40,16 @@ class ItemService:
 
     @staticmethod
     def get_categories_and_items_by_userid(user_id):
+        """
+        Retrieves categories and their associated items for a given user ID.
+
+        Args:
+            user_id (int): The ID of the user.
+
+        Returns:
+            list: A list of dictionaries containing category names and associated items.
+
+        """
         watchlist_items = WatchListItem.objects.filter(user_id=user_id).select_related('item')
 
         if user_id is not None:
@@ -52,6 +76,19 @@ class ItemService:
         
     @staticmethod
     def get_seller_details_from_item_id(item_id):
+        """
+        Retrieves the seller details from an item ID.
+
+        Args:
+            item_id (int): The ID of the item.
+
+        Returns:
+            dict: A dictionary containing the seller details.
+
+        Raises:
+            Item.DoesNotExist: If the item does not exist.
+
+        """
         item = Item.objects.select_related('seller__userinfo__user', 'seller__userinfo__userprofile').get(id=item_id)
 
         user = user_info.user
@@ -67,6 +104,18 @@ class ItemService:
 
     @staticmethod
     def get_category_and_items_by_itemid(category, item_id, user=None):
+        """
+        Retrieves the category and items associated with a given item ID.
+
+        Args:
+            category (Category): The category object.
+            item_id (int): The ID of the item.
+            user (User, optional): The user object. Defaults to None.
+
+        Returns:
+            dict: A dictionary containing the category name and associated items.
+
+        """
         items = Item.objects.filter(category=category).exclude(id=item_id).prefetch_related('itemimage_set')
 
         if user:
