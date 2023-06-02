@@ -134,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       item.remove();
     });
 
+    
     document.querySelectorAll("#checkout-form input[required]").forEach((input) => {
       input.addEventListener("invalid", invalidInputHandler);
     });
