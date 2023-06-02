@@ -32,18 +32,18 @@ def offer_details(request, offer_id):
             raise PermissionDenied()
         
         else:
-        item_images = ItemImage.objects.filter(item=offer.item)
-        highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
-        try:
-            seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
-        except TypeError:
-            seller_rating = 'No rating'
-        return render(request, 'offer/offer_details.html', {
-            "offer": offer,
-            'item_images': item_images,
-            'highest_price': highest_price,
-            'seller_rating': seller_rating,
-        })
+            item_images = ItemImage.objects.filter(item=offer.item)
+            highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
+            try:
+                seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
+            except TypeError:
+                seller_rating = 'No rating'
+            return render(request, 'offer/offer_details.html', {
+                "offer": offer,
+                'item_images': item_images,
+                'highest_price': highest_price,
+                'seller_rating': seller_rating,
+            })
 
     else:
         item_images = ItemImage.objects.filter(item=offer.item)
