@@ -409,6 +409,10 @@
         display: flex;
         justify-content: right;
     }
+
+    .form-row#form-template {
+        display: none;
+    }
    
 
 /* === Offer === */
@@ -454,6 +458,12 @@
     font-weight: 600;
     margin-left: 8px;
     margin-bottom: 100px;
+}
+
+.status-button {
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
 }
 
 
@@ -507,6 +517,47 @@
         width: 130px !important;
         height: 130px !important;
         border-radius: 50%;
+    }
+
+    .user-profile-btns {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+
+    .user-info-and-ratings {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 50%;
+    }
+
+    .user-info > h2 {
+        text-align: center;
+    }
+
+    #top-p{
+        margin-top: 25px;
+    }
+
+    .user-ratings-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        width: 50%;
+    }
+
+    .user-ratings {
+        width: 100%;
+        padding: 10px;
+        border-bottom: 1px solid lightgray;
     }
 
     /* Update User */
