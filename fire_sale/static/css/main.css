@@ -618,6 +618,10 @@
     clear:both; margin: 10px 0
 }
 
+#prev-to-payment {
+    height: fit-content
+}
+
 .notification-icon {
     display: flex; align-items: center
 }

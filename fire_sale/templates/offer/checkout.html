@@ -10,6 +10,7 @@
         {% csrf_token %}
         <div id="user-details">
             <h4>User Details</h4>
+            <h6>All fields are required.</h6>
             {{ user_form }}
             {{ user_profile_form }}
             <br>
@@ -19,6 +20,7 @@
         </div>
         <div id="payment-details" style="display: none;">
             <h4>Payment Details</h4>
+            <h6>All fields are required.</h6>
             {{ payment_form }}
             <br>
             <div class="d-flex justify-content-between">
@@ -28,6 +30,7 @@
         </div>
         <div id="rating-section" style="display: none;">
             <h4>Rating Seller</h4>
+            <h6>Not required.</h6>
             {{ rating_form }}
             <br>
             <div class="d-flex justify-content-between">

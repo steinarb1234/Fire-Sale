@@ -130,6 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#checkout-form").submit();
     };
     
+    document.querySelectorAll(".errorlist").forEach(item =>{
+      item.remove();
+    });
+
     document.querySelectorAll("#checkout-form input[required]").forEach((input) => {
       input.addEventListener("invalid", invalidInputHandler);
     });
