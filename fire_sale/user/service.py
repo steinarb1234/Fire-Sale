@@ -1,3 +1,4 @@
+from category.models import Category, CategoryViews
 from user.models import User, UserInfo
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
@@ -34,7 +35,6 @@ class UserService:
 
         categories_dicts = list(Category.objects.values('name'))
         categories = [category['name'] for category in categories_dicts]
-        print(categories)
         for name in categories:
             category_views = CategoryViews()
             category_views.category_views = 0

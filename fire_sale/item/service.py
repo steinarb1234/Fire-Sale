@@ -46,8 +46,6 @@ class ItemService:
 
         categories_and_items = []
         for category in categories:
-            # category = categories.get(pk=category_name)
-            print(category.category.name, category.category_views)
             categories_and_items.append({"name": category.category.name, "items": category.category.item_set.all()})
 
         return categories_and_items

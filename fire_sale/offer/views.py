@@ -177,10 +177,8 @@ def checkout(request, offer_id):
     # Reyndi að fá vistuðu uplýsingarnar, veit ekki afh það virkar ekki - Steinar
     auth_user = get_user_model()
     offer = get_object_or_404(Offer, pk=offer_id)
-    print(offer.buyer_id)
     
     user_instance = get_object_or_404(User, pk=offer.buyer_id)
-    print(user_instance)
     
     user_info_instance = user_instance.userinfo
     user_profile_instance = user_info_instance.userprofile
