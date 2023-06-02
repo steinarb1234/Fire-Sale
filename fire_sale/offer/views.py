@@ -70,7 +70,6 @@ def create_offer(request, item_id):
 
             notification_to_seller = Notification()
             notification_to_seller.message = f'Your item "{offer.item}" has received an offer of ${offer.amount}!'
-            notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
             notification_to_seller.href = 'offer-details'
             notification_to_seller.href_parameter = offer.id
             notification_to_seller.receiver = offer.seller
