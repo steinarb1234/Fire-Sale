@@ -11,17 +11,12 @@
     <div class="card-body">
         <a class="card-info" href="{% url 'item-details' item.id %}">
             <h5 class="card-title">{{ item.name|truncatechars:14 }}</h5>
-            <p class="card-text" style="display: flex; align-items: center; justify-content: space-between">
+            <p class="card-text">
                 $ {{ item.price }}
                 <a href="#" class="btn rounded-circle d-flex align-items-center material-symbols-outlined card-heart {% if item.is_in_watchlist %}card-heart-filled{% endif %}" title="Add item to watchlist.">
                     favorite
                 </a>
             </p>
         </a>
-{#        <div class="d-flex justify-content-between">#}
-{#            <a href="#" class="btn rounded-circle d-flex align-items-center material-symbols-outlined card-heart {% if item.is_in_watchlist %}card-heart-filled{% endif %}" title="Add item to watchlist.">#}
-{#              favorite#}
-{#            </a>#}
-{#        </div>#}
     </div>
 </div>

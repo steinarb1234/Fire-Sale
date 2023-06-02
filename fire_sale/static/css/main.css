@@ -316,6 +316,12 @@
         text-decoration: underline;
     }
 
+    .card-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     /* Item Details */
     .item-description {
         margin-top: 1em;
@@ -410,10 +416,10 @@
         justify-content: right;
     }
 
-    .form-row#form-template {
+    #form-template {
         display: none;
     }
-   
+
 
 /* === Offer === */
 
@@ -560,6 +566,13 @@
         border-bottom: 1px solid lightgray;
     }
 
+    .update-profile-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+    }
+
     /* Update User */
 
     .edit-heading {
@@ -687,4 +700,10 @@ input:focus-visible {
 
 .star.filled {
     color: gold;
+}
+
+/* === Notifications === */
+
+.notification-on-site {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
 }
