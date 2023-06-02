@@ -1413,7 +1413,7 @@ VALUES
 ('220', 'https://images.unsplash.com/photo-1644319030857-e93c4fc5016d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8enRlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'),
 ('221', 'https://images.unsplash.com/photo-1653674358579-c522b973bcde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dml2byUyMHBob25lfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60'),
 ('222', 'https://images.unsplash.com/photo-1643736039763-c062b17b27f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG9ub3IlMjBwaG9uZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'),
-('223', 'https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fmedia.wired.co.uk%2Fphotos%2F61548a6f2b18401229a84b00%2F16%3A9%2Fw_2560%252Cc_limit%2F3021-WIRED-Phonehero.jpg&sp=1685098350T6d2471df6ea603a3c1e30409847b68628f4d7b06650ea6ed8542a01a012bcb8f'),
+('223', 'https://cdn.shopify.com/s/files/1/0077/5513/7083/products/8a35bde1-3912-424c-99e3-376e743e406b_1200x.jpg?v=1650970769'),
 ('224', 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c21hcnRwaG9uZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'),
 ('225', 'https://images.unsplash.com/photo-1673287281746-8c2fb0fac266?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGxlbm92byUyMHBob25lfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60'),
 

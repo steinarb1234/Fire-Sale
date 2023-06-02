@@ -1,4 +1,4 @@
-import django
+
 from django.db.models import Max, Avg
 from django.forms import formset_factory, modelformset_factory
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from rating.models import Rating
 from user.models import UserProfile, UserInfo
-from category.models import Category
+from category.models import Category, CategoryViews
 from item.forms.item_form import CreateItemForm, EditItemForm, CreateItemImageForm, CreateItemDetailsForm, \
 EditItemImageForm, EditItemStatsForm, EditItemDetailsForm
 from item.models import Item, ItemImage, ItemDetails, ItemStats
@@ -36,6 +36,10 @@ def get_item_details_by_id(request, id):
     item_stats = get_object_or_404(ItemStats, pk=id)
     item_stats.views += 1
     item_stats.save()
+
+    category_views = get_object_or_404(CategoryViews, user=request.user.id, category=item_stats.item.category)
+    category_views.category_views += 1
+    category_views.save()
 
     seller_id = item_details.item_stats.item.seller_id
     user_location = UserProfile.objects.get(user_info__user_id=seller_id).country
