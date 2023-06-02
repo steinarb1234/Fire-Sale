@@ -61,8 +61,6 @@ class UserInfoUpdateForm(ModelForm):
 
 
 # For Checkout Form
-
-
 class CheckOutUserUpdateForm(ModelForm):
     class Meta:
         model = User
