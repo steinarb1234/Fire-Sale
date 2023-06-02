@@ -27,7 +27,8 @@ from django.core.exceptions import PermissionDenied
 def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
 
-    if offer.buyer.id != request.user.id and offer.seller.id != request.user.id:
+    if offer.buyer.id != request.user.id:
+        if offer.seller.id != request.user.id:
             raise PermissionDenied()
     else:
         item_images = ItemImage.objects.filter(item=offer.item)
