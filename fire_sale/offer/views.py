@@ -22,11 +22,13 @@ from django.core.exceptions import PermissionDenied
 
 
 
+
 @login_required
 def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
 
-    if offer.buyer.id != request.user.id and offer.seller.id != request.user.id:
+    if offer.buyer.id != request.user.id:
+        if offer.seller.id != request.user.id:
             raise PermissionDenied()
     else:
         item_images = ItemImage.objects.filter(item=offer.item)
@@ -178,6 +180,8 @@ def checkout(request, offer_id):
     print(offer.buyer_id)
     
     user_instance = get_object_or_404(User, pk=offer.buyer_id)
+    print(user_instance)
+    
     user_info_instance = user_instance.userinfo
     user_profile_instance = user_info_instance.userprofile
     auth_user_instance = auth_user.objects.get(pk=offer.buyer.id)
@@ -185,72 +189,75 @@ def checkout(request, offer_id):
     other_offers_on_item = Offer.objects.filter(item_id=offer.item_id)
     item_stats = get_object_or_404(ItemStats, pk=offer.item_id)
 
-    if request.method == 'POST':
-        user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
-        user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
-        payment_form = PaymentForm(data=request.POST)
-        rating_form = RatingForm(data=request.POST)
-        
-        if user_form.is_valid() and user_profile_form.is_valid() and payment_form.is_valid():
-            
-            if request.method == 'POST':
-            
-                # Save user profile information and rating
-                user_form.save()
-                user_profile_form.save()
-                
-                if rating_form.is_valid():
-                    # If the form is valid, save the instance
-                    rating_instance = rating_form.save(commit=False)
-                    rating_instance.offer = offer
-                    try:
-                        existing_rating = Rating.objects.get(offer=offer)
-                    except Rating.DoesNotExist:
-                        pass
-                    else:
-                        rating_form = RatingForm(request.POST, instance=existing_rating)
-                        rating_instance.save()
-                                
-                # Update the related auth_user instance directly
-                auth_user_instance.email = user_form.cleaned_data['email']
-                auth_user_instance.first_name = user_form.cleaned_data['full_name']
-                auth_user_instance.save()  
-                
-                user_profile = user_profile_form.save(commit=False)
-                user_profile.user_info = user_info_instance
-                user_profile.save()
-
-                item_stats.status = ItemStatuses(status="Sold")
-                item_stats.save()
-
-                other_offers_on_item.status = "Rejected"
-                for other_offer in other_offers_on_item:
-                    other_offer.save()
-
-                offer.status = "Item purchased"
-                offer.save()
-
-                notification_to_seller = Notification()
-                notification_to_seller.message = f'Your listing: "{offer.item}" has been purchased!'
-                notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
-                notification_to_seller.href = 'offer-details'
-                notification_to_seller.href_parameter = offer.id
-                notification_to_seller.receiver = offer.seller
-                notification_to_seller.save()
-
-                return redirect('item-index')
+    if offer.buyer.id != request.user.id:
+            raise PermissionDenied()
     else:
-        user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
-        user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
-        payment_form = PaymentForm()
-        rating_form = RatingForm(request.POST)
-    
-    return render(request, 'offer/checkout.html', {
-        'user_form': user_form,
-        'user_profile_form': user_profile_form,
-        'payment_form': payment_form,
-        'rating_form': rating_form,
-        'offer_id': offer_id,
+        if request.method == 'POST':
+            user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
+            user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
+            payment_form = PaymentForm(data=request.POST)
+            rating_form = RatingForm(data=request.POST)
+            
+            if user_form.is_valid() and user_profile_form.is_valid() and payment_form.is_valid():
+                
+                if request.method == 'POST':
+                
+                    # Save user profile information and rating
+                    user_form.save()
+                    user_profile_form.save()
+                    
+                    if rating_form.is_valid():
+                        # If the form is valid, save the instance
+                        rating_instance = rating_form.save(commit=False)
+                        rating_instance.offer = offer
+                        try:
+                            existing_rating = Rating.objects.get(offer=offer)
+                        except Rating.DoesNotExist:
+                            pass
+                        else:
+                            rating_form = RatingForm(request.POST, instance=existing_rating)
+                            rating_instance.save()
+                                    
+                    # Update the related auth_user instance directly
+                    auth_user_instance.email = user_form.cleaned_data['email']
+                    auth_user_instance.first_name = user_form.cleaned_data['full_name']
+                    auth_user_instance.save()  
+                    
+                    user_profile = user_profile_form.save(commit=False)
+                    user_profile.user_info = user_info_instance
+                    user_profile.save()
+
+                    item_stats.status = ItemStatuses(status="Sold")
+                    item_stats.save()
+
+                    other_offers_on_item.status = "Rejected"
+                    for other_offer in other_offers_on_item:
+                        other_offer.save()
+
+                    offer.status = "Item purchased"
+                    offer.save()
+
+                    notification_to_seller = Notification()
+                    notification_to_seller.message = f'Your listing: "{offer.item}" has been purchased!'
+                    notification_to_seller.datetime = django.utils.datetime_safe.datetime.now()
+                    notification_to_seller.href = 'offer-details'
+                    notification_to_seller.href_parameter = offer.id
+                    notification_to_seller.receiver = offer.seller
+                    notification_to_seller.save()
+
+                    return redirect('item-index')
+        else:
+            user_form = CheckOutUserUpdateForm(request.POST, instance=user_instance)
+            user_profile_form = CheckOutProfileUpdateForm(request.POST, instance=user_profile_instance)
+            payment_form = PaymentForm()
+            rating_form = RatingForm(request.POST)
+        
+        return render(request, 'offer/checkout.html', {
+            'user_form': user_form,
+            'user_profile_form': user_profile_form,
+            'payment_form': payment_form,
+            'rating_form': rating_form,
+            'offer_id': offer_id,
     })
 
 
