@@ -119,7 +119,7 @@ def edit_item(request, id):
     item_image_instances = ItemImage.objects.filter(item_id=id)
     item_details_instance = get_object_or_404(ItemDetails, pk=id)
 
-    if item_instance.buyer.id != request.user.id:
+    if item_instance.seller.id != request.user.id:
             raise PermissionDenied()
     else:
         if request.method == 'POST':

@@ -11,7 +11,7 @@ from user.forms.user_form import CustomUserCreationForm, UserProfileForm, Custom
 from user.models import UserProfile, User, UserInfo, Notification
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max
+from django.db.models import Max, Count
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 
@@ -144,14 +144,18 @@ def my_listings(request):
     # Calculate highest price for each item
     highest_prices = Offer.objects.filter(item__in=user_items).values('item_id').annotate(highest_price=Max('amount'))
     highest_prices_dict = {item['item_id']: item['highest_price'] for item in highest_prices}
-    
+
+    watchlist = WatchListItem.objects.filter(item__item_id__in=user_items).annotate(count=Count('item_id')).values('item_id', 'count')
+    item_watchers = list(watchlist.annotate(Count('item_id')).values('item_id', 'count'))
+    item_watchers_dict = {item['item_id']: item['count'] for item in item_watchers}
+    print(item_watchers_dict)
+
     # Fetch item stats
     item_stats = ItemStats.objects.prefetch_related('item', 'item__offer_set', 'status').filter(item__seller_id=request.user.id)
+
     for item_stat in item_stats:
         item_stat.highest_price = highest_prices_dict.get(item_stat.item.id, 'No offer')
-        
-        # Calculate number of watchers for each item
-        item_stat.watchers = WatchListItem.objects.filter(item=item_stat).count()
+        item_stat.watchers = item_watchers_dict.get(item_stat.item.id, 0)
     
     return render(request, 'user/my_listings.html', context={
         'item_stats': item_stats,

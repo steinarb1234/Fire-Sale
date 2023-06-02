@@ -8,6 +8,10 @@
             {{ form }}
             <input type="submit" class="btn btn-primary btn-block login_button" value="Log in"/>
         </form>
+        <form class="form form-row form-control" method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-primary btn-block login_button">Create a new account</button>
+        </form>
     </div>
 </div>
 {% endblock %}

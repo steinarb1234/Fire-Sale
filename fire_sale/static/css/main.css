@@ -455,50 +455,34 @@ label [for="country-select"] {
         margin-right: 0.5rem;
     }
 
+    /* Create Item */
+
+    #formset-container .form-control {
+        width: 90%;
+        margin-right: 1rem;
+    }
+    #formset-container .form-control, #formset-container .form-control + label, #formset-container input {
+        display: inline-block;
+    }
+
+    #add-image-button-div {
+        display: flex;
+        justify-content: right;
+    }
+   
+
 /* === Offer === */
 
-.offer-details-main-left > *:not(h1) {
-    margin-left: 200px;
-    margin-top: 80px;
-  }
   
-.offer-details-main-left h4 {
-    margin-top: 35px;
-    margin-bottom: 30px;
-  }
-  
-.offer-details-main-right {
-    flex-basis: 50%;
-    margin-top: 110px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.offer-details-main-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 1rem;
   }
   
 .offer-details-buttons {
-    margin-top: 10px;
-    margin-bottom: 100px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    margin-left: 18.5%;
-  }
-
-.offer-details {
-    display: flex;
-    flex-wrap: nowrap;
-  }
-  
-.offer-details-main-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-.offer-details-main-left {
-    flex-basis: 50%;
-    margin-bottom: 40px;
   }
 
 .filter-checkboxes {
@@ -558,58 +542,29 @@ label [for="country-select"] {
 
     /* Profile */
 
-    .profile-left-side {
-        width: 20%;
-        height: 600px;
+    .user-profile-main-container {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        padding: 10px;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .form-horizontal {
-        margin-top: 10%;
-        margin-left: 2%;
-    }
-
-    .profile-right-side {
-        margin-left: 8%;
+    .user-profile-name-and-image {
         display: flex;
         flex-direction: column;
-        margin-top: 9%;
+        align-items: center;
+        gap: 2rem;
+        margin: 2.5rem;
+        justify-content: center;
+        text-align: center
     }
 
-    .username-rating {
-        display: flex;
-        flex-direction: column;
+    .user-profile-image {
+        object-fit: cover;
+        width: 130px !important;
+        height: 130px !important;
+        border-radius: 50%;
     }
-
-    .username-rating p {
-        margin-right: 10px;
-        white-space: pre-wrap;
-    }
-
-    .centered {
-        text-align: center;
-    }
-
-    .right_side h1 {
-        font-size: 45px;
-        display: flex;
-        word-break: break-all;
-        margin-bottom: 10%;
-
-    }
-
-    .star {
-        font-size: 24px;
-        color: gold;
-    }
-    
-    .star.filled {
-        color: gold;
-    }
-  
 
     /* Update User */
 
@@ -682,7 +637,25 @@ label [for="country-select"] {
 }
 
 
+label {
+    display: block;
+}
 
+.form {
+    display: flex;
+    flex-direction: column;
+}
 
+.form input, .form textarea, .form select {
+    margin-bottom: 1em;
+}
 
+.form-submit-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-submit-button-container input{
+    width: 20%
+}
 

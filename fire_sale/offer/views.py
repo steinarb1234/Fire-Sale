@@ -179,6 +179,8 @@ def checkout(request, offer_id):
     print(offer.buyer_id)
     
     user_instance = get_object_or_404(User, pk=offer.buyer_id)
+    print(user_instance)
+    
     user_info_instance = user_instance.userinfo
     user_profile_instance = user_info_instance.userprofile
     auth_user_instance = auth_user.objects.get(pk=offer.buyer.id)
