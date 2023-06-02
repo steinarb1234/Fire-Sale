@@ -635,7 +635,7 @@ label {
     display: block;
 }
 
-input, textarea, select {
+input:not([type='checkbox']), textarea, select {
     display: block;
     /*width: 100%;*/
     padding: .375rem .75rem;
@@ -650,6 +650,10 @@ input, textarea, select {
     -moz-appearance: none;    color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
     border-radius: var(--bs-border-radius);
+}
+
+input[type="checkbox"] {
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
 }
 
 
