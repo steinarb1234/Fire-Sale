@@ -105,7 +105,7 @@ DATABASES = {
         'NAME': 'fire-sale-db',
         'USER': 'fire-sale-db-user',
         'PASSWORD': 'Abc.12345',
-        'HOST': '34.123.136.227',
+        'HOST': '35.242.163.106',
         'PORT': '5432',
         'CONN_MAX_AGE': 600,   # Muna að hækka í 600! - Steinar
     }
