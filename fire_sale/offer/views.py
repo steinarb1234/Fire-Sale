@@ -38,21 +38,21 @@ from django.http import HttpResponseForbidden
 @login_required
 def offer_details(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
-    
     if offer.buyer.id != request.user.id:
         if offer.seller.id != request.user.id:
             return HttpResponseForbidden("You are not authorized")
-    else:
-        item_images = ItemImage.objects.filter(item=offer.item)
-        highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
-        seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1) \
-                    or 'No ratings'
-        
-        return render(request, 'offer/offer_details.html', {
-            "offer": offer,
-            'item_images': item_images,
-            'highest_price': highest_price,
-            'seller_rating': seller_rating,
+        else:
+            item_images = ItemImage.objects.filter(item=offer.item)
+            highest_price = Offer.objects.filter(item_id=offer.item_id).aggregate(Max('amount'))['amount__max'] or '(No offers)'
+            try:
+                seller_rating = round(Rating.objects.filter(offer_id__seller=offer.seller).aggregate(Avg('rating'))['rating__avg'], 1)
+            except TypeError:
+                seller_rating = 'No rating'
+            return render(request, 'offer/offer_details.html', {
+                "offer": offer,
+                'item_images': item_images,
+                'highest_price': highest_price,
+                'seller_rating': seller_rating,
     })
 
 
@@ -122,12 +122,9 @@ def change_offer_status(request, id, itemid, button):
                 other_offer.status = "Rejected"
                 changed_offer_send_notification(other_offer)
                 other_offer.save()
-
-        return redirect('item-offers', item_id=itemid)
-
     return redirect('item-offers', item_id=itemid)
 
-@login_required
+
 def changed_offer_send_notification(offer):
     notification = Notification()
     notification.message = f'Your offer for "{offer.item}" has been {offer.status}!'
@@ -136,6 +133,7 @@ def changed_offer_send_notification(offer):
     notification.href_parameter = offer.id
     notification.receiver = offer.buyer
     notification.save()
+
 
 @login_required
 def edit_offer(request, id, itemid):

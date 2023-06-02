@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const category = option.textContent;
             form.action = `/categories/${category}`;
-            dropdownToggle.textContent = `Search by: ${category}`;
+            dropdownToggle.textContent = `${category}`;
         });
     });
 });
