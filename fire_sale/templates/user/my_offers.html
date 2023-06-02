@@ -1,42 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<script>
-    $(document).ready(function() {
-        // Hide the filter checkboxes initially
-        $(".filter-my-offers").hide();
-    
-        // Toggle filter checkboxes visibility when filter link is clicked
-        $("#filter-link").click(function() {
-            $(".filter-my-offers").toggle();
-        });
-    
-        // Handle filtering based on checkbox selections
-        $(":checkbox").change(function() {
-            let selectedFilters = [];
-    
-            // Get the values of checked checkboxes
-            $(":checkbox:checked").each(function() {
-                selectedFilters.push($(this).val());
-            });
-    
-            // Show/hide rows based on checkbox selections
-            $("#offer-table-container tbody tr").each(function() {
-                let offerStatus = $(this).find("td:eq(2)").text(); // Get the offer status from the table cell
-    
-                // Show the row if the offer status is in the selected filters or no filters are selected
-                if (selectedFilters.length === 0 || selectedFilters.includes(offerStatus)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-    });
-    </script>
-    
-    
-
 <div class="container d-flex justify-content-between mb-5">
     <h1>My offers</h1>
     {% include 'sort.html' %}
@@ -101,7 +65,7 @@
                 <td><a href="{% url 'offer-details' offer.id %}">See details</a></td>
                 <td>{{ offer.item.itemstats.status }}</td>
                 <td>
-                {% if offer.status != 'Item purchased' %}
+                {% if offer.status != 'Item purchased' and offer.status != 'Rejected' %}
                         <div class="status-button">
                             {% if offer.status == 'Accepted' %}
                                 <form method="POST" action="{% url 'checkout' offer.id %}">
