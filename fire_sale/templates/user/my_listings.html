@@ -21,7 +21,7 @@
         <tbody>
         {% for item in item_stats %}
             <tr>
-                <th scope="row" data-sort-date>{{item.sold_date|date:"d/m/y"}}</th>
+                <th scope="row" data-sort-date>{{item.listing_date|date:"d/m/y"}}</th>
                 <td data-sort-name><a href="{% url 'item-details' item.item.id %}">{{ item.item.name }}</a></td>
                 <td>{{ item.status }}</td>
                 <td data-sort-amount>${{ item.item.price }}</td>
