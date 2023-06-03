@@ -166,9 +166,3 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     }
 }
-
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]

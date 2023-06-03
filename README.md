@@ -21,18 +21,39 @@ Below are all functionalities of the website, required and extra. The extra requ
      * **Navigation bar includes search bar, allowing users to start searching immediately.**
        * **The search bar can both filter the search by a certain category and search all categories at once.**
      * **Navigation bar includes list of all categories, allowing users to easily navigate to their desired category.**
-     * **Navigation bar includes a notification bell and notification indicator.**
-       * **The notification indicator shows the number of notifications the user has not yet looked at.**
      * **Navigation bar includes the users profile image (or default icon if user has no image) as a clickable drop-down menu, giving the user quick access to various key parts of the site.**
        * **Navigation bar provides quick access to "Create listing" and "Watchlist".**
      * Average rating **(can be seen by clicking on the user's profile image)**
      * Logout **(can be seen by clicking on the user's profile image)**
+   * Notifications
+     * **Navigation bar includes a notification bell and notification indicator**
+     * **The notification indicator shows the number of notifications the user has not yet looked at. Notifications are marked as seen by clicking on them in the notification dropdown. When clicking on a notification it takes the user to the appropriate website that the notification refers to**
+     * **The notification dropdown only shows the 10 newest notifications**
+     * **The user can click on see all in the notification dropdown which redirects to a site showing all notifications.**
    * Footer
+     * Shows information about the company and includes useful links.
 * Home site
     * **Masthead**
-      * Advertisement displayed at the top of the home site which links to all items sorted by listing date
+      * **Advertisement displayed at the top of the home site which links to all items sorted by listing date**
     * **Category preview**
-      * Below the masthead are all categories shown in a category preview slide ordered by your most viewed categories.
+      * **Below the masthead are all categories shown in a category preview slide ordered by your most viewed categories**
+      * **The 10 newest items in each category are shown in the preview and the user can scroll to the right to see them all**
+      * **To see all items in the category the user can press the category name or the "See all" button**
+    * **Item card**
+      * **Each item is displayed on an item card ehich show the main image, title, price and a heart button which the user can press to add the item to his watchlist. He can click the heart again to remove the item from his watchlist.**
+    * **See all** 
+      * **Below all category previews is a "See all" button which takes the user to an index page which shows every item from all categories sorted by lisitng date**
+* **My bids/offer site**
+      * **Shows an overview over the user's all offers**
+      * **In the overview table the user can choose to make actions based on the status of his offer**
+      * **The list can be sorted by date, name and price**
+* **Watchlist**
+      * **An item card overview for all items user has added to his watchlist**
+      * **The list can be sorted by date, name and price**
+* **My listings**
+      * **Shows an overview over user's all listings**
+      * **The user can choose to make actions based on the status of the item**
+      * **The list can be sorted by date, name and price**
 * Edit profile
    * Name
    * **Username**
@@ -82,6 +103,8 @@ Below are all functionalities of the website, required and extra. The extra requ
      * **Average rating**
      * **Location**
    * A list of similar items **(from the same category)**
+   * **Edit item**
+     * **The user can edit title, description, condition, add or remove images**
 * Placing an offer
    * All items which are available (they don’t have an accepted offer) can receive
 an offer
@@ -93,12 +116,17 @@ offer was declined. **Notifications are handled as push-notifications, displayed
 * **Offer details site**
   * **Contains all relevant information on the item, the offer and buttons with actions the user can take.**
     * **If the users offer is pending, the actionss are "Edit offer" and "Withdraw offer".**
+        * **Edit offer site**
+            * **The user can edit the amount of his offer and his message**
     * **If the users offer is rejected, there are no actions.**
     * **If the users offer is accepted, the actionss are "Go to checkout" and "Withdraw offer".**
     * **If the item was purchased through the offer, there are no actions.**
-* **The user can see a list of all of their offers.**
+
+* **Selling site**
+  * **The user can see a list of all of their offers.**
   * **They can be sorted by name, offer amount and date.**
   * **The list contains most relevant information for the user to have, as well as quick-action buttons and a link to the offer details site and a list of all offers made on the item.**
+  
 * Checkout
    * The user with the accepting offer must checkout in order to finalize the sale
 of the item
