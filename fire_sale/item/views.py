@@ -48,9 +48,10 @@ def get_item_details_by_id(request, id):
     item_stats.views += 1
     item_stats.save()
 
-    category_views = get_object_or_404(CategoryViews, user=request.user.id, category=item_stats.item.category)
-    category_views.category_views += 1
-    category_views.save()
+    if request.user.id:
+        category_views = get_object_or_404(CategoryViews, user=request.user.id, category=item_stats.item.category)
+        category_views.category_views += 1
+        category_views.save()
 
     seller_id = item_details.item_stats.item.seller_id
     user_location = UserProfile.objects.get(user_info__user_id=seller_id).country
